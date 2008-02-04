@@ -1,9 +1,9 @@
 class Relevance::Tarantula::HtmlDocumentHandler 
   extend Forwardable
-  def_delegators("@tarantula", :queue_link, :queue_form)
-
-  def initialize(tarantula)
-    @tarantula = tarantula
+  def_delegators("@crawler", :queue_link, :queue_form)
+  
+  def initialize(crawler)
+    @crawler = crawler
   end
   def handle(method, url, response, data = nil)
     body = HTML::Document.new response.body
@@ -14,6 +14,7 @@ class Relevance::Tarantula::HtmlDocumentHandler
       queue_link(tag['href'])
     end
     body.find_all(:tag =>'form').each do |form|
+      form.attributes['action'] = url unless form.attributes['action']
       queue_form(form)
     end
   end

@@ -20,5 +20,9 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
     @handler.handle nil, nil, stub(:body => '<form>stuff</form>')
   end
   
+  it "infers form action from page url if form is not explicit" do
+    @handler.expects(:queue_form).with{|tag| tag['action'].should == '/page-url'; true }
+    @handler.handle nil, '/page-url', stub(:body => '<form>stuff</form>')
+  end
 end
 
