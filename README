@@ -1,0 +1,9 @@
+Tarantula: A big fuzzy spider
+=========
+Crawls your Rails application, fuzzing data to see what breaks.
+
+
+
+License and Copyright
+=======
+Copyright (c) 2008 Relevance, Inc., released under the MIT license

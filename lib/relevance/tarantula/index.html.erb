@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>Tarantula report</title>
+  </head>
+  <body>
+    <h1>Tarantula report</h3>
+    <p>Generated on <%= Time.now %></p>
+    <% %w{failures successes}.each do |result_type| %>
+      <h2><%= result_type.capitalize %></h2>
+      <table>
+        <thead>
+          <tr>
+            <td class='heading'>Action</td>
+            <td class='heading'>URL</td>
+            <td class='heading'>Response</td>
+            <td class='heading'>Detail</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% send(result_type).sort_by(&:url).each do |result| %>
+          <tr>
+            <td><%= result.method %></td>
+            <td><%= result.url %></td>
+            <td><%= result.code %></td>
+            <td><%= result.data ? result.data.inspect : "" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </body>
+</html>
+
