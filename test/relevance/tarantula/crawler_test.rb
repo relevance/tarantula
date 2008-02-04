@@ -20,6 +20,13 @@ describe 'Relevance::Tarantula::Crawler#crawl' do
     crawler.expects(:report_results)
     crawler.crawl("/foobar")
   end
+  
+  it 'reports results even if the crawl fails' do
+    crawler = Crawler.new
+    crawler.expects(:do_crawl).raises(RuntimeError)
+    crawler.expects(:report_results)
+    lambda {crawler.crawl('/')}.should.raise(RuntimeError)
+  end
 end
 
 describe 'Relevance::Tarantula::Crawler queuing' do

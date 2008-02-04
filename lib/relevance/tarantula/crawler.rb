@@ -44,6 +44,7 @@ class Relevance::Tarantula::Crawler
   def crawl(url = "/")
     queue_link url
     do_crawl
+  ensure
     report_results
   end
 
