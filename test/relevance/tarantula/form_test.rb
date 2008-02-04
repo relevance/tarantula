@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
-describe "Relevance::Tarantula::Form" do
+describe "Relevance::Tarantula::Form large example" do
   before do
     @tag = HTML::Document.new(<<END)
 <form action="/session" method="post">
@@ -22,6 +22,14 @@ END
     @form.method.should == "post"
   end
   
+end
+
+describe "A Relevance::Tarantula::Form" do
+  it "defaults method to 'get'" do
+    @tag = HTML::Document.new("<form/>")
+    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @form.method.should == 'get'
+  end
 end
 
 describe "A Relevance::Tarantula::Form with a hacked _method" do

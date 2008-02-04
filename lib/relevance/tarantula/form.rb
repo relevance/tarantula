@@ -11,7 +11,7 @@ class Relevance::Tarantula::Form
   end
   
   def method
-    (rails_method_hack or @tag['method']).downcase
+    (rails_method_hack or @tag['method'] or 'get').downcase
   end
   
   def rails_method_hack
