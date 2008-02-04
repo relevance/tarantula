@@ -31,6 +31,13 @@ describe 'Relevance::Tarantula::Crawler queuing' do
     crawler.links_queued.should == Set.new("/transformed")
   end
   
+  it 'ignores nil links' do
+    crawler = Crawler.new
+    crawler.expects(:transform_url).never
+    crawler.queue_link(nil)
+    crawler.links_to_crawl.should == []
+  end
+  
   it 'queues and remembers forms' do
     crawler = Crawler.new
     form = HTML::Document.new('<form action="/action" method="post"/>').find(:tag =>'form')

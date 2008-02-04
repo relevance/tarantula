@@ -19,5 +19,6 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
     @handler.expects(:queue_form).with{|tag| HTML::Tag === tag}
     @handler.handle nil, nil, stub(:body => '<form>stuff</form>')
   end
+  
 end
 

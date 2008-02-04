@@ -98,6 +98,7 @@ class Relevance::Tarantula::Crawler
   end
   
   def queue_link(dest)
+    return unless dest
     dest = transform_url(dest)
     return if should_skip_link?(dest)
     @links_to_crawl << dest 
