@@ -13,10 +13,10 @@ class Relevance::Tarantula::Crawler
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
     t.skip_uri_patterns << /logout$/
-    t.transform_url_patterns = [
+    t.transform_url_patterns += [
       [/\?\d+$/, ''],                               # strip trailing numbers for assets
       [/^http:\/\/#{integration_test.host}/, '']    # strip full path down to relative
-    ].map {|x| Transform.new(*x)}
+    ]
     t.reporters << Relevance::Tarantula::HtmlReporter
     t.crawl url
     t
@@ -33,13 +33,22 @@ class Relevance::Tarantula::Crawler
       /^mailto/,
       /^http/,                                      
     ]
-    @transform_url_patterns = []
+    self.transform_url_patterns = [
+      [/#.*$/, '']
+    ]
     @reporters = []
   end
   
-  attr_accessor :proxy, :handlers, :skip_uri_patterns, :transform_url_patterns,
+  attr_accessor :proxy, :handlers, :skip_uri_patterns,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
                 :form_signatures_queued
+  attr_reader   :transform_url_patterns
+  
+  def transform_url_patterns=(patterns)
+    @transform_url_patterns = patterns.map do |pattern| 
+      Array === pattern ? Relevance::Tarantula::Transform.new(*pattern) : pattern
+    end
+  end
   
   def crawl(url = "/")
     queue_link url
@@ -80,6 +89,7 @@ class Relevance::Tarantula::Crawler
   end
   
   def should_skip_link?(url)
+    return true if url.blank?
     if @skip_uri_patterns.any? {|pattern| pattern =~ url}
       log "Skipping #{url}"
       return true
@@ -92,6 +102,7 @@ class Relevance::Tarantula::Crawler
   end
   
   def transform_url(url)
+    return unless url
     @transform_url_patterns.each do |pattern|
       url = url.gsub(pattern.from, pattern.to)
     end
@@ -99,7 +110,6 @@ class Relevance::Tarantula::Crawler
   end
   
   def queue_link(dest)
-    return unless dest
     dest = transform_url(dest)
     return if should_skip_link?(dest)
     @links_to_crawl << dest 

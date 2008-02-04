@@ -11,6 +11,13 @@ describe "Relevance::Tarantula::Crawler rails_integration_test" do
   end
 end
 
+describe 'Relevance::Tarantula::Crawler#tranform_url' do
+  it "strips the trailing name portion of a link" do
+    crawler = Crawler.new
+    crawler.transform_url('http://host/path#name').should == 'http://host/path'
+  end
+end
+
 describe 'Relevance::Tarantula::Crawler#crawl' do
   it 'queues the first url, does crawl, and then reports results' do
     response = stub_everything(:code => "200")
@@ -36,13 +43,6 @@ describe 'Relevance::Tarantula::Crawler queuing' do
     crawler.queue_link("/url")
     crawler.links_to_crawl.should == ["/transformed"]
     crawler.links_queued.should == Set.new("/transformed")
-  end
-  
-  it 'ignores nil links' do
-    crawler = Crawler.new
-    crawler.expects(:transform_url).never
-    crawler.queue_link(nil)
-    crawler.links_to_crawl.should == []
   end
   
   it 'queues and remembers forms' do
@@ -118,6 +118,14 @@ describe 'Relevance::Tarantula::Crawler' do
   it "skips mailto links (those that begin with http)" do
     crawler = Crawler.new
     crawler.should_skip_link?("mailto-anything").should == true
+  end
+  
+  it 'skips blank links' do
+    crawler = Crawler.new
+    crawler.queue_link(nil)
+    crawler.links_to_crawl.should == []
+    crawler.queue_link("")
+    crawler.links_to_crawl.should == []
   end
   
   it "logs and skips links that match a pattern" do
