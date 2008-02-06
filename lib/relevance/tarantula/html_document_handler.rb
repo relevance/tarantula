@@ -15,7 +15,7 @@ class Relevance::Tarantula::HtmlDocumentHandler
     end
     body.find_all(:tag =>'form').each do |form|
       form.attributes['action'] = url unless form.attributes['action']
-      queue_form(form)
+      queue_form(form, url)
     end
   end
 end

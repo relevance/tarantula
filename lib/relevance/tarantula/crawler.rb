@@ -92,7 +92,11 @@ class Relevance::Tarantula::Crawler
   
   def crawl_queued_forms
     while (form = @forms_to_crawl.pop)
-      response = proxy.send(form.method, form.action, form.data)
+      begin
+        response = proxy.send(form.method, form.action, form.data)
+      rescue ActiveRecord::RecordNotFound
+        log "Skipping #{form.action}, presumed ok that record is missing"
+      end
       log "Response #{response.code} for #{form}"
       handle_form_results(form, response)
       blip
@@ -133,10 +137,11 @@ class Relevance::Tarantula::Crawler
     dest
   end
   
-  def queue_form(form)
+  def queue_form(form, referrer = nil)
     fs = FormSubmission.new(Form.new(form))
     fs.action = transform_url(fs.action)
     return if should_skip_form_submission?(fs)
+    @referrers[fs.action] = referrer if referrer
     @forms_to_crawl << fs
     @form_signatures_queued << fs.signature
   end

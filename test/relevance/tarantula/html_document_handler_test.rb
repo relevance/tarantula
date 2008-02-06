@@ -16,12 +16,12 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
   end
   
   it "queues forms" do
-    @handler.expects(:queue_form).with{|tag| HTML::Tag === tag}
+    @handler.expects(:queue_form).with{|tag,referrer| HTML::Tag === tag}
     @handler.handle nil, nil, stub(:body => '<form>stuff</form>'), nil
   end
   
   it "infers form action from page url if form is not explicit" do
-    @handler.expects(:queue_form).with{|tag| tag['action'].should == '/page-url'; true }
+    @handler.expects(:queue_form).with{|tag,referrer| tag['action'].should == '/page-url'; true }
     @handler.handle nil, '/page-url', stub(:body => '<form>stuff</form>'), nil
   end
 end

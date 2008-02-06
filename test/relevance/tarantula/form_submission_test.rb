@@ -54,3 +54,18 @@ END
   end
 end
 
+describe "Relevance::Tarantula::FormSubmission for a crummy form" do
+  before do
+    @tag = HTML::Document.new(<<END)
+<form action="/session" method="post">
+  <input value="no_name" />
+</form>
+END
+    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @fs = Relevance::Tarantula::FormSubmission.new(@form)
+  end
+  
+  it "ignores unnamed inputs" do
+    @fs.mutate_inputs(@form).should == {}
+  end
+end
