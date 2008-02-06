@@ -65,6 +65,8 @@ end
 describe 'Relevance::Tarantula::Crawler#report_results' do
   it "delegates to generate_reports then report_to_console" do
     crawler = Crawler.new
+    crawler.expects(:report_dir)
+    crawler.expects(:puts)
     crawler.expects(:generate_reports)
     crawler.expects(:report_to_console)
     crawler.report_results

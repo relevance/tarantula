@@ -28,10 +28,9 @@ class Relevance::Tarantula::Crawler
   end
   
   def initialize
-    @results_handler = ResultsHandler.new
     @successes = []
     @failures = []
-    @handlers = [@results_handler]
+    @handlers = [ResultsHandler.new]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
     @links_to_crawl = []
@@ -56,6 +55,8 @@ class Relevance::Tarantula::Crawler
   def crawl(url = "/")
     queue_link url
     do_crawl
+  rescue Interrupt
+    $stderr.puts "CTRL-C"
   ensure
     report_results
   end
@@ -162,7 +163,7 @@ class Relevance::Tarantula::Crawler
   def generate_reports
     FileUtils.mkdir_p(report_dir)
     reporters.each do |reporter|
-      reporter.report(report_dir, @results_handler)
+      reporter.report(report_dir, self)
     end
   end
   
@@ -177,6 +178,7 @@ class Relevance::Tarantula::Crawler
   end
   
   def report_results
+    puts "Writing results to #{report_dir}"
     generate_reports
     report_to_console
   end
