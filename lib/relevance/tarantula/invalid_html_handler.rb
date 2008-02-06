@@ -1,16 +1,12 @@
 class Relevance::Tarantula::InvalidHtmlHandler
-  extend Forwardable
-  def_delegators("@crawler", :queue_link, :queue_form)
-  
-  def initialize(crawler)
-    @crawler = crawler
-  end
-
+  include Relevance::Tarantula
   def handle(method, url, response, referrer, data = nil)
     begin
       body = HTML::Document.new(response.body, true)
     rescue Exception => e
-      @crawler.failures << Result.new(method, url, response.code, referrer, e.message)
+      Result.new(false, method, url, response.code, referrer, e.message)
+    else
+      nil
     end
   end
 end

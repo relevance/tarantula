@@ -17,5 +17,6 @@ class Relevance::Tarantula::HtmlDocumentHandler
       form.attributes['action'] = url unless form.attributes['action']
       queue_form(form, url)
     end
+    nil
   end
 end

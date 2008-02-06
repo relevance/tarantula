@@ -6,13 +6,17 @@ Relevance::Tarantula::Transform = Struct.new(:from, :to)
 class Relevance::Tarantula::Crawler
   extend Forwardable
   include Relevance::Tarantula
-  def_delegators("@results_handler", :failures, :successes)
-
+  
+  attr_accessor :proxy, :handlers, :skip_uri_patterns,
+                :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
+                :form_signatures_queued
+  attr_reader   :transform_url_patterns, :referrers, :failures, :successes
+   
   def self.rails_integration_test(integration_test, url = "/")
     t = self.new
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
-    t.handlers << InvalidHtmlHandler.new(t)
+    t.handlers << InvalidHtmlHandler.new
     t.skip_uri_patterns << /logout$/
     t.transform_url_patterns += [
       [/\?\d+$/, ''],                               # strip trailing numbers for assets
@@ -25,6 +29,8 @@ class Relevance::Tarantula::Crawler
   
   def initialize
     @results_handler = ResultsHandler.new
+    @successes = []
+    @failures = []
     @handlers = [@results_handler]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
@@ -40,11 +46,6 @@ class Relevance::Tarantula::Crawler
     ]
     @reporters = []
   end
-  
-  attr_accessor :proxy, :handlers, :skip_uri_patterns,
-                :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
-                :form_signatures_queued
-  attr_reader   :transform_url_patterns, :referrers
   
   def transform_url_patterns=(patterns)
     @transform_url_patterns = patterns.map do |pattern| 
@@ -79,10 +80,16 @@ class Relevance::Tarantula::Crawler
     end
   end  
   
+  def save_result(result)
+    return if result.nil?
+    collection = result.success ? successes : failures
+    collection << result
+  end
+  
   def handle_link_results(link, response)
     handlers.each do |h| 
       begin
-        h.handle("get", link, response, referrers[link])
+        save_result h.handle("get", link, response, referrers[link])
       rescue Exception => e
         log "error handling #{link} #{e.message}"
         # TODO: pass to results
@@ -104,7 +111,9 @@ class Relevance::Tarantula::Crawler
   end  
 
   def handle_form_results(form, response)
-    handlers.each {|h| h.handle(form.method, form.action, response, nil, form.data)}
+    handlers.each do |h| 
+      save_result h.handle(form.method, form.action, response, nil, form.data)
+    end
   end
   
   def should_skip_link?(url)
