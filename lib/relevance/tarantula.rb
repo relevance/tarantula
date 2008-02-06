@@ -11,6 +11,9 @@ module Relevance
     def log(msg)
       puts msg if ENV["VERBOSE"]
     end
+    def blip
+      putc "." unless ENV["VERBOSE"]
+    end
     def rails_root
       ::RAILS_ROOT
     end
@@ -19,6 +22,7 @@ end
 
 require 'relevance/core_extensions/file'
 require 'relevance/tarantula/results_handler'
+require 'relevance/tarantula/invalid_html_handler'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'

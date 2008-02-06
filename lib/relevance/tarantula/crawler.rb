@@ -12,6 +12,7 @@ class Relevance::Tarantula::Crawler
     t = self.new
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
+    t.handlers << InvalidHtmlHandler.new(t)
     t.skip_uri_patterns << /logout$/
     t.transform_url_patterns += [
       [/\?\d+$/, ''],                               # strip trailing numbers for assets
@@ -73,15 +74,28 @@ class Relevance::Tarantula::Crawler
     while (link = @links_to_crawl.pop)
       response = proxy.get link
       log "Response #{response.code} for #{link}"
-      handlers.each {|h| h.handle("get", link, response, referrers[link])}
+      handle_link_results(link, response)
+      blip
     end
   end  
+  
+  def handle_link_results(link, response)
+    handlers.each do |h| 
+      begin
+        h.handle("get", link, response, referrers[link])
+      rescue Exception => e
+        log "error handling #{link} #{e.message}"
+        # TODO: pass to results
+      end
+    end
+  end
   
   def crawl_queued_forms
     while (form = @forms_to_crawl.pop)
       response = proxy.send(form.method, form.action, form.data)
       log "Response #{response.code} for #{form}"
       handle_form_results(form, response)
+      blip
     end
   end  
 

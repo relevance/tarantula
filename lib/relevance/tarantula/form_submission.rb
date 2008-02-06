@@ -18,7 +18,8 @@ class Relevance::Tarantula::FormSubmission
   
   def create_random_data_for(form, tag_selector)
     form.find_all(tag_selector).injecting({}) do |form_args, input|
-      form_args[input['name']] = random_data(input)
+      # TODO: test
+      form_args[input['name']] = random_data(input) if input['name']
     end
   end
 
