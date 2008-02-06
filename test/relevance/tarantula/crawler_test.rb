@@ -54,6 +54,12 @@ describe 'Relevance::Tarantula::Crawler queuing' do
     crawler.form_signatures_queued.should == Set.new([signature])
   end
   
+  it 'remembers link referrer if there is one' do
+    crawler = Crawler.new
+    crawler.queue_link("/url", "/some-referrer")
+    crawler.referrers.should == {"/url" => "/some-referrer"}
+  end
+  
 end
 
 describe 'Relevance::Tarantula::Crawler#report_results' do

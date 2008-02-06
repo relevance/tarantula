@@ -1,4 +1,4 @@
-Relevance::Tarantula::Result = Struct.new(:method, :url, :code, :data)
+Relevance::Tarantula::Result = Struct.new(:method, :url, :code, :referrer, :data)
 class Relevance::Tarantula::ResultsHandler
   include Relevance::Tarantula
   attr_accessor :successes, :failures
@@ -16,8 +16,8 @@ class Relevance::Tarantula::ResultsHandler
     success_codes.member?(response.code)
   end
   
-  def handle(method, url, response, data = nil)
+  def handle(method, url, response, referrer, data = nil)
     collection = successful?(response) ? @successes : @failures
-    collection << Result.new(method, url, response.code, data)
+    collection << Result.new(method, url, response.code, referrer, data)
   end
 end

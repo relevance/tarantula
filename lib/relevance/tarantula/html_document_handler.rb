@@ -5,13 +5,13 @@ class Relevance::Tarantula::HtmlDocumentHandler
   def initialize(crawler)
     @crawler = crawler
   end
-  def handle(method, url, response, data = nil)
+  def handle(method, url, response, referrer, data = nil)
     body = HTML::Document.new response.body
     body.find_all(:tag=>'a').each do |tag|
-      queue_link(tag['href'])
+      queue_link(tag['href'], url)
     end
     body.find_all(:tag=>'link').each do |tag|
-      queue_link(tag['href'])
+      queue_link(tag['href'], url)
     end
     body.find_all(:tag =>'form').each do |form|
       form.attributes['action'] = url unless form.attributes['action']

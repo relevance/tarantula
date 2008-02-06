@@ -29,6 +29,7 @@ class Relevance::Tarantula::Crawler
     @form_signatures_queued = Set.new
     @links_to_crawl = []
     @forms_to_crawl = []
+    @referrers = {}
     @skip_uri_patterns =[
       /^mailto/,
       /^http/,                                      
@@ -42,7 +43,7 @@ class Relevance::Tarantula::Crawler
   attr_accessor :proxy, :handlers, :skip_uri_patterns,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
                 :form_signatures_queued
-  attr_reader   :transform_url_patterns
+  attr_reader   :transform_url_patterns, :referrers
   
   def transform_url_patterns=(patterns)
     @transform_url_patterns = patterns.map do |pattern| 
@@ -72,7 +73,7 @@ class Relevance::Tarantula::Crawler
     while (link = @links_to_crawl.pop)
       response = proxy.get link
       log "Response #{response.code} for #{link}"
-      handlers.each {|h| h.handle("get", link, response)}
+      handlers.each {|h| h.handle("get", link, response, referrers[link])}
     end
   end  
   
@@ -85,7 +86,7 @@ class Relevance::Tarantula::Crawler
   end  
 
   def handle_form_results(form, response)
-    handlers.each {|h| h.handle(form.method, form.action, response, form.data)}
+    handlers.each {|h| h.handle(form.method, form.action, response, nil, form.data)}
   end
   
   def should_skip_link?(url)
@@ -109,9 +110,10 @@ class Relevance::Tarantula::Crawler
     url
   end
   
-  def queue_link(dest)
+  def queue_link(dest, referrer = nil)
     dest = transform_url(dest)
     return if should_skip_link?(dest)
+    @referrers[dest] = referrer if referrer
     @links_to_crawl << dest 
     @links_queued << dest
     dest

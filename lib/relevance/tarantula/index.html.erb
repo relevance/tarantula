@@ -15,6 +15,7 @@
             <td class='heading'>URL</td>
             <td class='heading'>Response</td>
             <td class='heading'>Detail</td>
+            <td class='heading'>Referrer</td>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             <td><%= result.url %></td>
             <td><%= result.code %></td>
             <td><%= result.data ? result.data.inspect : "" %></td>
+            <td><%= result.referrer || "" %></td>
           </tr>
           <% end %>
         </tbody>
