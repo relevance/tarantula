@@ -8,19 +8,13 @@ class Relevance::Tarantula::RailsIntegrationProxy
     @integration_test.meta.attr_accessor :response
   end
   
-  # TODO: generalize and handle all verbs
-  def get(url, *args)
-    integration_test.get(url, *args)
-    response = integration_test.response
-    patch_response(url, response)
-    response
-  end
-
-  def post(url, *args)
-    integration_test.post(url, *args)
-    response = integration_test.response
-    patch_response(url, response)
-    response
+  [:get, :post, :put, :delete].each do |verb|
+    define_method(verb) do |url, *args|
+      integration_test.send(verb, url, *args)
+      response = integration_test.response
+      patch_response(url, response)
+      response
+    end
   end
 
   def patch_response(url, response)
