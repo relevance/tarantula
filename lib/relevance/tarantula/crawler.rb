@@ -9,10 +9,12 @@ class Relevance::Tarantula::Crawler
   
   attr_accessor :proxy, :handlers, :skip_uri_patterns,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
-                :form_signatures_queued
+                :form_signatures_queued, :max_url_length
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
    
-  def self.rails_integration_test(integration_test, url = "/")
+  def self.rails_integration_test(integration_test, options = {})
+    url = options[:url] || "/"
+    self.max_url_length = options[:max_url_length] if options[:max_url_length] 
     t = self.new
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
@@ -28,6 +30,7 @@ class Relevance::Tarantula::Crawler
   end
   
   def initialize
+    @max_url_length = 1024
     @successes = []
     @failures = []
     @handlers = [ResultsHandler.new]
@@ -121,6 +124,10 @@ class Relevance::Tarantula::Crawler
     return true if url.blank?
     if @skip_uri_patterns.any? {|pattern| pattern =~ url}
       log "Skipping #{url}"
+      return true
+    end
+    if url.length > max_url_length
+      log "Skipping long url #{url}"
       return true
     end
     @links_queued.member?(url)

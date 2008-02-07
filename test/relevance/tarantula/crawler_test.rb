@@ -133,13 +133,23 @@ describe 'Relevance::Tarantula::Crawler' do
     crawler.should_skip_link?("/foo").should == true
   end
   
+  it "skips links that are too long" do
+    crawler = Crawler.new
+    crawler.should_skip_link?("/foo").should == false
+    crawler.max_url_length = 2
+    crawler.expects(:log).with("Skipping long url /foo")
+    crawler.should_skip_link?("/foo").should == true
+  end
+  
   it "skips outbound links (those that begin with http)" do
     crawler = Crawler.new
+    crawler.expects(:log).with("Skipping http-anything")
     crawler.should_skip_link?("http-anything").should == true
   end
 
   it "skips mailto links (those that begin with http)" do
     crawler = Crawler.new
+    crawler.expects(:log).with("Skipping mailto-anything")
     crawler.should_skip_link?("mailto-anything").should == true
   end
   
