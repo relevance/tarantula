@@ -6,6 +6,7 @@ class Relevance::Tarantula::HtmlDocumentHandler
     @crawler = crawler
   end
   def handle(method, url, response, referrer, data = nil)
+    return unless response.html?
     body = HTML::Document.new response.body
     body.find_all(:tag=>'a').each do |tag|
       queue_link(tag['href'], url)

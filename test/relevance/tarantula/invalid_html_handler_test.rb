@@ -6,14 +6,20 @@ describe "Relevance::Tarantula::InvalidHtmlHandler" do
   end
   
   it "rejects unclosed html" do
-    response = stub(:body => '<html><div></html>', :code => 200)
+    response = stub(:html? => true, :body => '<html><div></html>', :code => 200)
     @handler.handle(nil, nil, response, nil).success.should == false
   end
 
   it "loves the good html" do
-    response = stub(:body => '<html><div></div></html>', :code => 200)
+    response = stub(:html? => true, :body => '<html><div></div></html>', :code => 200)
     @handler.handle(nil, nil, response, nil).should == nil
   end
 
+  it "ignores non html" do
+    response = stub(:html? => false,  
+                    :body => '<html><div></html>', 
+                    :code => 200)
+    @handler.handle(nil, nil, response, nil).should == nil
+  end
 end
 

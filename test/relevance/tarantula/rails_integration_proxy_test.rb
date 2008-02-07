@@ -18,7 +18,7 @@ describe "Relevance::Tarantula::RailsIntegrationProxy" do
 
 end
 
-describe "Relevance::Tarantula::RailsIntegrationProxy 404 handling" do
+describe "Relevance::Tarantula::RailsIntegrationProxy patching" do
   before do
     @rip = Relevance::Tarantula::RailsIntegrationProxy.new(stub)
     @rip.stubs(:rails_root).returns("faux_rails_root")
@@ -26,23 +26,33 @@ describe "Relevance::Tarantula::RailsIntegrationProxy 404 handling" do
     File.stubs(:exist?).returns(true)
   end
   
+  it "patches in Relevance::CoreExtensions::Response" do
+    @rip = Relevance::Tarantula::RailsIntegrationProxy.new(stub)
+    @rip.stubs(:rails_root).returns("faux_rails_root")
+    @response = stub_everything({:code => "404", :headers => {}, :content_type => "text/html"})
+    @response.meta.ancestors.should.not.include Relevance::CoreExtensions::Response
+    @rip.patch_response("/url", @response)
+    @response.meta.ancestors.should.include Relevance::CoreExtensions::Response
+    @response.html?.should == true
+  end
+  
   it "ignores 404s for known static binary types" do
     File.expects(:extension).returns("pdf")
     @rip.expects(:log).with("Skipping /url (for now)")
-    @rip.check_for_static_version_of_404s("/url", @response)
+    @rip.patch_response("/url", @response)
   end
   
   it "replaces 404s with 200s, pulling content from public, for known text types" do
     File.expects(:extension).returns("html")
     @rip.expects(:static_content_file).with("/url").returns("File body")
-    @rip.check_for_static_version_of_404s("/url", @response)
+    @rip.patch_response("/url", @response)
     @response.headers.should == {"type" => "text/html"}
   end
   
   it "logs and skips types we haven't dealt with yet" do
     File.expects(:extension).returns("whizzy")
     @rip.expects(:log).with("Skipping unknown type /url")
-    @rip.check_for_static_version_of_404s("/url", @response)
+    @rip.patch_response("/url", @response)
   end
   
   it "can find static content relative to rails root" do

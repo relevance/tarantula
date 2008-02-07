@@ -12,18 +12,18 @@ class Relevance::Tarantula::RailsIntegrationProxy
   def get(url, *args)
     integration_test.get(url, *args)
     response = integration_test.response
-    check_for_static_version_of_404s(url, response)
+    patch_response(url, response)
     response
   end
 
   def post(url, *args)
     integration_test.post(url, *args)
     response = integration_test.response
-    check_for_static_version_of_404s(url, response)
+    patch_response(url, response)
     response
   end
 
-  def check_for_static_version_of_404s(url, response)
+  def patch_response(url, response)
     if response.code == '404'
       if File.exist?(static_content_path(url))
         case ext = File.extension(url)
@@ -31,13 +31,16 @@ class Relevance::Tarantula::RailsIntegrationProxy
           log "Skipping #{url} (for now)"
         when /html|te?xt|css|js/
           response.body = static_content_file(url)
-          response.headers["type"] = "text/#{ext}"
+          response.headers["type"] = "text/#{ext}"  # readable as response.content_type
           response.meta.attr_accessor :code
           response.code = "200"
         else
           log "Skipping unknown type #{url}"
         end
       end
+    end
+    response.metaclass do
+      include Relevance::CoreExtensions::Response
     end
   end
   

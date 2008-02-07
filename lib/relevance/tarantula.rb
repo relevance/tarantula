@@ -21,6 +21,8 @@ module Relevance
 end
 
 require 'relevance/core_extensions/file'
+require 'relevance/core_extensions/response'
+
 require 'relevance/tarantula/results_handler'
 require 'relevance/tarantula/invalid_html_handler'
 require 'relevance/tarantula/crawler'
