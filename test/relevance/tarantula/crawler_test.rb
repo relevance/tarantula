@@ -2,12 +2,19 @@ require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 include Relevance::Tarantula
 
 describe "Relevance::Tarantula::Crawler rails_integration_test" do
+  before {Crawler.any_instance.stubs(:crawl)}
+
   it "strips leading hostname from link urls" do
-    Crawler.any_instance.stubs(:crawl)
     RailsIntegrationProxy.stubs(:new)
     crawler = Crawler.rails_integration_test(stub(:host => "foo.com"))
     crawler.transform_url("http://foo.com/path").should == "/path"
     crawler.transform_url("http://bar.com/path").should == "http://bar.com/path"
+  end
+  
+  it "allows override of max_url_length" do
+    crawler = Crawler.rails_integration_test(stub(:host => "foo.com"), 
+                                             :max_url_length => 16)
+    crawler.max_url_length.should == 16
   end
 end
 

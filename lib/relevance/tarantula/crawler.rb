@@ -14,8 +14,8 @@ class Relevance::Tarantula::Crawler
    
   def self.rails_integration_test(integration_test, options = {})
     url = options[:url] || "/"
-    self.max_url_length = options[:max_url_length] if options[:max_url_length] 
     t = self.new
+    t.max_url_length = options[:max_url_length] if options[:max_url_length] 
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
     t.handlers << InvalidHtmlHandler.new
