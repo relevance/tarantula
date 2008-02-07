@@ -182,4 +182,22 @@ class Relevance::Tarantula::Crawler
     generate_reports
     report_to_console
   end
+  
+  def total_links_count
+    @links_queued.size + @form_signatures_queued.size
+  end
+
+  def links_remaining_count
+    @links_to_crawl.size + @forms_to_crawl.size
+  end
+
+  def links_completed_count
+      total_links_count - links_remaining_count
+  end
+
+  def blip
+    unless verbose
+      print "\r #{links_completed_count} of #{total_links_count} links completed               "
+    end
+  end  
 end

@@ -20,10 +20,9 @@ end
 
 describe 'Relevance::Tarantula::Crawler#crawl' do
   it 'queues the first url, does crawl, and then reports results' do
-    response = stub_everything(:code => "200")
-    proxy = stub_everything(:get => response)
     crawler = Crawler.new
-    crawler.proxy = proxy
+    crawler.expects(:queue_link).with("/foobar")
+    crawler.expects(:do_crawl)
     crawler.expects(:report_results)
     crawler.crawl("/foobar")
   end
@@ -82,7 +81,23 @@ describe 'Relevance::Tarantula::Crawler#crawl_queued_forms' do
                                               :to_s => "stub")
     crawler.proxy = stub_everything(:send => stub(:code => "200" ))
     crawler.expects(:log).with("Response 200 for stub")
+    crawler.expects(:blip)
     crawler.crawl_queued_forms
+  end
+end
+
+describe 'Crawler blip' do
+  it "blips the current progress if !verbose" do
+    crawler = Crawler.new
+    crawler.stubs(:verbose).returns false
+    crawler.expects(:print).with("\r 0 of 0 links completed               ")
+    crawler.blip
+  end
+  it "blips nothing if verbose" do
+    crawler = Crawler.new
+    crawler.stubs(:verbose).returns true
+    crawler.expects(:print).never
+    crawler.blip
   end
 end
 
@@ -143,5 +158,6 @@ describe 'Relevance::Tarantula::Crawler' do
     crawler.queue_link("/blue-button").should == "/blue-button"
     crawler.queue_link("/the-red-button").should == nil
   end
+  
 end
 

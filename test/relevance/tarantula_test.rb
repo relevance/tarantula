@@ -2,22 +2,16 @@ require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
 
 describe "Relevance::Tarantula" do
   include Relevance::Tarantula
-  before do
-    @verbose = ENV['VERBOSE']
-  end
+  attr_accessor :verbose
   
-  after do
-    ENV['VERBOSE'] = @verbose
-  end
-  
-  it "writes to stdout if ENV['VERBOSE']" do
-    ENV['VERBOSE'] = "yep"
+  it "writes to stdout if verbose" do
+    self.verbose = true
     expects(:puts).with("foo")
     log("foo")
   end
 
-  it "swallows output if !ENV['VERBOSE']" do
-    ENV['VERBOSE'] = nil
+  it "swallows output if !verbose" do
+    self.verbose = false
     expects(:puts).never
     log("foo")
   end

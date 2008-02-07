@@ -9,13 +9,13 @@ module Relevance; module CoreExtensions; end; end
 module Relevance
   module Tarantula 
     def log(msg)
-      puts msg if ENV["VERBOSE"]
-    end
-    def blip
-      putc "." unless ENV["VERBOSE"]
+      puts msg if verbose
     end
     def rails_root
       ::RAILS_ROOT
+    end
+    def verbose
+      ENV["VERBOSE"]
     end
   end
 end
