@@ -20,6 +20,7 @@ module Relevance
   end
 end
 
+require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'
 require 'relevance/core_extensions/response'
 

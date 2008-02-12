@@ -2,9 +2,25 @@
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
     <title>Tarantula report</title>
+    <style type="text/css">
+table {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+table thead {
+	background-color: #DDDDDD;
+	font-weight: bold;
+}
+
+table td {
+	padding: 0.4em 1em 0.4em 1em;
+	border: 1px solid;
+}
+    </style>
   </head>
   <body>
-    <h1>Tarantula report</h3>
+    <h1>Tarantula report</h1>
     <p>Generated on <%= Time.now %></p>
     <% %w{failures successes}.each do |result_type| %>
       <h2><%= result_type.capitalize %></h2>
@@ -22,10 +38,10 @@
           <% send(result_type).sort_by(&:url).each do |result| %>
           <tr>
             <td><%= result.method %></td>
-            <td><%= result.url %></td>
+            <td><a href="<%= result.file_name%>"><%= result.url.ellipsize(40) %></a></td>
             <td><%= result.code %></td>
-            <td><%= result.data ? result.data.inspect : "" %></td>
-            <td><%= result.referrer || "" %></td>
+            <td><%= result.data.ellipsize(10) %></td>
+            <td><%= result.referrer.ellipsize(20) %></td>
           </tr>
           <% end %>
         </tbody>

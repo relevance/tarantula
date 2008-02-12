@@ -1,8 +1,27 @@
 Tarantula: A big fuzzy spider
-=========
+=============================
 Crawls your Rails application, fuzzing data to see what breaks.
 
+Example Usage:
+==============
 
+Create a Rails integration test that looks like this, filling in your
+own auth params of course:
+
+    def test_with_login
+      get '/sessions/new'
+      assert_response :success
+      post '/sessions/create', :password => 'your-pass'
+      assert_response :redirect
+      assert_redirected_to '/'
+      follow_redirect!
+      Relevance::Tarantula::Crawler.rails_integration_test(self)
+    end
+
+If you run the test you will get a report in tmp/tarantula. You can also
+set VERBOSE=true to see more detail as the test runs.
+
+For more options see the test suite.
 
 License and Copyright
 =======

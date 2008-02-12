@@ -8,6 +8,7 @@ class Relevance::Tarantula::HtmlReporter
     @basedir = basedir
     @results = results
     create_index
+    create_detail_reports
   end
   
   def template(name)
@@ -23,5 +24,15 @@ class Relevance::Tarantula::HtmlReporter
   def create_index
     template = ERB.new(template("index.html.erb"))
     output("index.html", template.result(results.send(:binding)))
+  end
+
+  def create_detail_reports
+    template = ERB.new(template("detail.html.erb"))
+    results.successes.each do |result|
+      output(result.file_name, template.result(result.send(:binding)))
+    end
+    results.failures.each do |result|
+      output(result.file_name, template.result(result.send(:binding)))
+    end
   end
 end

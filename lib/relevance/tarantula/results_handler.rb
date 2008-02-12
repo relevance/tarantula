@@ -1,4 +1,19 @@
-Relevance::Tarantula::Result = Struct.new(:success, :method, :url, :code, :referrer, :data)
+Relevance::Tarantula::Result = Struct.new(:success, :method, :url, :code, :referrer, :data) do
+  def short_description
+    [method,url].join(" ")
+  end
+  def sequence_number
+    @sequence_number ||= (self.class.next_number += 1)
+  end
+  def file_name
+    "#{sequence_number}.html"
+  end
+  class <<self
+    attr_accessor :next_number
+  end
+  self.next_number = 0
+end
+
 class Relevance::Tarantula::ResultsHandler
   include Relevance::Tarantula
   

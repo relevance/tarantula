@@ -1,5 +1,25 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
+describe "Relevance::Tarantula::Result" do
+  before do
+    @result = Relevance::Tarantula::Result.new(true, 
+                                              "get", 
+                                              "/some/url?arg1=foo&arg2=bar", 
+                                              nil, nil, nil)
+  end
+  
+  it "has a short description" do
+    @result.short_description.should == "get /some/url?arg1=foo&arg2=bar"
+  end
+  
+  it "has a sequence number" do
+    @result.class.next_number = 0
+    @result.sequence_number.should == 1
+    @result.class.next_number.should == 1
+  end
+  
+end
+
 describe "Relevance::Tarantula::ResultsHandler" do
   before do
     @rh = Relevance::Tarantula::ResultsHandler.new

@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>Tarantula report detail <%= short_description %></title>
+  </head>
+  <body>
+    <h1>Tarantula report detail <%= short_description %></h1>
+    <p>Generated on <%= Time.now %> (<a href="index.html">Top</a>)</p>
+    <p>Response: <%= code %></p>
+    <p>Referrer: <%= referrer || "" %></p>
+    <% if data %>
+      <h3>Data</h3>
+      <p><%= data.inspect %></p>
+    <% end %>
+  </body>
+</html>
+
