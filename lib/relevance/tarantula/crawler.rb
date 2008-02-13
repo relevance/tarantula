@@ -33,7 +33,7 @@ class Relevance::Tarantula::Crawler
     @max_url_length = 1024
     @successes = []
     @failures = []
-    @handlers = [ResultsHandler.new]
+    @handlers = [Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
     @links_to_crawl = []

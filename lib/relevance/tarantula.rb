@@ -24,7 +24,7 @@ require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'
 require 'relevance/core_extensions/response'
 
-require 'relevance/tarantula/results_handler'
+require 'relevance/tarantula/result'
 require 'relevance/tarantula/invalid_html_handler'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'

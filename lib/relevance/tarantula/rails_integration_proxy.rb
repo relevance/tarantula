@@ -33,7 +33,9 @@ class Relevance::Tarantula::RailsIntegrationProxy
         end
       end
     end
-    response.metaclass do
+    # don't count on metaclass taking block, e.g.
+    # http://relevancellc.com/2008/2/12/how-should-metaclass-work
+    response.metaclass.class_eval do
       include Relevance::CoreExtensions::Response
     end
   end

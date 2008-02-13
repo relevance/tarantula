@@ -20,9 +20,9 @@ describe "Relevance::Tarantula::Result" do
   
 end
 
-describe "Relevance::Tarantula::ResultsHandler" do
+describe "Relevance::Tarantula::Result class methods" do
   before do
-    @rh = Relevance::Tarantula::ResultsHandler.new
+    @rh = Relevance::Tarantula::Result
   end
   
   it "defines HTTP responses that are considered 'successful' when spidering" do
@@ -43,8 +43,9 @@ describe "Relevance::Tarantula::ResultsHandler" do
   
   it "passes arguments through to results object" do
     stub = stub_everything(:code => "500")
-    Relevance::Tarantula::Result.expects(:new).with(false,1,2,3,4,5)
-    @rh.handle(1,2,stub(:code => 3),4,5)
+    response = stub(:code => 200)
+    Relevance::Tarantula::Result.expects(:new).with(false,1,2,response,4,5)
+    @rh.handle(1,2,response,4,5)
   end
 
 end

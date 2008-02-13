@@ -5,7 +5,7 @@ class Relevance::Tarantula::InvalidHtmlHandler
     begin
       body = HTML::Document.new(response.body, true)
     rescue Exception => e
-      Result.new(false, method, url, response.code, referrer, e.message)
+      Result.new(false, method, url, response, referrer, e.message)
     else
       nil
     end
