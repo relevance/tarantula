@@ -1,5 +1,10 @@
 basedir = File.dirname(__FILE__)
 $:.unshift "#{basedir}/../lib"
+gem 'ruby-debug'
+gem 'test-spec'
+gem 'activesupport'
+gem 'actionpack'
+
 require 'rubygems'
 require 'test/spec'
 require 'mocha'
@@ -7,9 +12,7 @@ require 'ruby-debug'
 require 'relevance/tarantula'
 
 # needed for html-scanner, grr
-gem 'activesupport'
 require 'active_support'
-gem 'actionpack'
 require 'action_controller'
 
 class Test::Unit::TestCase 
