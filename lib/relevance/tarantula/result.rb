@@ -19,7 +19,7 @@ Relevance::Tarantula::Result = Struct.new(:success, :method, :url, :response, :r
   class <<self
     attr_accessor :next_number
     def handle(method, url, response, referrer, data = nil)
-      Result.new(successful?(response), method, url, response, referrer, data)
+      self.new(successful?(response), method, url, response, referrer, data)
     end
     def success_codes 
       %w{200 201 302 401}
