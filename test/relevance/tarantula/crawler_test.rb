@@ -18,10 +18,15 @@ describe "Relevance::Tarantula::Crawler rails_integration_test" do
   end
 end
 
-describe 'Relevance::Tarantula::Crawler#tranform_url' do
+describe 'Relevance::Tarantula::Crawler#transform_url' do
+  before {@crawler = Crawler.new}
+  it "de-obfuscates unicode obfuscated urls" do
+    obfuscated_mailto = "&#109;&#97;&#105;&#108;&#116;&#111;&#58;"
+    @crawler.transform_url(obfuscated_mailto).should == "mailto:"
+  end
+  
   it "strips the trailing name portion of a link" do
-    crawler = Crawler.new
-    crawler.transform_url('http://host/path#name').should == 'http://host/path'
+    @crawler.transform_url('http://host/path#name').should == 'http://host/path'
   end
 end
 

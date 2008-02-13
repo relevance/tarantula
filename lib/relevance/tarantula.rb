@@ -3,6 +3,8 @@ require 'forwardable'
 require 'facets/enumerable/injecting'
 require 'facets/kernel/metaclass'
 
+gem 'htmlentities'
+require 'htmlentities'
 
 module Relevance; end
 module Relevance; module CoreExtensions; end; end
@@ -26,6 +28,7 @@ require 'relevance/core_extensions/response'
 
 require 'relevance/tarantula/result'
 require 'relevance/tarantula/invalid_html_handler'
+require 'relevance/tarantula/transform'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'

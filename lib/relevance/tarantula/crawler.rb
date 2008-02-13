@@ -1,8 +1,6 @@
 require 'relevance/tarantula/rails_integration_proxy'
 require 'relevance/tarantula/html_document_handler'
 
-Relevance::Tarantula::Transform = Struct.new(:from, :to)
-
 class Relevance::Tarantula::Crawler
   extend Forwardable
   include Relevance::Tarantula
@@ -47,6 +45,8 @@ class Relevance::Tarantula::Crawler
       [/#.*$/, '']
     ]
     @reporters = []
+    @decoder = HTMLEntities.new
+    
   end
   
   def transform_url_patterns=(patterns)
@@ -139,8 +139,9 @@ class Relevance::Tarantula::Crawler
   
   def transform_url(url)
     return unless url
+    url = @decoder.decode(url)    
     @transform_url_patterns.each do |pattern|
-      url = url.gsub(pattern.from, pattern.to)
+      url = pattern[url]
     end
     url
   end
