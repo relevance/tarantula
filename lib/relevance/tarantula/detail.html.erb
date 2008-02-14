@@ -10,7 +10,7 @@
     <p>Referrer: <%= referrer || "" %></p>
     <% if data %>
       <h3>Data</h3>
-      <p><%= data.inspect %></p>
+      <pre><%= ERB::Util.h data %></pre>
     <% end %>
     <% if body %>
       <h3>Body</h3>

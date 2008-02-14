@@ -99,7 +99,7 @@ class Relevance::Tarantula::Crawler
 
   def handle_form_results(form, response)
     handlers.each do |h| 
-      save_result h.handle(form.method, form.action, response, nil, form.data)
+      save_result h.handle(form.method, form.action, response, nil, form.data.inspect)
     end
   end
   
