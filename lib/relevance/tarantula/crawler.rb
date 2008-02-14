@@ -10,23 +10,6 @@ class Relevance::Tarantula::Crawler
                 :form_signatures_queued, :max_url_length
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
    
-  def self.rails_integration_test(integration_test, options = {})
-    url = options[:url] || "/"
-    t = self.new
-    t.max_url_length = options[:max_url_length] if options[:max_url_length] 
-    t.proxy = RailsIntegrationProxy.new(integration_test)
-    t.handlers << HtmlDocumentHandler.new(t)
-    t.handlers << InvalidHtmlHandler.new
-    t.skip_uri_patterns << /logout$/
-    t.transform_url_patterns += [
-      [/\?\d+$/, ''],                               # strip trailing numbers for assets
-      [/^http:\/\/#{integration_test.host}/, '']    # strip full path down to relative
-    ]
-    t.reporters << Relevance::Tarantula::HtmlReporter
-    t.crawl url
-    t
-  end
-  
   def initialize
     @max_url_length = 1024
     @successes = []

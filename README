@@ -9,13 +9,23 @@ Create a Rails integration test that looks like this, filling in your
 own auth params of course:
 
     def test_with_login
-      get '/sessions/new'
-      assert_response :success
       post '/sessions/create', :password => 'your-pass'
       assert_response :redirect
       assert_redirected_to '/'
       follow_redirect!
-      Relevance::Tarantula::Crawler.rails_integration_test(self)
+      tarantula_crawl(self)
+    end
+
+If you want to set custom options, you can get access to the crawler and set
+properties before running it. For example, this would turn on HTMLTidy.
+
+    def test_with_login
+      post '/sessions/create', :password => 'your-pass'
+      assert_response :redirect
+      assert_redirected_to '/'
+      follow_redirect!
+      t = tarantula_crawler(self)
+      t.handlers << Relevance::Tarantula::TidyHandler.new
     end
 
 If you run the test you will get a report in tmp/tarantula. You can also

@@ -33,3 +33,5 @@ require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'
 require 'relevance/tarantula/html_reporter'
+
+require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']

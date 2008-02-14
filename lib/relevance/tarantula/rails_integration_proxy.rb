@@ -1,7 +1,36 @@
+require 'test/unit'
+
+class Test::Unit::TestCase
+  def tarantula_crawl(integration_test, options = {})
+    url = options[:url] || "/"
+    t = rails_integration_test(integration_test, options)
+    t.crawl url
+  end
+  
+  def tarantula_crawler(integration_test, options = {})
+    Relevance::Tarantula::RailsIntegrationProxy.rails_integration_test(integration_test_options)
+  end
+end
+
 class Relevance::Tarantula::RailsIntegrationProxy
   include Relevance::Tarantula
   extend Forwardable
   attr_accessor :integration_test
+
+  def self.rails_integration_test(integration_test, options = {})
+    t = Crawler.new
+    t.max_url_length = options[:max_url_length] if options[:max_url_length] 
+    t.proxy = RailsIntegrationProxy.new(integration_test)
+    t.handlers << HtmlDocumentHandler.new(t)
+    t.handlers << InvalidHtmlHandler.new
+    t.skip_uri_patterns << /logout$/
+    t.transform_url_patterns += [
+      [/\?\d+$/, ''],                               # strip trailing numbers for assets
+      [/^http:\/\/#{integration_test.host}/, '']    # strip full path down to relative
+    ]
+    t.reporters << Relevance::Tarantula::HtmlReporter
+    t
+  end
 
   def initialize(integration_test)
     @integration_test = integration_test
