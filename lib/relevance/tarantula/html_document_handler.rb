@@ -5,7 +5,9 @@ class Relevance::Tarantula::HtmlDocumentHandler
   def initialize(crawler)
     @crawler = crawler
   end
-  def handle(method, url, response, referrer, data = nil)
+  def handle(result)
+    response = result.response
+    url = result.url
     return unless response.html?
     body = HTML::Document.new response.body
     body.find_all(:tag=>'a').each do |tag|

@@ -1,6 +1,14 @@
-Relevance::Tarantula::Result = Struct.new(:success, :method, :url, :response, :referrer, :data) do
+class Relevance::Tarantula::Result
+  HASHABLE_ATTRS = [:success, :method, :url, :response, :referrer, :data, :description]
+  attr_accessor *HASHABLE_ATTRS
   include Relevance::Tarantula
 
+  def initialize(hash)
+    hash.each do |k,v|
+      raise ArgumentError, k unless HASHABLE_ATTRS.member?(k)
+      self.instance_variable_set("@#{k}", v)
+    end
+  end
   def short_description
     [method,url].join(" ")
   end
@@ -18,8 +26,11 @@ Relevance::Tarantula::Result = Struct.new(:success, :method, :url, :response, :r
   end
   class <<self
     attr_accessor :next_number
-    def handle(method, url, response, referrer, data = nil)
-      self.new(successful?(response), method, url, response, referrer, data)
+    def handle(result)
+      retval = result.dup
+      retval.success = successful?(result.response) 
+      retval.description = "Bad HTTP Response" unless retval.success
+      retval
     end
     def success_codes 
       %w{200 201 302 401}

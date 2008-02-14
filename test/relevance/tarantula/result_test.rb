@@ -1,11 +1,13 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
+include Relevance::Tarantula
 
 describe "Relevance::Tarantula::Result" do
   before do
-    @result = Relevance::Tarantula::Result.new(true, 
-                                              "get", 
-                                              "/some/url?arg1=foo&arg2=bar", 
-                                              nil, nil, nil)
+    @result = Relevance::Tarantula::Result.new(
+        :success => true, 
+        :method => "get", 
+        :url => "/some/url?arg1=foo&arg2=bar"
+    )
   end
   
   it "has a short description" do
@@ -33,20 +35,15 @@ describe "Relevance::Tarantula::Result class methods" do
   
   it "adds successful responses to success collection" do
     stub = stub_everything(:code => "200")
-    @rh.handle(stub, stub, stub, stub).success.should == true
+    @rh.handle(Result.new(:response => stub)).success.should == true
   end
 
   it "adds failed responses to failure collection" do
     stub = stub_everything(:code => "500")
-    @rh.handle(stub, stub, stub, stub).success.should == false
+    result = @rh.handle(Result.new(:response => stub))
+    result.success.should == false
+    result.description.should == "Bad HTTP Response"
   end
   
-  it "passes arguments through to results object" do
-    stub = stub_everything(:code => "500")
-    response = stub(:code => 200)
-    Relevance::Tarantula::Result.expects(:new).with(false,1,2,response,4,5)
-    @rh.handle(1,2,response,4,5)
-  end
-
 end
 

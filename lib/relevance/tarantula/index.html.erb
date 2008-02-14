@@ -30,7 +30,7 @@ table td {
             <td class='heading'>Action</td>
             <td class='heading'>URL</td>
             <td class='heading'>Response</td>
-            <td class='heading'>Detail</td>
+            <td class='heading'>Description</td>
             <td class='heading'>Referrer</td>
           </tr>
         </thead>
@@ -40,7 +40,7 @@ table td {
             <td><%= result.method %></td>
             <td><a href="<%= result.file_name%>"><%= result.url.ellipsize(40) %></a></td>
             <td><%= result.code %></td>
-            <td><%= result.data.ellipsize(10) %></td>
+            <td><%= result.description %></td>
             <td><%= result.referrer.ellipsize(20) %></td>
           </tr>
           <% end %>

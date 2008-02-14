@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
+include Relevance::Tarantula
 
 if defined?(Tidy) && ENV['TIDY_PATH']
   describe "Relevance::Tarantula::TidyHandler default" do
@@ -14,14 +15,15 @@ if defined?(Tidy) && ENV['TIDY_PATH']
   <body></body>
 </html>
 BODY
-      @handler.handle(nil, nil, response, nil).should == nil
+      @handler.handle(Result.new(:response => response)).should == nil
     end
 
     it "rejects a document with errors" do
       response = stub(:html? => true, :body => "<hotml>", :code => 200)
-      result = @handler.handle(nil, nil, response, nil)
+      result = @handler.handle(Result.new(:response => response))
       result.should.not.be nil
       result.data.should =~ /Error: <hotml> is not recognized!/
+      result.description.should == "Bad HTML (Tidy)"
     end
 
     it "rejects a document with warnings" do
@@ -30,7 +32,7 @@ BODY
 <html>
 </html>
 BODY
-      result = @handler.handle(nil, nil, response, nil)
+      result = @handler.handle(Result.new(:response => response))
       result.should.not.be nil
       result.data.should =~ /Warning: inserting missing 'title' element/
     end
@@ -48,7 +50,7 @@ BODY
 <html>
 </html>
 BODY
-      result = @handler.handle(nil, nil, response, nil)
+      result = @handler.handle(Result.new(:response => response))
       result.should.be nil
     end
   end

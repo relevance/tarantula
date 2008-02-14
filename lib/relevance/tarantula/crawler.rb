@@ -76,7 +76,10 @@ class Relevance::Tarantula::Crawler
   def handle_link_results(link, response)
     handlers.each do |h| 
       begin
-        save_result h.handle("get", link, response, referrers[link])
+        save_result h.handle(Result.new(:method => "get", 
+                                       :url => link, 
+                                       :response => response, 
+                                       :referrer => referrers[link]).freeze)
       rescue Exception => e
         log "error handling #{link} #{e.message}"
         # TODO: pass to results
@@ -99,7 +102,10 @@ class Relevance::Tarantula::Crawler
 
   def handle_form_results(form, response)
     handlers.each do |h| 
-      save_result h.handle(form.method, form.action, response, nil, form.data.inspect)
+      save_result h.handle(Result.new(:method => form.method, 
+                                     :url => form.action, 
+                                     :response => response, 
+                                     :data => form.data.inspect).freeze)
     end
   end
   

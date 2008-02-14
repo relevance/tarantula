@@ -14,13 +14,19 @@ if defined? Tidy
     def initialize(options = {})
       @options = {:show_warnings=>true}.merge(options)
     end
-    def handle(method, url, response, referrer, data = nil)
+    def handle(result)
+      response = result.response
       return unless response.html?
       tidy = Tidy.open(@options) do |tidy|
         xml = tidy.clean(response.body)
         tidy
       end
-      Result.new(false, method, url, response, referrer, tidy.errors.inspect) unless tidy.errors.blank?
+      unless tidy.errors.blank?
+        error_result = result.dup
+        error_result.description = "Bad HTML (Tidy)"
+        error_result.data = tidy.errors.inspect
+        error_result
+      end
     end
   end
 end
