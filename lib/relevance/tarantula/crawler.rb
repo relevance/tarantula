@@ -7,14 +7,14 @@ class Relevance::Tarantula::Crawler
   
   attr_accessor :proxy, :handlers, :skip_uri_patterns,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
-                :form_signatures_queued, :max_url_length
+                :form_signatures_queued, :max_url_length, :response_code_handler
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
    
   def initialize
     @max_url_length = 1024
     @successes = []
     @failures = []
-    @handlers = [Result]
+    @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
     @links_to_crawl = []
@@ -30,6 +30,11 @@ class Relevance::Tarantula::Crawler
     @reporters = []
     @decoder = HTMLEntities.new
     
+  end
+  
+  def method_missing(meth, *args)
+    super unless Result::ALLOW_NNN_FOR =~ meth.to_s
+    @response_code_handler.send(meth, *args)
   end
   
   def transform_url_patterns=(patterns)

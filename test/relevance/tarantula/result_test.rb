@@ -47,3 +47,36 @@ describe "Relevance::Tarantula::Result class methods" do
   
 end
 
+describe "Relevance::Tarantula::Result allowed errors" do
+  before do
+    Result.allow_errors_for = {}
+  end
+  
+  it "defaults to *not* skip errors" do
+    Result.can_skip_error?(stub(:code => 404)).should == false
+  end
+
+  it "can skip errors matching code and url" do
+    Result.allow_errors_for = {404 => [/some_url/]}
+    Result.can_skip_error?(stub(:code => 404, :url => "this_is_some_url")).should == true
+  end
+
+  it "does not skip errors matching code only" do
+    Result.allow_errors_for = {404 => [/some_other_url/]}
+    Result.can_skip_error?(stub(:code => 404, :url => "this_is_some_url")).should == false
+  end
+  
+  it "users allow_nnn_for syntax to specify allowed errors" do
+    Result.allow_404_for(/this_url/)
+    Result.allow_errors_for.should == {404 => [/this_url/]}
+    Result.allow_404_for(/another_url/)
+    Result.allow_errors_for.should == {404 => [/this_url/, /another_url/]}
+  end
+  
+  it "chains to super method missing" do
+    lambda{Result.allow_xxx_for}.should.raise(NoMethodError)
+  end
+  
+end
+
+

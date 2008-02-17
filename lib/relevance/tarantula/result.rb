@@ -24,22 +24,38 @@ class Relevance::Tarantula::Result
   def body
     response && response.body
   end
+  ALLOW_NNN_FOR = /^allow_(\d\d\d)_for$/
   class <<self
     attr_accessor :next_number
     def handle(result)
       retval = result.dup
-      retval.success = successful?(result.response) 
+      retval.success = successful?(result.response) || can_skip_error?(result)
       retval.description = "Bad HTTP Response" unless retval.success
       retval
     end
     def success_codes 
       %w{200 201 302 401}
     end
-
+    
+    # allow_errors_for is a hash 
+    #  k=error code,
+    #  v=array of matchers for urls that can skip said error
+    attr_accessor :allow_errors_for
+    def can_skip_error?(result)
+      coll = allow_errors_for[result.code]
+      return false unless coll
+      coll.any? {|item| item === result.url}
+    end
     def successful?(response)
       success_codes.member?(response.code)
     end
+    def method_missing(meth, *args)
+      super unless ALLOW_NNN_FOR =~ meth.to_s
+      error = $1.to_i
+      (allow_errors_for[error] ||= []).push(*args)
+    end
   end
+  self.allow_errors_for = {}
   self.next_number = 0
   
   

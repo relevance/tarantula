@@ -166,3 +166,21 @@ describe 'Relevance::Tarantula::Crawler' do
   
 end
 
+describe "allow_nnn_for" do
+  it "installs result as a response_code_handler" do
+    crawler = Crawler.new
+    crawler.response_code_handler.should == Result
+  end
+  
+  it "delegates to the response_code_handler" do
+    crawler = Crawler.new
+    (response_code_handler = mock).expects(:allow_404_for).with(:stub)
+    crawler.response_code_handler = response_code_handler
+    crawler.allow_404_for(:stub)
+  end
+  
+  it "chains up to super for method_missing" do
+    crawler = Crawler.new
+    lambda{crawler.foo}.should.raise(NoMethodError)
+  end
+end
