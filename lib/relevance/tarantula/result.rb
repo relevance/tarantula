@@ -51,8 +51,7 @@ class Relevance::Tarantula::Result
     end
     def method_missing(meth, *args)
       super unless ALLOW_NNN_FOR =~ meth.to_s
-      error = $1.to_i
-      (allow_errors_for[error] ||= []).push(*args)
+      (allow_errors_for[$1] ||= []).push(*args)
     end
   end
   self.allow_errors_for = {}
