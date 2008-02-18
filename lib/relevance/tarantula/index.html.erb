@@ -1,37 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <title>Tarantula report</title>
-    <style type="text/css">
-table {
-	border: 1px solid;
-	border-collapse: collapse;
-}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-table thead {
-	background-color: #DDDDDD;
-	font-weight: bold;
-}
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <title>Tarantula report</title>
+	
+	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
+</head>
 
-table td {
-	padding: 0.4em 1em 0.4em 1em;
-	border: 1px solid;
-}
-    </style>
-  </head>
-  <body>
+	<body id="top">
+	
+	<div id="page" class="column">
     <h1>Tarantula report</h1>
     <p>Generated on <%= Time.now %></p>
     <% %w{failures successes}.each do |result_type| %>
-      <h2><%= result_type.capitalize %></h2>
       <table>
+        <caption><%= result_type.capitalize %></caption>
         <thead>
           <tr>
-            <td class='heading'>Action</td>
-            <td class='heading'>URL</td>
-            <td class='heading'>Response</td>
-            <td class='heading'>Description</td>
-            <td class='heading'>Referrer</td>
+            <th>Action</th>
+            <th>URL</th>
+            <th>Response</th>
+            <th>Description</th>
+            <th>Referrer</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +39,22 @@ table td {
         </tbody>
       </table>
     <% end %>
-  </body>
+  </div>
+	<div id="sidebar" class="column">
+	<!-- sidebar -->
+	<h2>Tarantula</h2>
+	
+	<p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
+	
+	</div>
+	
+	<a href="http://opensource.thinkrelevance.com"><div id="footer">
+	<!-- footer -->
+	&nbsp;
+	</div></a>
+	
+	</body>
+
 </html>
+
 

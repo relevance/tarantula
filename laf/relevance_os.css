@@ -1,0 +1,163 @@
+body {
+	background: #acad9d url(images/background.jpg) no-repeat top left;
+	
+}
+
+#footer {		
+
+	background: #22211d url(images/relevance-os-logo.gif) no-repeat 98% .85em;
+	height: 4em;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	border-top: 2px solid #e5e6dc;
+}
+
+#page {
+	padding: 1em;
+	margin-bottom: 4em;
+	width: 70%;
+	float: left;
+}
+
+#sidebar {
+	width: 20%;
+	margin-top: 4em;
+	padding: 1em;
+	border-left: 1px dotted #999;
+	
+	float: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Lucida Grande", Arial, Helvetica, sans-serif ;
+	margin: .25em;
+	padding: 0;
+}
+
+h1 s{
+	color: #29322d;		
+}
+
+h2 {
+	color: #0f70ac;
+}
+
+h3 {
+	color: #ff5a00;
+}
+
+h4, h5, h6 {
+	margin-left: -.5%;		
+	
+}
+
+h5 {
+	font-size: 90%;
+}
+
+h6 {
+	font-size: 80%;
+}
+
+p, td, th, caption {
+	font-family: Arial, Helvetica, sans-serif ;
+	font-size: 87.5%;
+	padding: .25em;
+	margin: 0;
+	color: #29322d;		
+}
+
+hr {
+	border: none 0; 
+		border-top: 1px solid #758771;
+		border-bottom: 1px solid #29322d;
+		width: 80%;
+		height: 2px;
+	
+		text-align: center;
+}
+
+
+
+table {
+	width: 100%;
+	border-spacing: 0;
+	border-left: 1px solid #29322d;
+	border-right: 1px solid #29322d;
+	border-bottom: 1px solid #29322d;
+}
+	
+table thead th {
+	color: #acad9d ;
+}
+
+table tfoot td {
+	border-top: 1px solid #29322d;
+	background: #758771;
+	font-weight: 900;
+	font-size: 80%;
+}
+
+tbody td, tbody tr.normal td {
+	background: #8D907B;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #52594C;
+	border-top: 1px solid #52594C;
+	padding: 2px 3px 3px 4px
+}
+
+
+tbody tr.alt td {
+	background: #747968;
+	border-bottom: none;
+	border-left: none;
+	border-right: 1px solid #52594C;
+	border-top: 1px solid #52594C;
+	padding: 2px 3px 3px 4px
+}
+
+
+table thead th {
+	background: #29322d;
+	border-top: 1px solid #414d47;	
+	border-right: 1px solid #414d47;
+	border-left: 1px solid #29322d;	
+	border-bottom: #202a25;
+	text-align: left;
+	font-size: 85%;
+}
+
+table tbody td {
+	border-bottom: 1px solid #202a25;
+	border-right: 1px solid #202a25;
+	border-left: 1px solid #202a25;
+}
+
+caption {
+	padding-top: 1em;
+	text-align: left;
+	font-weight: 900;
+	color: #000;
+	font-size: 85%;
+}
+
+
+
+.column:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.column {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .column {height: 1%;}
+.column {display: block;}
+/* End hide from IE-mac */
+
+</style>

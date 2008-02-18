@@ -10,6 +10,9 @@ module Relevance; end
 module Relevance; module CoreExtensions; end; end
 module Relevance
   module Tarantula 
+    def tarantula_home
+      File.expand_path(File.join(File.dirname(__FILE__), "../.."))
+    end
     def log(msg)
       puts msg if verbose
     end

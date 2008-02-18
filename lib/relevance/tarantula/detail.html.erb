@@ -1,9 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <title>Tarantula report detail <%= short_description %></title>
-  </head>
-  <body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <title>Tarantula report detail <%= short_description %></title>
+	
+	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
+</head>
+
+	<body id="top">
+	
+	<div id="page" class="column">
     <h1>Tarantula report detail <%= short_description %></h1>
     <p>Generated on <%= Time.now %> (<a href="index.html">Top</a>)</p>
     <p>Response: <%= code %></p>
@@ -16,6 +24,22 @@
       <h3>Body</h3>
       <pre><%= ERB::Util.h body %></pre>
     <% end %>
-  </body>
+  </div>
+	<div id="sidebar" class="column">
+	<!-- sidebar -->
+	<h2>Tarantula</h2>
+	
+	<p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
+	
+	</div>
+	
+	<a href="http://opensource.thinkrelevance.com"><div id="footer">
+	<!-- footer -->
+	&nbsp;
+	</div></a>
+	
+	</body>
+
 </html>
+
 
