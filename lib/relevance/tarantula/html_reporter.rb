@@ -32,6 +32,10 @@ class Relevance::Tarantula::HtmlReporter
     Dir.glob("#{tarantula_home}/laf/images/*.{jpg,gif,png}").each do |file|
       FileUtils.cp(file, File.join(basedir, "images")) 
     end
+    FileUtils.mkdir_p(File.join(basedir, "javascripts"))
+    Dir.glob("#{tarantula_home}/laf/javascripts/*.js").each do |file|
+      FileUtils.cp(file, File.join(basedir, "javascripts")) 
+    end
   end
   
   def create_index

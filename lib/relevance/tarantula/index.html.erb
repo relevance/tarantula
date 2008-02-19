@@ -5,7 +5,9 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
   <title>Tarantula report</title>
-	
+	<script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="javascripts/tarantula.js"></script>
 	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
 </head>
 
@@ -15,7 +17,7 @@
     <h1>Tarantula report</h1>
     <p>Generated on <%= Time.now %></p>
     <% %w{failures successes}.each do |result_type| %>
-      <table>
+      <table class="tablesorter">
         <caption><%= result_type.capitalize %></caption>
         <thead>
           <tr>

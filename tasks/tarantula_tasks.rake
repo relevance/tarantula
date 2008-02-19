@@ -1,7 +1,8 @@
 namespace :tarantula do
 
   desc 'Run tarantula tests and (Mac only) open results in your browser.'
-  task :test do 
+  task :test do
+    rm_rf "tmp/tarantula" 
     task = Rake::TestTask.new(:tarantula_test) do |t|
       t.libs << 'test'
       t.pattern = 'test/tarantula/**/*_test.rb'
@@ -13,9 +14,11 @@ namespace :tarantula do
     rescue RuntimeError => e
       puts e.message
     end
-    if PLATFORM['darwin']
-      Dir.glob("tmp/tarantula/**/index.html") do |file|
+    Dir.glob("tmp/tarantula/**/index.html") do |file|
+      if PLATFORM['darwin']
         system("open #{file}") 
+      else
+        puts "You can view tarantula results at #{file}"
       end
     end
   end

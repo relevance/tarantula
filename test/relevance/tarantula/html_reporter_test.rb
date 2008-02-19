@@ -3,16 +3,19 @@ require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 describe "Relevance::Tarantula::HtmlReporter file output" do
   include Relevance::Tarantula
   before do
+    FileUtils.rm_rf(test_output_dir)
     FileUtils.mkdir_p(test_output_dir)
     Relevance::Tarantula::Result.next_number = 0
-    @result = Relevance::Tarantula::Result.new(
+    @results = (1..10).map do |index|
+      Relevance::Tarantula::Result.new(
         :success => true, 
         :method => "get", 
-        :url => "/some-fairly-long-url/with/lots/of/trailing/goo", 
+        :url => "/widgets/#{index}", 
         :response => stub(:code => 200, :body => "<h1>header</h1>\n<p>text</p>"), 
-        :referrer => "/some-referrer", 
+        :referrer => "/random/#{rand(100)}", 
         :data => "{:param1 => :value, :param2 => :another_value}"
-    )
+      )
+    end
     @index = File.join(test_output_dir, "index.html")
     FileUtils.rm_f @index
     @detail = File.join(test_output_dir, "1.html")
@@ -20,7 +23,7 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
   end
   
   it "creates a report based on tarantula results" do
-    results = stub_everything(:successes => [@result], :failures => [@result])
+    results = stub_everything(:successes => @results, :failures => @results)
     # ERB::Util.expects(:h).with(:foo).returns(:data_stub)
     Relevance::Tarantula::HtmlReporter.report(test_output_dir, results)
     File.should.exist @index
@@ -32,7 +35,7 @@ end
 describe "Relevance::Tarantula::HtmlReporter output processing" do
   include Relevance::Tarantula
   def turn_off_report_output
-    Relevance::Tarantula::HtmlReporter.stubs(:output)
+    Relevance::Tarantula::HtmlReporter.any_instance.stubs(:output)
   end
   
   before do
