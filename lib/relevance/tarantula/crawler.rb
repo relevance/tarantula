@@ -91,15 +91,19 @@ class Relevance::Tarantula::Crawler
       end
     end
   end
+
+  def crawl_form(form)
+    response = proxy.send(form.method, form.action, form.data)
+    log "Response #{response.code} for #{form}"
+    response
+  rescue ActiveRecord::RecordNotFound => e
+    log "Skipping #{form.action}, presumed ok that record is missing"
+    Relevance::Tarantula::Response.new(:code => "404", :body => e.message, :content_type => "text/plain")
+  end
   
   def crawl_queued_forms
     while (form = @forms_to_crawl.pop)
-      begin
-        response = proxy.send(form.method, form.action, form.data)
-      rescue ActiveRecord::RecordNotFound
-        log "Skipping #{form.action}, presumed ok that record is missing"
-      end
-      log "Response #{response.code} for #{form}"
+      response = crawl_form(form)
       handle_form_results(form, response)
       blip
     end

@@ -5,10 +5,12 @@ gem 'ruby-debug'
 gem 'test-spec'
 gem 'activesupport'
 gem 'actionpack'
+gem 'activerecord'
 
 require 'test/spec'
 require 'mocha'
 require 'ruby-debug'
+require 'activerecord'
 require 'relevance/tarantula'
 
 # needed for html-scanner, grr

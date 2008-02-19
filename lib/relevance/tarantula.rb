@@ -30,6 +30,7 @@ require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'
 require 'relevance/core_extensions/response'
 
+require 'relevance/tarantula/response'
 require 'relevance/tarantula/result'
 require 'relevance/tarantula/invalid_html_handler'
 require 'relevance/tarantula/transform'
