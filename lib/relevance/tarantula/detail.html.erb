@@ -24,6 +24,10 @@
       <h3>Body</h3>
       <pre><%= ERB::Util.h body %></pre>
     <% end %>
+    <% if log %>
+      <h3>Log</h3>
+      <pre><%= ERB::Util.h log %></pre>
+    <% end %>
   </div>
 	<div id="sidebar" class="column">
 	<!-- sidebar -->

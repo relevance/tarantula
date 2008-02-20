@@ -32,6 +32,7 @@ require 'relevance/core_extensions/response'
 
 require 'relevance/tarantula/response'
 require 'relevance/tarantula/result'
+require 'relevance/tarantula/log_grabber'
 require 'relevance/tarantula/invalid_html_handler'
 require 'relevance/tarantula/transform'
 require 'relevance/tarantula/crawler'

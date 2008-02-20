@@ -13,6 +13,7 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
         :url => "/widgets/#{index}", 
         :response => stub(:code => 200, :body => "<h1>header</h1>\n<p>text</p>"), 
         :referrer => "/random/#{rand(100)}", 
+        :log => "sample log value",
         :data => "{:param1 => :value, :param2 => :another_value}"
       )
     end

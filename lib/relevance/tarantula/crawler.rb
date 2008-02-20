@@ -5,7 +5,7 @@ class Relevance::Tarantula::Crawler
   extend Forwardable
   include Relevance::Tarantula
   
-  attr_accessor :proxy, :handlers, :skip_uri_patterns,
+  attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
                 :form_signatures_queued, :max_url_length, :response_code_handler
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
@@ -84,6 +84,7 @@ class Relevance::Tarantula::Crawler
         save_result h.handle(Result.new(:method => "get", 
                                        :url => link, 
                                        :response => response, 
+                                       :log => grab_log!,
                                        :referrer => referrers[link]).freeze)
       rescue Exception => e
         log "error handling #{link} #{e.message}"
@@ -108,12 +109,17 @@ class Relevance::Tarantula::Crawler
       blip
     end
   end  
-
+  
+  def grab_log!
+    @log_grabber && @log_grabber.grab!
+  end
+  
   def handle_form_results(form, response)
     handlers.each do |h| 
       save_result h.handle(Result.new(:method => form.method, 
                                      :url => form.action, 
                                      :response => response, 
+                                     :log => grab_log!,
                                      :data => form.data.inspect).freeze)
     end
   end

@@ -13,6 +13,19 @@ describe 'Relevance::Tarantula::Crawler#transform_url' do
   end
 end
 
+describe 'Relevance::Tarantula::Crawler log grabbing' do
+  it "returns nil if no grabber is specified" do
+    crawler = Crawler.new
+    crawler.grab_log!.should == nil
+  end
+  
+  it "returns grabber.grab if grabber is specified" do
+    crawler = Crawler.new
+    crawler.log_grabber = stub(:grab! => "fake log entry")
+    crawler.grab_log!.should == "fake log entry"
+  end
+end
+
 describe 'Relevance::Tarantula::Crawler interruption' do
   it 'catches interruption and writes the partial report' do
     crawler = Crawler.new

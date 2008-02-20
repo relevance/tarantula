@@ -1,5 +1,5 @@
 class Relevance::Tarantula::Result
-  HASHABLE_ATTRS = [:success, :method, :url, :response, :referrer, :data, :description]
+  HASHABLE_ATTRS = [:success, :method, :url, :response, :referrer, :data, :description, :log]
   attr_accessor *HASHABLE_ATTRS
   include Relevance::Tarantula
 
