@@ -4,12 +4,21 @@ class Relevance::Tarantula::HtmlDocumentHandler
   
   def initialize(crawler)
     @crawler = crawler
+  end              
+  # HTML::Document shouts to stderr when it sees ugly HTML
+  # We don't want this -- the InvalidHtmlHandler will deal with it
+  def html_doc_without_stderr_noise(html)  
+    body = nil
+    Recording.stderr do
+      body = HTML::Document.new html
+    end       
+    body
   end
   def handle(result)
     response = result.response
     url = result.url
     return unless response.html?
-    body = HTML::Document.new response.body
+    body = html_doc_without_stderr_noise(response.body)
     body.find_all(:tag=>'a').each do |tag|
       queue_link(tag['href'], url)
     end

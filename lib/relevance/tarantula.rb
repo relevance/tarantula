@@ -21,7 +21,7 @@ module Relevance
     end
     def verbose
       ENV["VERBOSE"]
-    end
+    end    
   end
 end
 
@@ -30,6 +30,7 @@ require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'
 require 'relevance/core_extensions/response'
 
+require 'relevance/tarantula/recording'
 require 'relevance/tarantula/response'
 require 'relevance/tarantula/result'
 require 'relevance/tarantula/log_grabber'

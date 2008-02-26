@@ -5,6 +5,14 @@ describe "Relevance::Tarantula::InvalidHtmlHandler" do
   before do
     @handler = Relevance::Tarantula::InvalidHtmlHandler.new
   end
+    
+  it "does not write HTML Scanner warnings to the console" do
+    bad_html = "<html><div></form></html>"    
+    err = Recording.stderr do
+      @handler.handle(Result.new(:response => stub(:html? => true, :body => bad_html)))
+    end
+    err.should == ""
+  end
   
   it "rejects unclosed html" do
     response = stub(:html? => true, :body => '<html><div></html>', :code => 200)

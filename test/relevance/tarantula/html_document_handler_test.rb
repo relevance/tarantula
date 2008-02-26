@@ -6,6 +6,14 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
     @handler = Relevance::Tarantula::HtmlDocumentHandler.new(nil)
   end
   
+  it "does not write HTML Scanner warnings to the console" do
+    bad_html = "<html><div></form></html>"    
+    err = Recording.stderr do
+      @handler.handle(Result.new(:response => stub(:html? => true, :body => bad_html)))
+    end
+    err.should == ""
+  end
+  
   it "ignores non-html" do
     @handler.expects(:queue_link).never
     @handler.handle(Result.new(:response => stub(:html? => false, :body => '<a href="/foo">foo</a>')))
