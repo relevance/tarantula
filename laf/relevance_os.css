@@ -1,6 +1,60 @@
+/* RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* RESET APPEND */
+
+body {
+	font-size: 100.1%;
+}
+
+/* LAYOUT */
 body {
 	background: #acad9d url(images/background.jpg) no-repeat top left;
-	
+
 }
 
 #footer {		
@@ -14,7 +68,7 @@ body {
 }
 
 #page {
-	padding: 1em;
+	padding: 1.75em;
 	margin-bottom: 4em;
 	width: 70%;
 	float: left;
@@ -35,15 +89,18 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0;
 }
 
-h1 s{
+h1 {
+	font-size: 160%;
 	color: #29322d;		
 }
 
 h2 {
+	font-size: 140%;
 	color: #0f70ac;
 }
 
 h3 {
+	font-size: 120%;
 	color: #ff5a00;
 }
 
@@ -60,13 +117,30 @@ h6 {
 	font-size: 80%;
 }
 
-p, td, th, caption {
+p, td, th, caption, form, textarea, input {
 	font-family: Arial, Helvetica, sans-serif ;
-	font-size: 87.5%;
+	font-size: 87.2%;
 	padding: .25em;
 	margin: 0;
 	color: #29322d;		
 }
+
+a:link {
+	color:  #0f70ac
+}   
+
+a:visited {
+	color: #29322d
+}  
+
+a:hover {
+	text-decoration: none; 
+	color: #0066ff;
+}   
+
+a:active {
+	color:  #0f70ac
+}   
 
 hr {
 	border: none 0; 
@@ -84,55 +158,69 @@ table {
 	width: 100%;
 	border-spacing: 0;
 	border-left: 1px solid #29322d;
+	/*
+	border-left: 1px solid #29322d;
 	border-right: 1px solid #29322d;
 	border-bottom: 1px solid #29322d;
+	*/
 }
-	
+
 table thead th {
 	color: #acad9d ;
-}
-
-table tfoot td {
-	border-top: 1px solid #29322d;
-	background: #758771;
-	font-weight: 900;
-	font-size: 80%;
-}
-
-tbody td, tbody tr.normal td {
-	background: #8D907B;
-	border-bottom: none;
-	border-left: none;
-	border-right: 1px solid #52594C;
-	border-top: 1px solid #52594C;
-	padding: 2px 3px 3px 4px
-}
-
-
-tbody tr.alt td {
-	background: #747968;
-	border-bottom: none;
-	border-left: none;
-	border-right: 1px solid #52594C;
-	border-top: 1px solid #52594C;
-	padding: 2px 3px 3px 4px
-}
-
-
-table thead th {
 	background: #29322d;
-	border-top: 1px solid #414d47;	
-	border-right: 1px solid #414d47;
-	border-left: 1px solid #29322d;	
-	border-bottom: #202a25;
+	border: none;
+	border-bottom: 1px solid #202a25;
 	text-align: left;
 	font-size: 85%;
 }
 
+
+/* sortable */
+
+table thead th.header {
+	cursor: pointer !important;
+	background:  #29322d url(images/table-sort.gif) no-repeat 97% 2px;
+}
+
+table thead th.headerSortDown {
+	background-position: 97% -58px;
+}
+
+table thead th.headerSortUp {
+		background-position: 97% -118px;
+}
+
+table tfoot td {
+	
+	border-bottom: 1px solid #29322d;
+	border-right: 1px solid #29322d;
+	background: #758771;
+	font-weight: 900;
+	font-size: 80%;
+	
+}
+
+tbody td, tbody tr.normal td {
+	background: #d7d7c7;
+	padding: 2px 3px 3px 4px
+}
+
 table tbody td {
-	border-bottom: 1px solid #202a25;
-	border-right: 1px solid #202a25;
-	border-left: 1px solid #202a25;
+ /* border: none; */
+	border-right: 1px solid #29322d;
+	border-bottom: 1px solid #29322d;
+}
+
+table body tr td {
+	border: none;
+}
+
+tbody tr.odd td {
+	background: #cacabb;
+}
+
+tbody td.center {
+	text-align: center;
 }
 
 caption {
@@ -144,7 +232,81 @@ caption {
 }
 
 
+/* FORMS */
+form legend {
+	font-size: 120%;
+	font-weight: 900;
+}
 
+form {
+	margin: .5em;
+}
+
+form fieldset ul li {
+	list-style: none;
+}
+
+form fieldset ul.messages {
+	margin: 1.5% 2.5%;
+	font-weight: 900;
+}
+
+form fieldset ul li {
+	margin: 0.5%;
+}
+
+form fieldset ul.messages > .error {
+	color: #cc3333;
+}
+
+form fieldset ul.messages > .warning {
+	color: #333300;
+}
+
+form fieldset ul.messages > .notice {
+	color: #0f70ac;
+}
+
+input.small {
+	width: 8em;
+}
+
+input[type="text"], input.medium {
+	width: 12em;
+}
+
+input.large {
+	width: 14em;
+}
+
+input.xxlarge {
+	width: 18em;
+}
+
+textarea {
+	width: 20em;
+	height: 8em;
+}
+
+form label {
+	padding-top: .5em;
+	font-size: 87.5%;
+	display: block;
+	font-weight: 900;
+}
+
+input, textarea {
+	border: 1px solid #29322d;
+	background-color:#d7d7c7;
+}
+
+input[type="submit"] {
+	margin: .75em;
+	background-color: #758771;
+	font-weight: 900;
+}
+
+/* UTILITY */
 .column:after {
     content: "."; 
     display: block; 
@@ -160,15 +322,3 @@ caption {
 .column {display: block;}
 /* End hide from IE-mac */
 
-table.tablesorter thead tr .header {
-	background-image: url(images/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-}
-table.tablesorter thead tr .headerSortUp {
-	background-image: url(images/asc.gif);
-}
-table.tablesorter thead tr .headerSortDown {
-	background-image: url(images/desc.gif);
-}
