@@ -5,7 +5,9 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
   <title>Tarantula report detail <%= short_description %></title>
-	
+	<script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="javascripts/tarantula.js"></script>
 	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
 </head>
 
@@ -17,16 +19,16 @@
     <p>Response: <%= code %></p>
     <p>Referrer: <%= referrer || "" %></p>
     <% if data %>
-      <h3>Data</h3>
-      <pre><%= ERB::Util.h data %></pre>
+      <h3>Data</h3> 
+      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(data) %>
     <% end %>
     <% if body %>
       <h3>Body</h3>
-      <pre><%= ERB::Util.h body %></pre>
+      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(body) %>
     <% end %>
     <% if log %>
-      <h3>Log</h3>
-      <pre><%= ERB::Util.h log %></pre>
+      <h3>Log</h3>    
+      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(log) %>
     <% end %>
   </div>
 	<div id="sidebar" class="column">

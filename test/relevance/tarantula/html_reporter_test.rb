@@ -51,10 +51,8 @@ describe "Relevance::Tarantula::HtmlReporter output processing" do
     )
   end
 
-  it "html escapes the data and body sections" do
-    @results = stub_everything(:successes => [], :failures => [@result])
-    ERB::Util.expects(:h).with("stub_data")
-    ERB::Util.expects(:h).with("stub_body")
-    Relevance::Tarantula::HtmlReporter.report(test_output_dir, @results)
+  it "can wrap text in a line number table" do
+    html = Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table("Line 1\nLine 2")
+    html.should == "<table class=\"tablesorter\"><thead><tr><th>Line \#</th><th>Line</th></tr></thead><tr><td>1</td><td>Line 1</td></tr><tr><td>2</td><td>Line 2</td></tr></table>"
   end
 end

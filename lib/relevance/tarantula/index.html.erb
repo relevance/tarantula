@@ -18,7 +18,7 @@
     <p>Generated on <%= Time.now %></p>
     <% %w{failures successes}.each do |result_type| %>
       <table class="tablesorter">
-        <caption><%= result_type.capitalize %></caption>
+        <caption><%= result_type.capitalize %> (<%= send(result_type).size %>)</caption>
         <thead>
           <tr>
             <th>Action</th>
@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <% send(result_type).sort_by(&:url).each do |result| %>
+          <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each do |result| %>
           <tr>
             <td><%= result.method %></td>
             <td><a href="<%= result.file_name%>"><%= result.url.ellipsize(40) %></a></td>

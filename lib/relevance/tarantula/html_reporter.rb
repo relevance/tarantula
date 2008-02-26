@@ -5,6 +5,25 @@ class Relevance::Tarantula::HtmlReporter
     self.new(basedir, results)
   end
 
+  def self.wrap_in_line_number_table(text)
+    x = Builder::XmlMarkup.new
+    x.table(:class => "tablesorter") do      
+      x.thead do
+        x.tr do
+          x.th("Line \#")
+          x.th("Line")
+        end
+      end
+      text.split("\n").each_with_index do |line, index|
+        x.tr do
+          x.td(index+1)
+          x.td(line)
+        end
+      end   
+    end
+    x.target!
+  end
+
   def initialize(basedir, results)
     @basedir = basedir
     @results = results
@@ -21,7 +40,7 @@ class Relevance::Tarantula::HtmlReporter
     File.open(File.join(basedir, name), "w") do |file|
       file.write body
     end
-  end
+  end      
   
   def copy_styles
     # not using cp_r because it picks up .svn crap
