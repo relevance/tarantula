@@ -11,6 +11,13 @@ Tarantula is a big fuzzy spider. It crawls your Rails application, fuzzing data 
 script/plugin install http://opensource.thinkrelevance.com/svn/tarantula/trunk tarantula
 }}}
 
+== Dependencies ==
+
+{{{
+gem install htmlentities
+gem install facets
+}}}
+
 == Usage ==
 
 Create a Rails integration test that looks like this, filling in your own auth params. You will probably want to include all fixtures.
