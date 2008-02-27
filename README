@@ -23,6 +23,10 @@ gem install facets
 Create a Rails integration test that looks like this, filling in your own auth params. You will probably want to include all fixtures.
 
 {{{
+# somewhere
+require 'relevance/tarantula'
+
+# in your test
 def test_with_login
   post '/sessions/create', :password => 'your-pass'
   assert_response :redirect
@@ -51,7 +55,7 @@ Assuming your project is at /work/project/:
 {{{
 #!sh
 cd /work/project
-rake test:tarantula
+rake tarantula:test
 }}}
 
 == Verbose Mode ==
