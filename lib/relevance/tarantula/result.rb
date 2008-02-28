@@ -1,5 +1,6 @@
 class Relevance::Tarantula::Result
   HASHABLE_ATTRS = [:success, :method, :url, :response, :referrer, :data, :description, :log]
+  DEFAULT_LOCALHOST = "http://localhost:3000"
   attr_accessor *HASHABLE_ATTRS
   include Relevance::Tarantula
 
@@ -23,6 +24,9 @@ class Relevance::Tarantula::Result
   end
   def body
     response && response.body
+  end
+  def full_url
+    "#{DEFAULT_LOCALHOST}#{url}"
   end
   ALLOW_NNN_FOR = /^allow_(\d\d\d)_for$/
   class <<self

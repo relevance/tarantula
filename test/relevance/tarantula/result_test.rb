@@ -20,6 +20,10 @@ describe "Relevance::Tarantula::Result" do
     @result.class.next_number.should == 1
   end
   
+  it "has link to the url at localhost" do
+    @result.full_url.should == "http://localhost:3000/some/url?arg1=foo&arg2=bar"
+  end
+  
 end
 
 describe "Relevance::Tarantula::Result class methods" do

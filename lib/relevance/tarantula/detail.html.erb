@@ -16,6 +16,7 @@
 	<div id="page" class="column">
     <h1>Tarantula report detail <%= short_description %></h1>
     <p>Generated on <%= Time.now %> (<a href="index.html">Top</a>)</p>
+    <p>Visit <a href="<%= full_url %>"><%= full_url %></a></p>
     <p>Response: <%= code %></p>
     <p>Referrer: <%= referrer || "" %></p>
     <% if data %>
