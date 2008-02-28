@@ -32,10 +32,10 @@
           <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each do |result| %>
           <tr>
             <td><%= result.method %></td>
-            <td><a href="<%= result.file_name%>"><%= result.url.ellipsize(40) %></a></td>
+            <td><a href="<%= result.file_name%>"><%= result.url.ellipsize(30) %></a></td>
             <td><%= result.code %></td>
             <td><%= result.description %></td>
-            <td><%= result.referrer.ellipsize(20) %></td>
+            <td><%= result.referrer.ellipsize(30) %></td>
           </tr>
           <% end %>
         </tbody>

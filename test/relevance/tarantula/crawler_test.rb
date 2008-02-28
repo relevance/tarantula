@@ -37,6 +37,23 @@ describe 'Relevance::Tarantula::Crawler interruption' do
   end
 end
 
+describe 'Relevance::Tarantula::Crawler handle_form_results' do
+  it 'captures the result values (bugfix)' do
+    response = stub_everything
+    result_args = {:url => :action_stub, 
+                    :data => 'nil', 
+                    :response => response, 
+                    :referrer => :action_stub, 
+                    :log => nil, 
+                    :method => :stub_method}
+    result = Result.new(result_args)
+    Result.expects(:new).with(result_args).returns(result)
+    crawler = Crawler.new
+    crawler.handle_form_results(stub_everything(:method => :stub_method, :action => :action_stub), 
+                                response)
+  end
+end
+
 describe 'Relevance::Tarantula::Crawler#crawl' do
   it 'queues the first url, does crawl, and then reports results' do
     crawler = Crawler.new

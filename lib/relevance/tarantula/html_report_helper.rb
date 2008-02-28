@@ -1,4 +1,4 @@
-module Relevance::Tarantula::HtmlReportHelper
+module Relevance::Tarantula::HtmlReportHelper 
   def wrap_in_line_number_table(text, &blk)
     x = Builder::XmlMarkup.new
     x.table(:class => "tablesorter") do      

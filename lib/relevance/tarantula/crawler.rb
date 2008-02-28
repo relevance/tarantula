@@ -119,7 +119,8 @@ class Relevance::Tarantula::Crawler
       save_result h.handle(Result.new(:method => form.method, 
                                      :url => form.action, 
                                      :response => response, 
-                                     :log => grab_log!,
+                                     :log => grab_log!,   
+                                     :referrer => form.action,
                                      :data => form.data.inspect).freeze)
     end
   end
