@@ -13,7 +13,13 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
         :url => "/widgets/#{index}", 
         :response => stub(:code => 200, :body => "<h1>header</h1>\n<p>text</p>"), 
         :referrer => "/random/#{rand(100)}", 
-        :log => "sample log value",
+        :log => <<-END,
+Made-up stack trace:
+/some_module/some_class.rb:697:in `bad_method'
+/some_module/other_class.rb:12345677:in `long_method'
+this link should be <a href="#">escaped</a>
+blah blah blah
+END
         :data => "{:param1 => :value, :param2 => :another_value}"
       )
     end
@@ -25,7 +31,6 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
   
   it "creates a report based on tarantula results" do
     results = stub_everything(:successes => @results, :failures => @results)
-    # ERB::Util.expects(:h).with(:foo).returns(:data_stub)
     Relevance::Tarantula::HtmlReporter.report(test_output_dir, results)
     File.should.exist @index
     File.should.exist @detail
@@ -33,26 +38,3 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
 
 end
 
-describe "Relevance::Tarantula::HtmlReporter output processing" do
-  include Relevance::Tarantula
-  def turn_off_report_output
-    Relevance::Tarantula::HtmlReporter.any_instance.stubs(:output)
-  end
-  
-  before do
-    turn_off_report_output
-    @result = Relevance::Tarantula::Result.new(
-        :success => true, 
-        :method => "stub_method", 
-        :url => "stub_url",
-        :response => stub(:code => 200, :body => "stub_body"), 
-        :referrer => "stub_referrer", 
-        :data => "stub_data"
-    )
-  end
-
-  it "can wrap text in a line number table" do
-    html = Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table("Line 1\nLine 2")
-    html.should == "<table class=\"tablesorter\"><thead><tr><th>Line \#</th><th>Line</th></tr></thead><tr><td>1</td><td>Line 1</td></tr><tr><td>2</td><td>Line 2</td></tr></table>"
-  end
-end

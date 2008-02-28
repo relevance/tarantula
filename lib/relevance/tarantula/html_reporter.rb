@@ -5,25 +5,6 @@ class Relevance::Tarantula::HtmlReporter
     self.new(basedir, results)
   end
 
-  def self.wrap_in_line_number_table(text)
-    x = Builder::XmlMarkup.new
-    x.table(:class => "tablesorter") do      
-      x.thead do
-        x.tr do
-          x.th("Line \#")
-          x.th("Line")
-        end
-      end
-      text.split("\n").each_with_index do |line, index|
-        x.tr do
-          x.td(index+1)
-          x.td(line)
-        end
-      end   
-    end
-    x.target!
-  end
-
   def initialize(basedir, results)
     @basedir = basedir
     @results = results
@@ -65,9 +46,11 @@ class Relevance::Tarantula::HtmlReporter
   def create_detail_reports
     template = ERB.new(template("detail.html.erb"))
     results.successes.each do |result|
+      result.extend HtmlReportHelper
       output(result.file_name, template.result(result.send(:binding)))
     end
     results.failures.each do |result|
+      result.extend HtmlReportHelper
       output(result.file_name, template.result(result.send(:binding)))
     end
   end

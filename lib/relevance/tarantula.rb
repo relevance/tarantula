@@ -1,9 +1,23 @@
 require 'forwardable'
 
+TARANTULA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "../.."))
+
+# bringing in xss-shield requires a bunch of other dependencies
+# still not certain about this, if it ruins your world please let me know           
+require 'erb'    
+gem 'activesupport'                                                        
+gem 'actionpack'
+require 'active_support'
+require 'action_controller'
+xss_shield_path = File.join(TARANTULA_ROOT, %w{vendor xss-shield})
+$: << File.join(xss_shield_path, "lib")
+require File.join(xss_shield_path, "init")
+
+gem 'facets'
+gem 'htmlentities'
+
 require 'facets/enumerable/injecting'
 require 'facets/kernel/metaclass'
-
-gem 'htmlentities'
 require 'htmlentities'
 
 module Relevance; end
@@ -24,6 +38,7 @@ module Relevance
     end    
   end
 end
+     
 
 require 'relevance/core_extensions/test_case'
 require 'relevance/core_extensions/ellipsize'
@@ -40,5 +55,6 @@ require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'
 require 'relevance/tarantula/html_reporter'
+require 'relevance/tarantula/html_report_helper'
 
 require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']

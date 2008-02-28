@@ -20,15 +20,15 @@
     <p>Referrer: <%= referrer || "" %></p>
     <% if data %>
       <h3>Data</h3> 
-      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(data) %>
+      <%= wrap_in_line_number_table(data) %>
     <% end %>
     <% if body %>
       <h3>Body</h3>
-      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(body) %>
+      <%= wrap_in_line_number_table(body) %>
     <% end %>
     <% if log %>
-      <h3>Log</h3>    
-      <%= Relevance::Tarantula::HtmlReporter.wrap_in_line_number_table(log) %>
+      <h3>Log</h3>       
+      <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
     <% end %>
   </div>
 	<div id="sidebar" class="column">

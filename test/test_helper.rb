@@ -1,6 +1,6 @@
 basedir = File.dirname(__FILE__)
 $:.unshift "#{basedir}/../lib"
-require 'rubygems'
+require 'rubygems' 
 gem 'ruby-debug'
 gem 'test-spec'
 gem 'activesupport'
