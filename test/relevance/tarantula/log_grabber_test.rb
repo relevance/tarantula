@@ -9,15 +9,15 @@ describe 'Relevance::Tarantula::LogGrabber' do
   end
   
   it "can clear the log file" do
-    File.open(log_file, "w") {|f| f.puts "sample log"}
-    File.size(log_file).should == 11  
+    File.open(log_file, "w") {|f| f.print "sample log"}
+    File.size(log_file).should == 10  
     @grabber.clear!
     File.size(log_file).should == 0  
   end
   
   it "can grab the log file" do
-    File.open(log_file, "w") {|f| f.puts "sample log"}
-    @grabber.grab!.should == "sample log\n"
+    File.open(log_file, "w") {|f| f.print "sample log"}
+    @grabber.grab!.should == "sample log"
     File.size(log_file).should == 0
   end
   
