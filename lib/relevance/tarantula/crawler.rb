@@ -124,8 +124,8 @@ class Relevance::Tarantula::Crawler
                                      :data => form.data.inspect).freeze)
     end
   end
-  
-  def should_skip_link?(url)
+               
+  def should_skip_url?(url)
     return true if url.blank?
     if @skip_uri_patterns.any? {|pattern| pattern =~ url}
       log "Skipping #{url}"
@@ -135,11 +135,14 @@ class Relevance::Tarantula::Crawler
       log "Skipping long url #{url}"
       return true
     end
-    @links_queued.member?(url)
+  end
+
+  def should_skip_link?(url)
+    should_skip_url?(url) || @links_queued.member?(url)
   end
   
   def should_skip_form_submission?(fs)
-    @form_signatures_queued.member?(fs.signature)
+    should_skip_url?(fs.action) || @form_signatures_queued.member?(fs.signature)
   end
   
   def transform_url(url)

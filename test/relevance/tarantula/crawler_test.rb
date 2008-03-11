@@ -252,6 +252,14 @@ describe 'Relevance::Tarantula::Crawler' do
     crawler.skip_uri_patterns << /red-button/
     crawler.queue_link("/blue-button").should == "/blue-button"
     crawler.queue_link("/the-red-button").should == nil
+  end   
+  
+  it "logs and skips form submissions that match a pattern" do
+    crawler = Crawler.new
+    crawler.expects(:log).with("Skipping /reset-password-form")
+    crawler.skip_uri_patterns << /reset-password/             
+    fs = stub_everything(:action => "/reset-password-form")
+    crawler.should_skip_form_submission?(fs).should == true
   end
   
 end
