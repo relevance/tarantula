@@ -1,4 +1,5 @@
 module Relevance::Tarantula::HtmlReportHelper 
+  include Relevance::Tarantula
   def wrap_in_line_number_table(text, &blk)
     x = Builder::XmlMarkup.new
     x.table(:class => "tablesorter") do      
@@ -23,7 +24,7 @@ module Relevance::Tarantula::HtmlReportHelper
   end 
                                                                             
   def textmate_url(file, line_no)
-    "txmt://open?url=#{file}&line_no=#{line_no}"
+    "txmt://open?url=#{File.expand_path(File.join(rails_root,file))}&line_no=#{line_no}"
   end
   
   def wrap_stack_trace_line(text)

@@ -45,6 +45,8 @@ require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'
 require 'relevance/core_extensions/response'
 
+require 'relevance/tarantula/html_reporter'
+require 'relevance/tarantula/html_report_helper'
 require 'relevance/tarantula/recording'
 require 'relevance/tarantula/response'
 require 'relevance/tarantula/result'
@@ -54,7 +56,5 @@ require 'relevance/tarantula/transform'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'
-require 'relevance/tarantula/html_reporter'
-require 'relevance/tarantula/html_report_helper'
 
 require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']

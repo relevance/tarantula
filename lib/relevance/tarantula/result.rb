@@ -3,6 +3,7 @@ class Relevance::Tarantula::Result
   DEFAULT_LOCALHOST = "http://localhost:3000"
   attr_accessor *HASHABLE_ATTRS
   include Relevance::Tarantula
+  include Relevance::Tarantula::HtmlReportHelper
 
   def initialize(hash)
     hash.each do |k,v|

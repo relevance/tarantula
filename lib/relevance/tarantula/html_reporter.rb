@@ -46,11 +46,9 @@ class Relevance::Tarantula::HtmlReporter
   def create_detail_reports
     template = ERB.new(template("detail.html.erb"))
     results.successes.each do |result|
-      result.extend HtmlReportHelper
       output(result.file_name, template.result(result.send(:binding)))
     end
     results.failures.each do |result|
-      result.extend HtmlReportHelper
       output(result.file_name, template.result(result.send(:binding)))
     end
   end

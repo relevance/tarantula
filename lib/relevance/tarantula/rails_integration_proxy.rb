@@ -2,6 +2,7 @@ require 'test/unit'
 
 class Relevance::Tarantula::RailsIntegrationProxy
   include Relevance::Tarantula
+  extend Relevance::Tarantula
   extend Forwardable
   attr_accessor :integration_test
 
@@ -11,6 +12,7 @@ class Relevance::Tarantula::RailsIntegrationProxy
     t.proxy = RailsIntegrationProxy.new(integration_test)
     t.handlers << HtmlDocumentHandler.new(t)
     t.handlers << InvalidHtmlHandler.new
+    t.log_grabber = Relevance::Tarantula::LogGrabber.new(File.join(rails_root, "log/test.log"))
     t.skip_uri_patterns << /logout$/
     t.transform_url_patterns += [
       [/\?\d+$/, ''],                               # strip trailing numbers for assets

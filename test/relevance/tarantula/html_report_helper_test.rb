@@ -40,7 +40,7 @@ end
 describe 'Relevance::Tarantula::HtmlReportHelper IDE help' do
   include HtmlReportHelperSpec
   it "can create a textmate url" do
-    @reporter.textmate_url("/etc/somewhere", 100).should ==
-        "txmt://open?url=/etc/somewhere&line_no=100"
+    @reporter.stubs(:rails_root).returns("STUB_RAILS_ROOT")
+    @reporter.textmate_url("/etc/somewhere", 100).should =~ %r{txmt://open\?url=.*/STUB_RAILS_ROOT/etc/somewhere&line_no=100}
   end
 end

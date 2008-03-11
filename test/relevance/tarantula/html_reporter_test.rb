@@ -29,7 +29,8 @@ END
     FileUtils.rm_f @detail
   end
   
-  it "creates a report based on tarantula results" do
+  it "creates a report based on tarantula results" do    
+    Relevance::Tarantula::Result.any_instance.stubs(:rails_root).returns("STUB_ROOT")
     results = stub_everything(:successes => @results, :failures => @results)
     Relevance::Tarantula::HtmlReporter.report(test_output_dir, results)
     File.should.exist @index

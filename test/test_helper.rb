@@ -21,5 +21,5 @@ require 'action_controller'
 class Test::Unit::TestCase 
   def test_output_dir
     File.join(File.dirname(__FILE__), "..", "tmp", "test_output")
-  end
+  end 
 end
