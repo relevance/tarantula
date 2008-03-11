@@ -7,8 +7,20 @@
   <title>Tarantula report detail <%= short_description %></title>
 	<script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.tabs.js"></script>
 	<script type="text/javascript" src="javascripts/tarantula.js"></script>
 	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
+	<link type="text/css" media="screen" rel="stylesheet" href="jquery.tabs.css"/>
+	
+	<!--[if lte IE 7]>
+  <link rel="stylesheet" href="jqeury.tabs-ie.css" type="text/css" media="projection, screen" />
+  <![endif]-->
+  
+	<script type="text/javascript">
+  	$(function() {
+  	  $('#tab-container').tabs();
+  	});
+	</script>
 </head>
 
 	<body id="top">
@@ -19,19 +31,35 @@
     <p>Visit <a href="<%= full_url %>"><%= full_url %></a></p>
     <p>Response: <%= code %></p>
     <p>Referrer: <%= referrer || "" %></p>
-    <% if data %>
-      <h3>Data</h3> 
-      <%= wrap_in_line_number_table(data) %>
-    <% end %>
-    <% if body %>
-      <h3>Body</h3>
-      <%= wrap_in_line_number_table(body) %>
-    <% end %>
-    <% if log %>
-      <h3>Log</h3>       
-      <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
-    <% end %>
-  </div>
+    <div id="tab-container">  
+      <ul>
+        <li><a href="#fragment-1"><span>Data</span></a></li>
+        <li><a href="#fragment-2"><span>Body</span></a></li>
+        <li><a href="#fragment-3"><span>Log</span></a></li>
+      </ul>
+      <div id="fragment-1">
+        <% if data %>
+          <%= wrap_in_line_number_table(data) %>
+        <% else %>
+          <p>No Data</p>
+        <% end %>
+      </div>      
+      <div id="fragment-2">
+        <% if body %>
+          <%= wrap_in_line_number_table(body) %>
+        <% else %>
+          <p>No Body</p>  
+        <% end %>
+      </div>
+      <div id="fragment-3">
+        <% if log %>
+          <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
+        <% else %>
+          <p>No Log</p>  
+        <% end %>
+      </div>
+    </div>  
+    </div>
 	<div id="sidebar" class="column">
 	<!-- sidebar -->
 	<h2>Tarantula</h2>
