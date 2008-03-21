@@ -24,7 +24,7 @@ module Relevance::Tarantula::HtmlReportHelper
   end 
                                                                             
   def textmate_url(file, line_no)
-    "txmt://open?url=#{File.expand_path(File.join(rails_root,file))}&line_no=#{line_no}"
+    "txmt://open?url=file://#{File.expand_path(File.join(rails_root,file))}&line_no=#{line_no}"
   end
   
   def wrap_stack_trace_line(text)

@@ -218,50 +218,55 @@ describe 'Relevance::Tarantula::Crawler' do
     crawler.should_skip_link?("/foo").should == true
   end
   
+end
+                         
+describe "Crawler link skipping" do   
+  before do
+    @crawler = Crawler.new
+  end
+  
   it "skips links that are too long" do
-    crawler = Crawler.new
-    crawler.should_skip_link?("/foo").should == false
-    crawler.max_url_length = 2
-    crawler.expects(:log).with("Skipping long url /foo")
-    crawler.should_skip_link?("/foo").should == true
+    @crawler.should_skip_link?("/foo").should == false
+    @crawler.max_url_length = 2
+    @crawler.expects(:log).with("Skipping long url /foo")
+    @crawler.should_skip_link?("/foo").should == true
   end
   
   it "skips outbound links (those that begin with http)" do
-    crawler = Crawler.new
-    crawler.expects(:log).with("Skipping http-anything")
-    crawler.should_skip_link?("http-anything").should == true
+    @crawler.expects(:log).with("Skipping http-anything")
+    @crawler.should_skip_link?("http-anything").should == true
+  end
+
+  it "skips javascript links (those that begin with javascript)" do
+    @crawler.expects(:log).with("Skipping javascript-anything")
+    @crawler.should_skip_link?("javascript-anything").should == true
   end
 
   it "skips mailto links (those that begin with http)" do
-    crawler = Crawler.new
-    crawler.expects(:log).with("Skipping mailto-anything")
-    crawler.should_skip_link?("mailto-anything").should == true
+    @crawler.expects(:log).with("Skipping mailto-anything")
+    @crawler.should_skip_link?("mailto-anything").should == true
   end
   
   it 'skips blank links' do
-    crawler = Crawler.new
-    crawler.queue_link(nil)
-    crawler.links_to_crawl.should == []
-    crawler.queue_link("")
-    crawler.links_to_crawl.should == []
+    @crawler.queue_link(nil)
+    @crawler.links_to_crawl.should == []
+    @crawler.queue_link("")
+    @crawler.links_to_crawl.should == []
   end
   
   it "logs and skips links that match a pattern" do
-    crawler = Crawler.new
-    crawler.expects(:log).with("Skipping /the-red-button")
-    crawler.skip_uri_patterns << /red-button/
-    crawler.queue_link("/blue-button").should == "/blue-button"
-    crawler.queue_link("/the-red-button").should == nil
+    @crawler.expects(:log).with("Skipping /the-red-button")
+    @crawler.skip_uri_patterns << /red-button/
+    @crawler.queue_link("/blue-button").should == "/blue-button"
+    @crawler.queue_link("/the-red-button").should == nil
   end   
   
   it "logs and skips form submissions that match a pattern" do
-    crawler = Crawler.new
-    crawler.expects(:log).with("Skipping /reset-password-form")
-    crawler.skip_uri_patterns << /reset-password/             
+    @crawler.expects(:log).with("Skipping /reset-password-form")
+    @crawler.skip_uri_patterns << /reset-password/             
     fs = stub_everything(:action => "/reset-password-form")
-    crawler.should_skip_form_submission?(fs).should == true
+    @crawler.should_skip_form_submission?(fs).should == true
   end
-  
 end
 
 describe "allow_nnn_for" do

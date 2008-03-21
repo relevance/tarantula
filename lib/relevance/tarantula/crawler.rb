@@ -21,6 +21,7 @@ class Relevance::Tarantula::Crawler
     @forms_to_crawl = []
     @referrers = {}
     @skip_uri_patterns =[
+      /^javascript/,
       /^mailto/,
       /^http/,                                      
     ]
