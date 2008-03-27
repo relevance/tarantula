@@ -16,8 +16,8 @@ require File.join(xss_shield_path, "init")
 gem 'facets'
 gem 'htmlentities'
 
-require 'facets/enumerable/injecting'
-require 'facets/kernel/metaclass'
+require 'facets/metaid'
+require 'facets/meta'
 require 'htmlentities'
 
 module Relevance; end

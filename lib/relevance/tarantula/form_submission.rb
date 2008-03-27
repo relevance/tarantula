@@ -17,9 +17,10 @@ class Relevance::Tarantula::FormSubmission
   end
   
   def create_random_data_for(form, tag_selector)
-    form.find_all(tag_selector).injecting({}) do |form_args, input|
+    form.find_all(tag_selector).inject({}) do |form_args, input|
       # TODO: test
       form_args[input['name']] = random_data(input) if input['name']
+      form_args
     end
   end
 
@@ -32,10 +33,11 @@ class Relevance::Tarantula::FormSubmission
   end
   
   def mutate_selects(form)
-    form.find_all(:tag => 'select').injecting({}) do |form_args, select|
+    form.find_all(:tag => 'select').inject({}) do |form_args, select|
       options = select.find_all(:tag => 'option')
       option = options.rand
       form_args[select['name']] = option['value'] 
+      form_args
     end
   end
   
