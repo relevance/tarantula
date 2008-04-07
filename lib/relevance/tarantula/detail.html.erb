@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.tabs.js"></script>
 	<script type="text/javascript" src="javascripts/tarantula.js"></script>
-	<link type="text/css" media="screen" rel="stylesheet" href="relevance_os.css"/>
+	<link type="text/css" media="screen" rel="stylesheet" href="stylesheets/tarantula.css"/>
 	<link type="text/css" media="screen" rel="stylesheet" href="jquery.tabs.css"/>
 	
 	<!--[if lte IE 7]>
@@ -24,55 +24,58 @@
 </head>
 
 	<body id="top">
-	
-	<div id="page" class="column">
-    <h1>Tarantula report detail <%= short_description %></h1>
-    <p>Generated on <%= Time.now %> (<a href="index.html">Top</a>)</p>
-    <p>Visit <a href="<%= full_url %>"><%= full_url %></a></p>
-    <p>Response: <%= code %></p>
-    <p>Referrer: <%= referrer || "" %></p>
-    <div id="tab-container">  
-      <ul>
-        <li><a href="#fragment-1"><span>Data</span></a></li>
-        <li><a href="#fragment-2"><span>Body</span></a></li>
-        <li><a href="#fragment-3"><span>Log</span></a></li>
-      </ul>
-      <div id="fragment-1">
-        <% if data %>
-          <%= wrap_in_line_number_table(data) %>
-        <% else %>
-          <p>No Data</p>
-        <% end %>
-      </div>      
-      <div id="fragment-2">
-        <% if body %>
-          <%= wrap_in_line_number_table(body) %>
-        <% else %>
-          <p>No Body</p>  
-        <% end %>
-      </div>
-      <div id="fragment-3">
-        <% if log %>
-          <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
-        <% else %>
-          <p>No Log</p>  
-        <% end %>
-      </div>
-    </div>  
-    </div>
-	<div id="sidebar" class="column">
-	<!-- sidebar -->
-	<h2>Tarantula</h2>
-	
-	<p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
-	
-	</div>
-	
-	<a href="http://opensource.thinkrelevance.com"><div id="footer">
-	<!-- footer -->
-	&nbsp;
-	</div></a>
-	
+
+		<div id="container">
+			
+			<div id="header">
+				<hr class="top"/>
+				<h1><span>Tarantula : Eight Legs, Two Fangs, and an Attitude</span></h1>
+			</div>             
+
+  		<div id="page-container">
+  			<hr class="top"/>
+  			<div id="page">
+          <h1>Tarantula report detail <%= short_description %></h1>
+          <p>Generated on <%= Time.now %> (<a href="index.html">Top</a>)</p>
+          <p>Visit <a href="<%= full_url %>"><%= full_url %></a></p>
+          <p>Response: <%= code %></p>
+          <p>Referrer: <%= referrer || "" %></p>
+          <div id="tab-container">  
+            <!-- TODO: make the tabs work -->
+            <!-- <ul>
+              <li><a href="#fragment-1"><span>Data</span></a></li>
+              <li><a href="#fragment-2"><span>Body</span></a></li>
+              <li><a href="#fragment-3"><span>Log</span></a></li>
+            </ul> -->
+            <div id="fragment-1">
+              <% if data %>
+                <%= wrap_in_line_number_table(data) %>
+              <% else %>
+                <p>No Data</p>
+              <% end %>
+            </div>      
+            <div id="fragment-2">
+              <% if body %>
+                <%= wrap_in_line_number_table(body) %>
+              <% else %>
+                <p>No Body</p>  
+              <% end %>
+            </div>
+            <div id="fragment-3">
+              <% if log %>
+                <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
+              <% else %>
+                <p>No Log</p>  
+              <% end %>
+            </div>
+          </div>  
+        </div>
+		  </div>
+		  <div id="sidebar">         
+				<h3><span>Tarantula</span></h3>
+				<p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
+			</div>
+		</div>                
 	</body>
 
 </html>

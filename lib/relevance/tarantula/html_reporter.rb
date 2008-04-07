@@ -1,6 +1,7 @@
 class Relevance::Tarantula::HtmlReporter
   include Relevance::Tarantula
-  attr_accessor :basedir, :results
+  attr_accessor :basedir, :results 
+  delegate :successes, :failures, :to => :results
   def self.report(basedir, results)
     self.new(basedir, results)
   end
@@ -25,8 +26,9 @@ class Relevance::Tarantula::HtmlReporter
   
   def copy_styles
     # not using cp_r because it picks up .svn crap
-    Dir.glob("#{tarantula_home}/laf/*.css").each do |file|
-      FileUtils.cp(file, basedir) 
+    FileUtils.mkdir_p(File.join(basedir, "stylesheets"))
+    Dir.glob("#{tarantula_home}/laf/stylesheets/*.css").each do |file|
+      FileUtils.cp(file, File.join(basedir, "stylesheets")) 
     end
     FileUtils.mkdir_p(File.join(basedir, "images"))
     Dir.glob("#{tarantula_home}/laf/images/*.{jpg,gif,png}").each do |file|
@@ -40,7 +42,7 @@ class Relevance::Tarantula::HtmlReporter
   
   def create_index
     template = ERB.new(template("index.html.erb"))
-    output("index.html", template.result(results.send(:binding)))
+    output("index.html", template.result(binding))
   end
 
   def create_detail_reports
@@ -51,5 +53,10 @@ class Relevance::Tarantula::HtmlReporter
     results.failures.each do |result|
       output(result.file_name, template.result(result.send(:binding)))
     end
+  end 
+
+  # CSS class for HTML status codes
+  def class_for_code(code)
+    "r#{Integer(code)/100}" 
   end
 end

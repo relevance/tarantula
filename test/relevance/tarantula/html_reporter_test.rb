@@ -31,7 +31,7 @@ END
   
   it "creates a report based on tarantula results" do    
     Relevance::Tarantula::Result.any_instance.stubs(:rails_root).returns("STUB_ROOT")
-    results = stub_everything(:successes => @results, :failures => @results)
+    results = stub(:successes => @results, :failures => @results)
     Relevance::Tarantula::HtmlReporter.report(test_output_dir, results)
     File.should.exist @index
     File.should.exist @detail

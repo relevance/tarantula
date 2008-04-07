@@ -16,7 +16,9 @@ describe 'Relevance::Tarantula::HtmlReportHelper#wrap_in_line_number_table' do
   include HtmlReportHelperSpec
   it "can wrap text in a line number table" do
     html = @reporter.wrap_in_line_number_table("Line 1\nLine 2")
-    html.should == "<table class=\"tablesorter\"><thead><tr><th>Line \#</th><th>Line</th></tr></thead><tr><td>1</td><td>Line 1</td></tr><tr><td>2</td><td>Line 2</td></tr></table>"
+    html.should == <<-END.strip
+<table class="grid tablesorter"><thead><tr><th class="sort asc"><span>Line #</span><span class="sort"><em>&#8613;</em></span></th><th class="sort left"><span>Line</span><span class="sort"><em>&#8613;</em></span></th></tr></thead><tr><td>1</td><td>Line 1</td></tr><tr><td>2</td><td>Line 2</td></tr></table>    
+END
   end  
 end
 

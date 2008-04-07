@@ -2,11 +2,25 @@ module Relevance::Tarantula::HtmlReportHelper
   include Relevance::Tarantula
   def wrap_in_line_number_table(text, &blk)
     x = Builder::XmlMarkup.new
-    x.table(:class => "tablesorter") do      
+    x.table(:class => "grid tablesorter") do      
       x.thead do
         x.tr do
-          x.th("Line \#")
-          x.th("Line")
+          x.th(:class => "sort asc") do
+            x.span("Line \#")
+            x.span(:class => "sort") do
+              x.em do
+                x << '&#8613;'
+              end
+            end
+          end
+          x.th(:class => "sort left") do
+            x.span("Line")
+            x.span(:class => "sort") do
+              x.em do
+                x << '&#8613;'
+              end
+            end               
+          end
         end
       end
       text.split("\n").each_with_index do |line, index|

@@ -54,7 +54,7 @@ class Relevance::Tarantula::Result
     def successful?(response)
       success_codes.member?(response.code)
     end
-    def method_missing(meth, *args)
+    def method_missing(meth, *args)  
       super unless ALLOW_NNN_FOR =~ meth.to_s
       (allow_errors_for[$1] ||= []).push(*args)
     end
