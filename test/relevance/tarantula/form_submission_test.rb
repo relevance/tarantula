@@ -4,7 +4,7 @@ describe "Relevance::Tarantula::FormSubmission" do
   
   # TODO: add more from field types to this example form as needed
   before do
-    @tag = HTML::Document.new(<<END)
+    @tag = Hpricot(<<END)
 <form action="/session" method="post">
   <input id="email" name="email" size="30" type="text" />
   <textarea id="comment" name="comment"value="1" />
@@ -16,7 +16,7 @@ describe "Relevance::Tarantula::FormSubmission" do
   </select> 
 </form>
 END
-    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @form = Relevance::Tarantula::Form.new(@tag.at('form'))
     @fs = Relevance::Tarantula::FormSubmission.new(@form)
   end
   
@@ -26,7 +26,7 @@ END
   end
   
   it "can mutate selects" do
-    Array.any_instance.stubs(:rand).returns(stub(:[] => "2006-stub"))
+    Hpricot::Elements.any_instance.stubs(:rand).returns(stub(:[] => "2006-stub"))
     @fs.mutate_selects(@form).should == {"foo[opened_on(1i)]" => "2006-stub"}
   end
   
@@ -56,12 +56,12 @@ end
 
 describe "Relevance::Tarantula::FormSubmission for a crummy form" do
   before do
-    @tag = HTML::Document.new(<<END)
+    @tag = Hpricot(<<END)
 <form action="/session" method="post">
   <input value="no_name" />
 </form>
 END
-    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @form = Relevance::Tarantula::Form.new(@tag.at('form'))
     @fs = Relevance::Tarantula::FormSubmission.new(@form)
   end
   

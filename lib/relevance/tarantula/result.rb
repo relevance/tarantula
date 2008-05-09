@@ -30,7 +30,7 @@ class Relevance::Tarantula::Result
     "#{DEFAULT_LOCALHOST}#{url}"
   end
   ALLOW_NNN_FOR = /^allow_(\d\d\d)_for$/
-  class <<self
+  class << self
     attr_accessor :next_number
     def handle(result)
       retval = result.dup

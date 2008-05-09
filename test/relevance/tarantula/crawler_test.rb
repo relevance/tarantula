@@ -82,7 +82,7 @@ describe 'Relevance::Tarantula::Crawler queuing' do
   
   it 'queues and remembers forms' do
     crawler = Crawler.new
-    form = HTML::Document.new('<form action="/action" method="post"/>').find(:tag =>'form')
+    form = Hpricot('<form action="/action" method="post"/>').at('form')
     signature = FormSubmission.new(Form.new(form)).signature
     crawler.queue_form(form)
     crawler.forms_to_crawl.size.should == 1
@@ -98,12 +98,9 @@ describe 'Relevance::Tarantula::Crawler queuing' do
 end
 
 describe 'Relevance::Tarantula::Crawler#report_results' do
-  it "delegates to generate_reports then report_to_console" do
+  it "delegates to generate_reports" do
     crawler = Crawler.new
-    crawler.expects(:report_dir)
-    crawler.expects(:puts)
     crawler.expects(:generate_reports)
-    crawler.expects(:report_to_console)
     crawler.report_results
   end
 end
@@ -187,21 +184,14 @@ describe 'Relevance::Tarantula::Crawler' do
     crawler.do_crawl
   end
   
-  it "reports errors to stderr and then raises" do
-    crawler = Crawler.new
-    crawler.failures << stub(:code => "404", :url => "/uh-oh")
-    $stderr.expects(:puts).with("****** FAILURES")
-    $stderr.expects(:puts).with("404: /uh-oh")
-    lambda {crawler.report_to_console}.should.raise RuntimeError
-  end
-  
   it "asks each reporter to write its report in report_dir" do
     crawler = Crawler.new
-    crawler.failures << stub(:code => "404", :url => "/uh-oh")
     crawler.stubs(:report_dir).returns(test_output_dir)
     reporter = stub_everything
     reporter.expects(:report)
+    reporter.expects(:finish_report)
     crawler.reporters = [reporter]
+    crawler.save_result stub(:code => "404", :url => "/uh-oh")
     crawler.generate_reports
   end
   

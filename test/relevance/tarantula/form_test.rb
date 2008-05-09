@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
 describe "Relevance::Tarantula::Form large example" do
   before do
-    @tag = HTML::Document.new(<<END)
+    @tag = Hpricot(<<END)
 <form action="/session" method="post">
   <input name="authenticity_token" type="hidden" value="1be0d07c6e13669a87b8f52a3c7e1d1ffa77708d" />
   <input id="email" name="email" size="30" type="text" />
@@ -11,7 +11,7 @@ describe "Relevance::Tarantula::Form large example" do
   <input name="commit" type="submit" value="Log in" />
 </form>
 END
-    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @form = Relevance::Tarantula::Form.new(@tag.at('form'))
   end
   
   it "has an action" do
@@ -26,21 +26,21 @@ end
 
 describe "A Relevance::Tarantula::Form" do
   it "defaults method to 'get'" do
-    @tag = HTML::Document.new("<form/>")
-    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @tag = Hpricot("<form/>")
+    @form = Relevance::Tarantula::Form.new(@tag.at('form'))
     @form.method.should == 'get'
   end
 end
 
 describe "A Relevance::Tarantula::Form with a hacked _method" do
   before do
-    @tag = HTML::Document.new(<<END)
+    @tag = Hpricot(<<END)
 <form action="/foo">
   <input name="authenticity_token" type="hidden" value="1be0d07c6e13669a87b8f52a3c7e1d1ffa77708d" />
   <input id="_method" name="_method" size="30" type="text" value="PUT"/>
 </form>
 END
-    @form = Relevance::Tarantula::Form.new(@tag.find(:tag => 'form'))
+    @form = Relevance::Tarantula::Form.new(@tag.at('form'))
   end
 
   it "has a method" do

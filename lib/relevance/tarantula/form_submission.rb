@@ -6,6 +6,10 @@ class Relevance::Tarantula::FormSubmission
     @data = mutate_selects(form).merge(mutate_text_areas(form)).merge(mutate_inputs(form))
   end
   
+  def self.mutate(form)
+    [self.new(form)]
+  end
+  
   def to_s
     "#{action} #{method} #{data.inspect}"
   end
@@ -17,7 +21,7 @@ class Relevance::Tarantula::FormSubmission
   end
   
   def create_random_data_for(form, tag_selector)
-    form.find_all(tag_selector).inject({}) do |form_args, input|
+    form.search(tag_selector).inject({}) do |form_args, input|
       # TODO: test
       form_args[input['name']] = random_data(input) if input['name']
       form_args
@@ -25,16 +29,16 @@ class Relevance::Tarantula::FormSubmission
   end
 
   def mutate_inputs(form)
-    create_random_data_for(form, :tag => 'input')
+    create_random_data_for(form, 'input')
   end
 
   def mutate_text_areas(form)
-    create_random_data_for(form, :tag => 'textarea')
+    create_random_data_for(form, 'textarea')
   end
   
   def mutate_selects(form)
-    form.find_all(:tag => 'select').inject({}) do |form_args, select|
-      options = select.find_all(:tag => 'option')
+    form.search('select').inject({}) do |form_args, select|
+      options = select.search('option')
       option = options.rand
       form_args[select['name']] = option['value'] 
       form_args
@@ -46,6 +50,7 @@ class Relevance::Tarantula::FormSubmission
       when /amount/         : random_int
       when /_id$/           : random_whole_number
       when /uploaded_data/  : nil
+      when /^_method$/      : input['value']
       when nil              : input['value']
       else                    random_int
     end

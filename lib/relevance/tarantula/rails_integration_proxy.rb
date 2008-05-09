@@ -18,7 +18,7 @@ class Relevance::Tarantula::RailsIntegrationProxy
       [/\?\d+$/, ''],                               # strip trailing numbers for assets
       [/^http:\/\/#{integration_test.host}/, '']    # strip full path down to relative
     ]
-    t.reporters << Relevance::Tarantula::HtmlReporter
+    t.reporters << Relevance::Tarantula::HtmlReporter.new(t.report_dir)
     t
   end
 

@@ -4,6 +4,7 @@ require 'relevance/core_extensions/test_case'
 describe "TestCase extensions" do
   it "can create the crawler" do 
     RailsIntegrationProxy.stubs(:rails_root).returns("STUB_RAILS_ROOT")
+    Crawler.any_instance.stubs(:rails_root).returns("STUB_RAILS_ROOT")
     tarantula_crawler(stub_everything)
   end
   

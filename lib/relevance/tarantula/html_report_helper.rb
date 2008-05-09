@@ -1,4 +1,6 @@
+require "erb"
 module Relevance::Tarantula::HtmlReportHelper 
+  include ERB::Util
   include Relevance::Tarantula
   def wrap_in_line_number_table(text, &blk)
     x = Builder::XmlMarkup.new
@@ -43,12 +45,12 @@ module Relevance::Tarantula::HtmlReportHelper
   
   def wrap_stack_trace_line(text)
     if text =~ %r{^\s*(/[^:]+):(\d+):([^:]+)$}
-      file = $1.to_s_xss_protected
+      file = h($1) # .to_s_xss_protected
       line_number = $2
-      message = $3.to_s_xss_protected
-      "<a href='#{textmate_url(file, line_number)}'>#{file}:#{line_number}</a>:#{message}".mark_as_xss_protected
+      message = h($3) # .to_s_xss_protected
+      "<a href='#{textmate_url(file, line_number)}'>#{file}:#{line_number}</a>:#{message}" # .mark_as_xss_protected
     else
-      text.to_s_xss_protected
+      h(text) # .to_s_xss_protected
     end
   end
 end

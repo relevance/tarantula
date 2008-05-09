@@ -1,28 +1,33 @@
 class Relevance::Tarantula::HtmlReporter
+  
   include Relevance::Tarantula
-  attr_accessor :basedir, :results 
+  attr_accessor :basedir, :results
   delegate :successes, :failures, :to => :results
-  def self.report(basedir, results)
-    self.new(basedir, results)
-  end
-
-  def initialize(basedir, results)
+  
+  HtmlResultOverview = Struct.new(:code, :url, :description, :method, :referrer, :file_name)
+  
+  def initialize(basedir)
     @basedir = basedir
-    @results = results
+    @results = Struct.new(:successes, :failures).new([], [])
+    FileUtils.mkdir_p(@basedir)
+  end
+  
+  def report(result)
+    return if result.nil?
+    
+    create_detail_report(result)
+    
+    collection = result.success ? results.successes : results.failures
+    collection << HtmlResultOverview.new(
+      result.code, result.url, result.description, result.method, result.referrer, result.file_name
+    )
+  end
+  
+  def finish_report
+    puts "Writing results to #{basedir}"
     copy_styles
     create_index
-    create_detail_reports
   end
-  
-  def template(name)
-    File.read(File.join(File.dirname(__FILE__), name))
-  end
-  
-  def output(name, body)
-    File.open(File.join(basedir, name), "w") do |file|
-      file.write body
-    end
-  end      
   
   def copy_styles
     # not using cp_r because it picks up .svn crap
@@ -44,19 +49,26 @@ class Relevance::Tarantula::HtmlReporter
     template = ERB.new(template("index.html.erb"))
     output("index.html", template.result(binding))
   end
-
-  def create_detail_reports
+  
+  def template(name)
+    File.read(File.join(File.dirname(__FILE__), name))
+  end
+  
+  def output(name, body)
+    File.open(File.join(basedir, name), "w") do |file|
+      file.write body
+    end
+  end      
+  
+  def create_detail_report(result)
     template = ERB.new(template("detail.html.erb"))
-    results.successes.each do |result|
-      output(result.file_name, template.result(result.send(:binding)))
-    end
-    results.failures.each do |result|
-      output(result.file_name, template.result(result.send(:binding)))
-    end
+    output(result.file_name, template.result(result.send(:binding)))
   end 
-
+  
   # CSS class for HTML status codes
   def class_for_code(code)
     "r#{Integer(code)/100}" 
   end
+  
+  
 end

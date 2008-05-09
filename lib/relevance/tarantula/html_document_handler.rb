@@ -1,3 +1,5 @@
+require 'hpricot'
+
 class Relevance::Tarantula::HtmlDocumentHandler 
   extend Forwardable
   def_delegators("@crawler", :queue_link, :queue_form)
@@ -10,7 +12,7 @@ class Relevance::Tarantula::HtmlDocumentHandler
   def html_doc_without_stderr_noise(html)  
     body = nil
     Recording.stderr do
-      body = HTML::Document.new html
+      body = Hpricot html
     end       
     body
   end
@@ -19,14 +21,14 @@ class Relevance::Tarantula::HtmlDocumentHandler
     url = result.url
     return unless response.html?
     body = html_doc_without_stderr_noise(response.body)
-    body.find_all(:tag=>'a').each do |tag|
+    body.search('a').each do |tag|
       queue_link(tag['href'], url)
     end
-    body.find_all(:tag=>'link').each do |tag|
+    body.search('link').each do |tag|
       queue_link(tag['href'], url)
     end
-    body.find_all(:tag =>'form').each do |form|
-      form.attributes['action'] = url unless form.attributes['action']
+    body.search('form').each do |form|
+      form['action'] = url unless form['action']
       queue_form(form, url)
     end
     nil

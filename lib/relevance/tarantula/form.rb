@@ -1,6 +1,6 @@
 class Relevance::Tarantula::Form
   extend Forwardable
-  def_delegators("@tag", :find_all)
+  def_delegators("@tag", :search)
   
   def initialize(tag)
     @tag = tag
@@ -15,7 +15,7 @@ class Relevance::Tarantula::Form
   end
   
   def rails_method_hack
-    (tag = @tag.find(:tag => 'input', :attributes => { :name => '_method'})) && tag["value"]
+    (tag = @tag.at('input[@name="_method"]')) && tag["value"]
   end
 
 end

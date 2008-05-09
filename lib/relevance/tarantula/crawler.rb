@@ -7,7 +7,8 @@ class Relevance::Tarantula::Crawler
   
   attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
-                :form_signatures_queued, :max_url_length, :response_code_handler
+                :form_signatures_queued, :max_url_length, :response_code_handler,
+                :times_to_crawl, :fuzzers
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
    
   def initialize
@@ -20,17 +21,18 @@ class Relevance::Tarantula::Crawler
     @links_to_crawl = []
     @forms_to_crawl = []
     @referrers = {}
-    @skip_uri_patterns =[
+    @skip_uri_patterns = [
       /^javascript/,
       /^mailto/,
-      /^http/,                                      
+      /^http/,
     ]
     self.transform_url_patterns = [
       [/#.*$/, '']
     ]
-    @reporters = []
+    @reporters = [Relevance::Tarantula::IOReporter.new($stderr)]
     @decoder = HTMLEntities.new
-    
+    @times_to_crawl = 1
+    @fuzzers = [Relevance::Tarantula::FormSubmission]
   end
   
   def method_missing(meth, *args)
@@ -45,8 +47,18 @@ class Relevance::Tarantula::Crawler
   end
   
   def crawl(url = "/")
-    queue_link url
-    do_crawl
+    @times_to_crawl.times do |i|
+      queue_link url
+      do_crawl
+      
+      puts "#{(i+1).ordinalize} crawl" if @times_to_crawl > 1
+      
+      if i + 1 < @times_to_crawl
+        @links_queued = Set.new
+        @form_signatures_queued = Set.new
+        @referrers = {}
+      end
+    end
   rescue Interrupt
     $stderr.puts "CTRL-C"
   ensure
@@ -74,9 +86,9 @@ class Relevance::Tarantula::Crawler
   end  
   
   def save_result(result)
-    return if result.nil?
-    collection = result.success ? successes : failures
-    collection << result
+    reporters.each do |reporter|
+      reporter.report(result)
+    end
   end
   
   def handle_link_results(link, response)
@@ -165,12 +177,16 @@ class Relevance::Tarantula::Crawler
   end
   
   def queue_form(form, referrer = nil)
-    fs = FormSubmission.new(Form.new(form))
-    fs.action = transform_url(fs.action)
-    return if should_skip_form_submission?(fs)
-    @referrers[fs.action] = referrer if referrer
-    @forms_to_crawl << fs
-    @form_signatures_queued << fs.signature
+    fuzzers.each do |fuzzer|
+      fuzzer.mutate(Form.new(form)).each do |fs|
+        # fs = fuzzer.new(Form.new(form))
+        fs.action = transform_url(fs.action)
+        return if should_skip_form_submission?(fs)
+        @referrers[fs.action] = referrer if referrer
+        @forms_to_crawl << fs
+        @form_signatures_queued << fs.signature
+      end
+    end
   end
   
   def report_dir
@@ -178,26 +194,21 @@ class Relevance::Tarantula::Crawler
   end
 
   def generate_reports
-    FileUtils.mkdir_p(report_dir)
+    errors = []
     reporters.each do |reporter|
-      reporter.report(report_dir, self)
-    end
-  end
-  
-  def report_to_console
-    unless (failures).empty?
-      $stderr.puts "****** FAILURES"
-      failures.each do |failure|
-        $stderr.puts "#{failure.code}: #{failure.url}"
+      begin
+        reporter.finish_report
+      rescue RuntimeError => e
+        errors << e
       end
-      raise "#{failures.size} failures"
+    end
+    unless errors.empty?
+      raise errors.map(&:message).join("\n")
     end
   end
   
   def report_results
-    puts "Writing results to #{report_dir}"
     generate_reports
-    report_to_console
   end
   
   def total_links_count

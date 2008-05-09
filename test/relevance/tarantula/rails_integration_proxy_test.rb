@@ -4,6 +4,7 @@ include Relevance::Tarantula
 describe "Relevance::Tarantula::RailsIntegrationProxy rails_integration_test" do
   before {
     Crawler.any_instance.stubs(:crawl)
+    Crawler.any_instance.stubs(:rails_root).returns("STUB_RAILS_ROOT")
     RailsIntegrationProxy.stubs(:rails_root).returns("STUB_RAILS_ROOT")
   }
 

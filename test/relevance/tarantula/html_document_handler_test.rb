@@ -30,7 +30,7 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
   end
   
   it "queues forms" do
-    @handler.expects(:queue_form).with{|tag,referrer| HTML::Tag === tag}
+    @handler.expects(:queue_form).with{|tag,referrer| Hpricot::Elem === tag}
     @handler.handle(Result.new(:response => stub(:html? => true, :body => '<form>stuff</form>')))
   end
   
