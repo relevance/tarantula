@@ -1,0 +1,10 @@
+***************
+*** 286,289 ****
+      crawler = Crawler.new
+      lambda{crawler.foo}.should.raise(NoMethodError)
+    end
+- end--- 276,279 ----
+      crawler = Crawler.new
+      lambda{crawler.foo}.should.raise(NoMethodError)
+    end
++ end
