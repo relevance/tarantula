@@ -4,7 +4,7 @@ include Relevance::Tarantula
 describe 'Relevance::Tarantula::LogGrabber' do
   before do
     @grabber = LogGrabber.new(log_file)
-    File.new(log_file)
+    FileUtils.mkdir_p(test_output_dir)
   end
 
   def log_file
