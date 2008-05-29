@@ -27,8 +27,7 @@ begin
 
   namespace :coverage do
     rcov_output = ENV["CC_BUILD_ARTIFACTS"] || 'tmp/coverage'
-    rcov_exclusions = %w{
-    }.join(',')
+    rcov_exclusions = %w{ /Library/Ruby/* }.join(',')
   
     desc "Delete aggregate coverage data."
     task(:clean) { rm_f "rcov_tmp" }
