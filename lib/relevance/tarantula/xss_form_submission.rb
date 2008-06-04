@@ -1,7 +1,18 @@
+include Relevance::Tarantula
+
 class Relevance::Tarantula::XssFormSubmission
   attr_accessor :method, :action, :data, :attack
   
-  cattr_accessor :attacks
+  class << self
+    def attacks
+      # normalize from hash input to Attack
+      @attacks = @attacks.map do |val|
+        Hash === val ? XssAttack.new(val) : val
+      end
+      @attacks
+    end
+  end
+  @attacks = []
   
   def initialize(form, attack = nil)
     @method = form.method
@@ -23,7 +34,7 @@ class Relevance::Tarantula::XssFormSubmission
   # a form's signature is what makes it unique (e.g. action + fields)
   # used to keep track of which forms we have submitted already
   def signature
-    [action, data.keys.sort, attack['name']]
+    [action, data.keys.sort, attack.name]
   end
   
   def create_random_data_for(form, tag_selector)
@@ -54,7 +65,7 @@ class Relevance::Tarantula::XssFormSubmission
   def random_data(input)
     case input['name']
       when /^_method$/      : input['value']
-      else                    attack['code']
+      else                    attack.input
     end
   end
 end

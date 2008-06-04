@@ -2,12 +2,12 @@ require 'hpricot'
 
 class Relevance::Tarantula::XssDocumentCheckerHandler 
   
-  def initialize(attacks)
-    @attacks = attacks
-    @regexp = '(' + attacks.map {|a| Regexp.escape a['code']}.join('|') + ')'
+  def attacks
+    Relevance::Tarantula::XssFormSubmission.attacks
   end
   
   def handle(result)
+    regexp = '(' + attacks.map {|a| Regexp.escape a.output}.join('|') + ')'
     response = result.response
     return unless response.html?
     if n = (response.body =~ /#{@regexp}/)
@@ -27,7 +27,7 @@ class Relevance::Tarantula::XssDocumentCheckerHandler
         ########################################################################
         # Attack information:
         ########################################################################
-        #{@attacks.select {|a| a['code'] == $1}[0].to_yaml}
+        #{attacks.select {|a| a.output == $1}[0].to_yaml}
       STR
       error_result
     end

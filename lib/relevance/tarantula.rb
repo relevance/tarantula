@@ -57,6 +57,7 @@ require 'relevance/tarantula/transform'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'
+require 'relevance/tarantula/xss_attack'
 require 'relevance/tarantula/xss_form_submission'
 require 'relevance/tarantula/xss_document_checker_handler'
 
