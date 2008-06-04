@@ -1,19 +1,21 @@
 require 'hpricot'
 
 class Relevance::Tarantula::XssDocumentCheckerHandler 
+  include ERB::Util
   
   def attacks
     Relevance::Tarantula::XssFormSubmission.attacks
   end
   
   def handle(result)
+    return unless attacks.size > 0
     regexp = '(' + attacks.map {|a| Regexp.escape a.output}.join('|') + ')'
     response = result.response
     return unless response.html?
-    if n = (response.body =~ /#{@regexp}/)
+    if n = (response.body =~ /#{regexp}/)
       error_result = result.dup
       error_result.success = false
-      error_result.description = "XSS error found, match was: #{$1}"
+      error_result.description = "XSS error found, match was: #{h($1)}"
       error_result.data = <<-STR
         ########################################################################
         # Text around unescaped string: #{$1}
