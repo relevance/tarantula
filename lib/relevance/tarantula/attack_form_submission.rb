@@ -1,13 +1,13 @@
 include Relevance::Tarantula
 
-class Relevance::Tarantula::XssFormSubmission
+class Relevance::Tarantula::AttackFormSubmission
   attr_accessor :method, :action, :data, :attack
   
   class << self
     def attacks
       # normalize from hash input to Attack
       @attacks = @attacks.map do |val|
-        Hash === val ? XssAttack.new(val) : val
+        Hash === val ? Attack.new(val) : val
       end
       @attacks
     end

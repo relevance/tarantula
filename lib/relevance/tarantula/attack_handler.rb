@@ -1,10 +1,10 @@
 require 'hpricot'
 
-class Relevance::Tarantula::XssDocumentCheckerHandler 
+class Relevance::Tarantula::AttackHandler 
   include ERB::Util
   
   def attacks
-    Relevance::Tarantula::XssFormSubmission.attacks
+    Relevance::Tarantula::AttackFormSubmission.attacks.select(&:output)
   end
   
   def handle(result)

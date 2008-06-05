@@ -57,8 +57,8 @@ require 'relevance/tarantula/transform'
 require 'relevance/tarantula/crawler'
 require 'relevance/tarantula/form'
 require 'relevance/tarantula/form_submission'
-require 'relevance/tarantula/xss_attack'
-require 'relevance/tarantula/xss_form_submission'
-require 'relevance/tarantula/xss_document_checker_handler'
+require 'relevance/tarantula/attack'
+require 'relevance/tarantula/attack_form_submission'
+require 'relevance/tarantula/attack_handler'
 
 require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']

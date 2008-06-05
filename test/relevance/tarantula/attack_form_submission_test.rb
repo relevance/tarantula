@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
-describe "Relevance::Tarantula::XssFormSubmission" do
+describe "Relevance::Tarantula::AttackFormSubmission" do
   
   # TODO: add more from field types to this example form as needed
   before do
@@ -17,7 +17,7 @@ describe "Relevance::Tarantula::XssFormSubmission" do
 </form>
 END
     @form = Relevance::Tarantula::Form.new(@tag.at('form'))
-    @fs = Relevance::Tarantula::XssFormSubmission.new(@form, XssAttack.new({:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'}))
+    @fs = Relevance::Tarantula::AttackFormSubmission.new(@form, Attack.new({:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'}))
   end
   
   it "can mutate text areas" do
@@ -49,20 +49,20 @@ END
   end
   
   it "processes all its attacks" do
-    XssFormSubmission.stubs(:attacks).returns([
-      XssAttack.new({:name => 'foo_name1', :input => 'foo_input', :output => 'foo_output'}),
-      XssAttack.new({:name => 'foo_name2', :input => 'foo_input', :output => 'foo_output'}),
+    AttackFormSubmission.stubs(:attacks).returns([
+      Attack.new({:name => 'foo_name1', :input => 'foo_input', :output => 'foo_output'}),
+      Attack.new({:name => 'foo_name2', :input => 'foo_input', :output => 'foo_output'}),
     ])
-    Relevance::Tarantula::XssFormSubmission.mutate(@form).size.should == 2
+    Relevance::Tarantula::AttackFormSubmission.mutate(@form).size.should == 2
   end
   
-  it "maps hash attacks to XssAttack instances" do
-    XssFormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
-    XssFormSubmission.attacks.should == [XssAttack.new({:name => "attack name"})]
+  it "maps hash attacks to Attack instances" do
+    AttackFormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
+    AttackFormSubmission.attacks.should == [Attack.new({:name => "attack name"})]
   end
 end
 
-describe "Relevance::Tarantula::XssFormSubmission for a crummy form" do
+describe "Relevance::Tarantula::AttackFormSubmission for a crummy form" do
   before do
     @tag = Hpricot(<<END)
 <form action="/session" method="post">
@@ -70,7 +70,7 @@ describe "Relevance::Tarantula::XssFormSubmission for a crummy form" do
 </form>
 END
     @form = Relevance::Tarantula::Form.new(@tag.at('form'))
-    @fs = Relevance::Tarantula::XssFormSubmission.new(@form, {:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'})
+    @fs = Relevance::Tarantula::AttackFormSubmission.new(@form, {:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'})
   end
   
   it "ignores unnamed inputs" do

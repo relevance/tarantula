@@ -1,4 +1,4 @@
-class Relevance::Tarantula::XssAttack
+class Relevance::Tarantula::Attack
   HASHABLE_ATTRS = [:name, :input, :output]
   attr_accessor *HASHABLE_ATTRS
   def initialize(hash)
@@ -8,7 +8,7 @@ class Relevance::Tarantula::XssAttack
     end
   end
   def ==(other)
-    XssAttack === other && HASHABLE_ATTRS.all? { |attr| send(attr) == other.send(attr)}
+    Attack === other && HASHABLE_ATTRS.all? { |attr| send(attr) == other.send(attr)}
   end
 end
 
