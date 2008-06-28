@@ -47,6 +47,8 @@ class Relevance::Tarantula::Crawler
   end
   
   def crawl(url = "/")
+    orig_links_to_crawl = @links_to_crawl.dup
+    orig_forms_to_crawl = @forms_to_crawl.dup
     @times_to_crawl.times do |i|
       queue_link url
       do_crawl
@@ -56,6 +58,8 @@ class Relevance::Tarantula::Crawler
       if i + 1 < @times_to_crawl
         @links_queued = Set.new
         @form_signatures_queued = Set.new
+        @links_to_crawl = orig_links_to_crawl
+        @forms_to_crawl = orig_forms_to_crawl
         @referrers = {}
       end
     end

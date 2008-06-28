@@ -141,6 +141,21 @@ describe 'Relevance::Tarantula::Crawler#crawling' do
     crawler.expects(:blip)
     crawler.crawl_queued_forms
   end
+  
+  it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
+    crawler = Crawler.new
+    crawler.proxy = stub
+    response = stub(:code => "200")
+    crawler.links_to_crawl = [:stub_1]
+    crawler.proxy.expects(:get).returns(response).times(4) # (stub_1 and "/") * 2
+    crawler.forms_to_crawl << stub_everything(:method => "post", 
+                                              :action => "/foo",
+                                              :data => "some data",
+                                              :to_s => "stub")
+    crawler.proxy.expects(:post).returns(response).times(2)
+    crawler.times_to_crawl = 2
+    crawler.crawl
+  end
 end
 
 describe 'Crawler blip' do
