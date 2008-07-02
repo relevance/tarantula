@@ -77,7 +77,7 @@ t.allow_404_for %r{/users/\d+/}
 
 == Bugs/Requests ==
 
-Please submit your bug reports, patches or feature requests as a ticket under the component "tarantula".  You'll have to create an account (Sorry!  Otherwise we'd get way too much spam).
+Please submit your bug reports, patches or feature requests as a ticket under the component "tarantula" on our Trac instance here: http://opensource.thinkrelevance.com/.  You'll have to create an account (Sorry!  Otherwise we'd get way too much spam).
 
 == License and Copyright ==
 
