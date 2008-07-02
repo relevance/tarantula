@@ -144,6 +144,7 @@ describe 'Relevance::Tarantula::Crawler#crawling' do
   
   it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
     crawler = Crawler.new
+    stub_puts_and_print(crawler)
     crawler.proxy = stub
     response = stub(:code => "200")
     crawler.links_to_crawl = [:stub_1]

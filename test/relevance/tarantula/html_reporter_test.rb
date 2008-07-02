@@ -50,6 +50,7 @@ END
     Relevance::Tarantula::Result.any_instance.stubs(:rails_root).returns("STUB_ROOT")
     # results = stub(:successes => @results, :failures => @results)
     reporter = Relevance::Tarantula::HtmlReporter.new(test_output_dir)
+    stub_puts_and_print(reporter)
     (@success_results + @fail_results).each {|r| reporter.report(r)}
     reporter.finish_report
     File.should.exist @index
