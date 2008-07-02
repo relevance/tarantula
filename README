@@ -8,7 +8,7 @@ Tarantula is a big fuzzy spider. It crawls your Rails application, fuzzing data 
 
 {{{
 #!sh
-script/plugin install http://opensource.thinkrelevance.com/svn/rubygems/tarantula/trunk tarantula
+script/plugin install git://github.com/relevance/tarantula.git tarantula
 }}}
 
 == Dependencies ==
