@@ -23,6 +23,7 @@ class Test::Unit::TestCase
     File.join(File.dirname(__FILE__), "..", "tmp", "test_output")
   end
 
+  # TODO change puts/print to use a single method for logging, which will then make the stubbing cleaner
   def stub_puts_and_print(obj)
     obj.stubs(:puts)
     obj.stubs(:print)
