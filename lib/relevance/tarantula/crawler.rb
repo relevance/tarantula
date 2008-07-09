@@ -47,6 +47,8 @@ class Relevance::Tarantula::Crawler
   end
   
   def crawl(url = "/")
+    orig_links_queued = @links_queued.dup
+    orig_form_signatures_queued = @form_signatures_queued.dup
     orig_links_to_crawl = @links_to_crawl.dup
     orig_forms_to_crawl = @forms_to_crawl.dup
     @times_to_crawl.times do |i|
@@ -56,8 +58,8 @@ class Relevance::Tarantula::Crawler
       puts "#{(i+1).ordinalize} crawl" if @times_to_crawl > 1
       
       if i + 1 < @times_to_crawl
-        @links_queued = Set.new
-        @form_signatures_queued = Set.new
+        @links_queued = orig_links_queued
+        @form_signatures_queued = orig_form_signatures_queued
         @links_to_crawl = orig_links_to_crawl
         @forms_to_crawl = orig_forms_to_crawl
         @referrers = {}
@@ -82,7 +84,7 @@ class Relevance::Tarantula::Crawler
   
   def crawl_queued_links
     while (link = @links_to_crawl.pop)
-      response = proxy.get link
+      response = proxy.send(link.method, link.href)
       log "Response #{response.code} for #{link}"
       handle_link_results(link, response)
       blip
@@ -98,8 +100,8 @@ class Relevance::Tarantula::Crawler
   def handle_link_results(link, response)
     handlers.each do |h| 
       begin
-        save_result h.handle(Result.new(:method => "get", 
-                                       :url => link, 
+        save_result h.handle(Result.new(:method => link.method, 
+                                       :url => link.href, 
                                        :response => response, 
                                        :log => grab_log!,
                                        :referrer => referrers[link]).freeze)
@@ -154,8 +156,8 @@ class Relevance::Tarantula::Crawler
     end
   end
 
-  def should_skip_link?(url)
-    should_skip_url?(url) || @links_queued.member?(url)
+  def should_skip_link?(link)
+    should_skip_url?(link.href) || @links_queued.member?(link)
   end
   
   def should_skip_form_submission?(fs)
@@ -172,10 +174,11 @@ class Relevance::Tarantula::Crawler
   end
   
   def queue_link(dest, referrer = nil)
-    dest = transform_url(dest)
+    dest = Link.new(dest)
+    dest.href = transform_url(dest.href)
     return if should_skip_link?(dest)
     @referrers[dest] = referrer if referrer
-    @links_to_crawl << dest 
+    @links_to_crawl << dest
     @links_queued << dest
     dest
   end

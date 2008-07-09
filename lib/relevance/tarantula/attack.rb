@@ -1,5 +1,5 @@
 class Relevance::Tarantula::Attack
-  HASHABLE_ATTRS = [:name, :input, :output]
+  HASHABLE_ATTRS = [:name, :input, :output, :description]
   attr_accessor *HASHABLE_ATTRS
   def initialize(hash)
     hash.each do |k,v|

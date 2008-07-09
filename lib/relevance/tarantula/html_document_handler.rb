@@ -22,10 +22,10 @@ class Relevance::Tarantula::HtmlDocumentHandler
     return unless response.html?
     body = html_doc_without_stderr_noise(response.body)
     body.search('a').each do |tag|
-      queue_link(tag['href'], url)
+      queue_link(tag, url)
     end
     body.search('link').each do |tag|
-      queue_link(tag['href'], url)
+      queue_link(tag, url)
     end
     body.search('form').each do |form|
       form['action'] = url unless form['action']

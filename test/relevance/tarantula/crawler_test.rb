@@ -76,8 +76,8 @@ describe 'Relevance::Tarantula::Crawler queuing' do
     crawler = Crawler.new
     crawler.expects(:transform_url).with("/url").returns("/transformed")
     crawler.queue_link("/url")
-    crawler.links_to_crawl.should == ["/transformed"]
-    crawler.links_queued.should == Set.new("/transformed")
+    crawler.links_to_crawl.should == [Relevance::Tarantula::Link.new("/transformed")]
+    crawler.links_queued.should == Set.new([Relevance::Tarantula::Link.new("/transformed")])
   end
   
   it 'queues and remembers forms' do
@@ -92,7 +92,7 @@ describe 'Relevance::Tarantula::Crawler queuing' do
   it 'remembers link referrer if there is one' do
     crawler = Crawler.new
     crawler.queue_link("/url", "/some-referrer")
-    crawler.referrers.should == {"/url" => "/some-referrer"}
+    crawler.referrers.should == {Relevance::Tarantula::Link.new("/url") => "/some-referrer"}
   end
   
 end
@@ -121,7 +121,7 @@ describe 'Relevance::Tarantula::Crawler#crawling' do
     crawler = Crawler.new
     crawler.proxy = stub
     response = stub(:code => "200")
-    crawler.links_to_crawl = [:stub_1, :stub_2]
+    crawler.links_to_crawl = [stub(:href => "/foo1", :method => :get), stub(:href => "/foo2", :method => :get)]
     crawler.proxy.expects(:get).returns(response).times(2)
     crawler.expects(:log).times(2)
     crawler.expects(:handle_link_results).times(2)
@@ -147,13 +147,14 @@ describe 'Relevance::Tarantula::Crawler#crawling' do
     stub_puts_and_print(crawler)
     crawler.proxy = stub
     response = stub(:code => "200")
-    crawler.links_to_crawl = [:stub_1]
-    crawler.proxy.expects(:get).returns(response).times(4) # (stub_1 and "/") * 2
+    crawler.links_to_crawl = [stub(:href => "/foo", :method => :get)]
+    crawler.proxy.expects(:get).returns(response).times(4) # (stub and "/") * 2
     crawler.forms_to_crawl << stub_everything(:method => "post", 
                                               :action => "/foo",
                                               :data => "some data",
                                               :to_s => "stub")
     crawler.proxy.expects(:post).returns(response).times(2)
+    crawler.expects(:links_completed_count).returns(*(0..6).to_a).times(6)
     crawler.times_to_crawl = 2
     crawler.crawl
   end
@@ -219,9 +220,9 @@ describe 'Relevance::Tarantula::Crawler' do
   
   it "skips links that are already queued" do
     crawler = Crawler.new
-    crawler.should_skip_link?("/foo").should == false
-    crawler.queue_link("/foo").should == "/foo"
-    crawler.should_skip_link?("/foo").should == true
+    crawler.should_skip_link?(Relevance::Tarantula::Link.new("/foo")).should == false
+    crawler.queue_link("/foo").should == Relevance::Tarantula::Link.new("/foo")
+    crawler.should_skip_link?(Relevance::Tarantula::Link.new("/foo")).should == true
   end
   
 end
@@ -232,25 +233,25 @@ describe "Crawler link skipping" do
   end
   
   it "skips links that are too long" do
-    @crawler.should_skip_link?("/foo").should == false
+    @crawler.should_skip_link?(Relevance::Tarantula::Link.new("/foo")).should == false
     @crawler.max_url_length = 2
     @crawler.expects(:log).with("Skipping long url /foo")
-    @crawler.should_skip_link?("/foo").should == true
+    @crawler.should_skip_link?(Relevance::Tarantula::Link.new("/foo")).should == true
   end
   
   it "skips outbound links (those that begin with http)" do
     @crawler.expects(:log).with("Skipping http-anything")
-    @crawler.should_skip_link?("http-anything").should == true
+    @crawler.should_skip_link?(Relevance::Tarantula::Link.new("http-anything")).should == true
   end
 
   it "skips javascript links (those that begin with javascript)" do
     @crawler.expects(:log).with("Skipping javascript-anything")
-    @crawler.should_skip_link?("javascript-anything").should == true
+    @crawler.should_skip_link?(Relevance::Tarantula::Link.new("javascript-anything")).should == true
   end
 
   it "skips mailto links (those that begin with http)" do
     @crawler.expects(:log).with("Skipping mailto-anything")
-    @crawler.should_skip_link?("mailto-anything").should == true
+    @crawler.should_skip_link?(Relevance::Tarantula::Link.new("mailto-anything")).should == true
   end
   
   it 'skips blank links' do
@@ -263,7 +264,7 @@ describe "Crawler link skipping" do
   it "logs and skips links that match a pattern" do
     @crawler.expects(:log).with("Skipping /the-red-button")
     @crawler.skip_uri_patterns << /red-button/
-    @crawler.queue_link("/blue-button").should == "/blue-button"
+    @crawler.queue_link("/blue-button").should == Relevance::Tarantula::Link.new("/blue-button")
     @crawler.queue_link("/the-red-button").should == nil
   end   
   

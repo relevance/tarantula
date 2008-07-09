@@ -2,6 +2,8 @@ require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 include Relevance::Tarantula
 
 describe "Relevance::Tarantula::HtmlDocumentHandler" do
+  include ActionView::Helpers::UrlHelper
+  
   before do
     @handler = Relevance::Tarantula::HtmlDocumentHandler.new(nil)
   end
@@ -20,12 +22,27 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
   end
   
   it "queues anchor tags" do
-    @handler.expects(:queue_link).with("/foo", nil)
+    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/foo" && args[1] == nil}
     @handler.handle(Result.new(:response => stub(:html? => true, :body => '<a href="/foo">foo</a>')))
   end
 
+  it "queues anchor tags with POST 'method'" do
+    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/foo" && args[1] == nil}
+    @handler.handle(Result.new(:response => stub(:html? => true, :body => %Q{<a href="/foo" onclick="#{method_javascript_function(:post)}">foo</a>})))
+  end
+
+  it "queues anchor tags with PUT 'method'" do
+    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/foo" && args[1] == nil}
+    @handler.handle(Result.new(:response => stub(:html? => true, :body => %Q{<a href="/foo" onclick="#{method_javascript_function(:put)}">foo</a>})))
+  end
+
+  it "queues anchor tags with DELETE 'method'" do
+    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/foo" && args[1] == nil}
+    @handler.handle(Result.new(:response => stub(:html? => true, :body => %Q{<a href="/foo" onclick="#{method_javascript_function(:delete)}">foo</a>})))
+  end
+
   it "queues link tags" do
-    @handler.expects(:queue_link).with("/bar", nil)
+    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/bar" && args[1] == nil}
     @handler.handle(Result.new(:response => stub(:html? => true, :body => '<link href="/bar">bar</a>')))
   end
   
@@ -38,5 +55,11 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
     @handler.expects(:queue_form).with{|tag,referrer| tag['action'].should == '/page-url'; true }
     @handler.handle(Result.new(:url => "/page-url", :response => stub(:html? => true, :body => '<form>stuff</form>')))
   end
+  
+  # method_javascript_function needs this method
+  def protect_against_forgery?
+    false
+  end
+  
 end
 

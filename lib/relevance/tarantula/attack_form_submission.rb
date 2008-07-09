@@ -11,6 +11,12 @@ class Relevance::Tarantula::AttackFormSubmission
       end
       @attacks
     end
+    def attacks=(atts)
+      # normalize from hash input to Attack
+      @attacks = atts.map do |val|
+        Hash === val ? Attack.new(val) : val
+      end
+    end
   end
   @attacks = []
   

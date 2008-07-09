@@ -60,5 +60,6 @@ require 'relevance/tarantula/form_submission'
 require 'relevance/tarantula/attack'
 require 'relevance/tarantula/attack_form_submission'
 require 'relevance/tarantula/attack_handler'
+require 'relevance/tarantula/link'
 
 require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']
