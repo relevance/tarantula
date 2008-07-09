@@ -20,7 +20,7 @@ class Relevance::Tarantula::Link
   attr_accessor :href
   
   def initialize(link)
-    if String === link || link.blank?
+    if String === link || link.nil?
       @href = link
       @method = :get
     else # should be a tag
