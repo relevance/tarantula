@@ -5,7 +5,7 @@ class TarantulaTest < ActionController::IntegrationTest
   fixtures :all
 
   def test_tarantula
-    post '/session', :login => 'quentin', :password => 'test'
+    post '/session', :login => 'quentin', :password => 'monkey'
     follow_redirect!
     tarantula_crawl(self)
   end
