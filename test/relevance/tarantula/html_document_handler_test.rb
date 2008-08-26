@@ -32,7 +32,7 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
   
   it "queues forms" do
     @handler.expects(:queue_form).with{|tag,referrer| Hpricot::Elem === tag}
-    @handler.handle(Result.new(:response => stub(:html? => true, :body => '<form>stuff</form>')))
+    @handler.handle(Result.new(:url => "/page-url", :response => stub(:html? => true, :body => '<form>stuff</form>')))
   end
   
   it "infers form action from page url if form is not explicit" do
