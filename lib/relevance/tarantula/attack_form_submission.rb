@@ -1,5 +1,3 @@
-include Relevance::Tarantula
-
 class Relevance::Tarantula::AttackFormSubmission
   attr_accessor :method, :action, :data, :attack
   
@@ -7,14 +5,14 @@ class Relevance::Tarantula::AttackFormSubmission
     def attacks
       # normalize from hash input to Attack
       @attacks = @attacks.map do |val|
-        Hash === val ? Attack.new(val) : val
+        Hash === val ? Relevance::Tarantula::Attack.new(val) : val
       end
       @attacks
     end
     def attacks=(atts)
       # normalize from hash input to Attack
       @attacks = atts.map do |val|
-        Hash === val ? Attack.new(val) : val
+        Hash === val ? Relevance::Tarantula::Attack.new(val) : val
       end
     end
   end
