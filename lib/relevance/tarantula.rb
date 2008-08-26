@@ -16,8 +16,8 @@ require 'action_controller'
 gem 'facets'
 gem 'htmlentities'
 
+require 'facets/kernel/meta'
 require 'facets/metaid'
-require 'facets/meta'
 require 'htmlentities'
 
 module Relevance; end
