@@ -13,12 +13,24 @@ require 'action_controller'
 #$: << File.join(xss_shield_path, "lib")
 #require File.join(xss_shield_path, "init")
 
-gem 'facets'
-gem 'htmlentities'
+REQUIRED_GEMS = ['facets', '>= 2.4.3'],
+                 'htmlentities',
+                 'hpricot'
+      
+gems_missing = false
+REQUIRED_GEMS.each do |name|
+  begin
+    gem *name
+  rescue Gem::LoadError => e
+    puts e
+    gems_missing = true
+  end
+end
+exit if gems_missing
 
+require 'htmlentities'
 require 'facets/kernel/meta'
 require 'facets/metaid'
-require 'htmlentities'
 
 module Relevance; end
 module Relevance; module CoreExtensions; end; end
