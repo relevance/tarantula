@@ -21,7 +21,7 @@ class Relevance::Tarantula::IOReporter
     end
   end
   
-  def finish_report
+  def finish_report(test_name)
     unless (failures).empty?
       io.puts "****** FAILURES"
       failures.each do |failure|

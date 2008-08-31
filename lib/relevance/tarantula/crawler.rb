@@ -8,7 +8,7 @@ class Relevance::Tarantula::Crawler
   attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
                 :form_signatures_queued, :max_url_length, :response_code_handler,
-                :times_to_crawl, :fuzzers
+                :times_to_crawl, :fuzzers, :test_name
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes
    
   def initialize
@@ -104,7 +104,8 @@ class Relevance::Tarantula::Crawler
                                        :url => link.href, 
                                        :response => response, 
                                        :log => grab_log!,
-                                       :referrer => referrers[link]).freeze)
+                                       :referrer => referrers[link],
+                                       :test_name => test_name).freeze)
       rescue Exception => e
         log "error handling #{link} #{e.message}"
         # TODO: pass to results
@@ -140,7 +141,8 @@ class Relevance::Tarantula::Crawler
                                      :response => response, 
                                      :log => grab_log!,   
                                      :referrer => form.action,
-                                     :data => form.data.inspect).freeze)
+                                     :data => form.data.inspect,
+                                     :test_name => test_name).freeze)
     end
   end
                
@@ -204,7 +206,7 @@ class Relevance::Tarantula::Crawler
     errors = []
     reporters.each do |reporter|
       begin
-        reporter.finish_report
+        reporter.finish_report(test_name)
       rescue RuntimeError => e
         errors << e
       end

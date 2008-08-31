@@ -1,0 +1,34 @@
+<div id="<%= test_name %>">
+  <% %w{failures successes}.each do |result_type| %>
+    <table class="grid tablesorter" cellspacing="0">
+      <caption><%= result_type.capitalize %> (<%= send(result_type).size %>)</caption>
+      <thead>
+        <tr>
+          <th class="sort asc"><span>URL</span><span class="sort"><em>&#8613;</em></span></th>
+          <th><span>Action</span><span class="sort"><em>&#8613;</em></span></th>
+          <th><span>Response</span><span class="sort"><em>&#8613;</em></span></th>
+          <th><span>Description</span><span class="sort"><em>&#8613;</em></span></th>
+          <th><span>Referrer</span><span class="sort"><em>&#8613;</em></span></th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            Footer
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each do |result| %>
+          <tr>
+            <td class="left"><a href="<%= "#{test_name}/#{result.file_name}" %>"><%= result.url.ellipsize(30) %></a></td>
+            <td class="center"><%= result.method %></td>
+            <td class="center"><span class="<%= class_for_code(result.code) %>"><%= result.code %></span></td>
+            <td><%= result.description %></td>
+            <td><%= result.referrer.ellipsize(30) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

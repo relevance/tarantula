@@ -51,7 +51,6 @@ module Relevance
   end
 end
      
-
 require 'relevance/core_extensions/test_case'
 require 'relevance/core_extensions/ellipsize'
 require 'relevance/core_extensions/file'

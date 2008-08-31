@@ -6,10 +6,11 @@ describe "Relevance::Tarantula::RailsIntegrationProxy rails_integration_test" do
     Crawler.any_instance.stubs(:crawl)
     Crawler.any_instance.stubs(:rails_root).returns("STUB_RAILS_ROOT")
     RailsIntegrationProxy.stubs(:rails_root).returns("STUB_RAILS_ROOT")
+    RailsIntegrationProxy.stubs(:new).returns(stub(:integration_test => stub(:method_name => @test_name)))
+    @test_name = "test_user_pages"
   }
 
-  it "strips leading hostname from link urls" do
-    RailsIntegrationProxy.stubs(:new)   
+  it "strips leading hostname from link urls" do    
     crawler = RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com"))
     crawler.transform_url("http://foo.com/path").should == "/path"
     crawler.transform_url("http://bar.com/path").should == "http://bar.com/path"

@@ -1,77 +1,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/> 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<meta name="Author" content="Erik Yowell; erik[at]thinkrelevance.com"/>
-  <title>Tarantula report</title>
-	<script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="javascripts/tarantula.js"></script>
-	<link type="text/css" media="screen" rel="stylesheet" href="stylesheets/tarantula.css"/>
-</head>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="Author" content="Erik Yowell; erik[at]thinkrelevance.com"/>
+    <title>Tarantula report</title>
+    <script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="javascripts/jquery-ui-tabs.js"></script>
+    <script type="text/javascript" src="javascripts/tarantula.js"></script>
+    <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/tarantula.css"/>
+    <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/ui.tabs.css"/>
+  </head>
 
-<body id="top">
-  
-	<div id="container">
-		
-		<div id="header">
-			<hr class="top"/>
-			<h1><span>Tarantula : Eight Legs, Two Fangs, and an Attitude</span></h1>
-		  <ul class="navigation">
-				<li><a href="#" class="result-all"><span>All</span> <em><%= successes.size + failures.size %></em></a></li>
-				<li><a href="#" class="result-failure"><span>Failures</span> <em><%= failures.size %></em></a></li>
-				<li><a href="#" class="result-success"><span>Successful</span> <em><%= successes.size %></em></a></li>
-			</ul>
-		</div>             
-	</div> 
-	<div id="page-container">
-		<hr class="top"/>
-		<div id="page">
-      <p>Generated on <%= Time.now %></p>
+  <body id="top">
 
-      <% %w{failures successes}.each do |result_type| %>
-        <table class="grid tablesorter" cellspacing="0">
-          <caption><%= result_type.capitalize %> (<%= send(result_type).size %>)</caption>
-          <thead>
-            <tr>
-              <th class="sort asc"><span>URL</span><span class="sort"><em>&#8613;</em></span></th>
-              <th><span>Action</span><span class="sort"><em>&#8613;</em></span></th>
-              <th><span>Response</span><span class="sort"><em>&#8613;</em></span></th>
-              <th><span>Description</span><span class="sort"><em>&#8613;</em></span></th>
-              <th><span>Referrer</span><span class="sort"><em>&#8613;</em></span></th>
-            </tr>
-          </thead>
-					<tfoot>
-						<tr>
-							<td colspan="5">
-								Footer
-							</td>
-						</tr>
-					</tfoot>    
-          <tbody>
-            <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each do |result| %>
-            <tr>
-              <td class="left"><a href="<%= result.file_name%>"><%= result.url.ellipsize(30) %></a></td>
-              <td class="center"><%= result.method %></td>
-              <td class="center"><span class="<%= class_for_code(result.code) %>"><%= result.code %></span></td>
-              <td><%= result.description %></td>
-              <td><%= result.referrer.ellipsize(30) %></td>
-            </tr>
-            <% end %>
-          </tbody>
-				</table>
-			<% end %>
-		</div>
-		<div id="sidebar">         
-			<h3><span>Tarantula</span></h3>
-			<p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
-		</div>
-	</div>
-</body>
+    <div id="container">
+
+      <div id="header">
+        <hr class="top"/>
+        <h1><span>Tarantula : Eight Legs, Two Fangs, and an Attitude</span></h1>
+        <ul class="navigation">
+          <li><a href="#" class="result-all"><span>All</span> <em><%= successes.size + failures.size %></em></a></li>
+          <li><a href="#" class="result-failure"><span>Failures</span> <em><%= failures.size %></em></a></li>
+          <li><a href="#" class="result-success"><span>Successful</span> <em><%= successes.size %></em></a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="page-container">
+      <hr class="top"/>
+      <div id="page">
+        <p>Generated on <%= Time.now %></p>
+        <div id="tabs-container">
+          <ul>
+          </ul>
+        </div>
+      </div>
+      <div id="sidebar">
+        <h3><span>Tarantula</span></h3>
+        <p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://opensource.thinkrelevance.com">http://opensource.thinkrelevance.com</a>.</p>
+      </div>
+    </div>
+  </body>
 
 </html>
-
-

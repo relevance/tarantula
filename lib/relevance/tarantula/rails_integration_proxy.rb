@@ -9,7 +9,7 @@ class Relevance::Tarantula::RailsIntegrationProxy
   def self.rails_integration_test(integration_test, options = {})
     t = Crawler.new
     t.max_url_length = options[:max_url_length] if options[:max_url_length] 
-    t.proxy = RailsIntegrationProxy.new(integration_test)
+    t.proxy = RailsIntegrationProxy.new(integration_test)    
     t.handlers << HtmlDocumentHandler.new(t)
     t.handlers << InvalidHtmlHandler.new
     t.log_grabber = Relevance::Tarantula::LogGrabber.new(File.join(rails_root, "log/test.log"))
@@ -18,6 +18,7 @@ class Relevance::Tarantula::RailsIntegrationProxy
       [/\?\d+$/, ''],                               # strip trailing numbers for assets
       [/^http:\/\/#{integration_test.host}/, '']    # strip full path down to relative
     ]
+    t.test_name = t.proxy.integration_test.method_name
     t.reporters << Relevance::Tarantula::HtmlReporter.new(t.report_dir)
     t
   end

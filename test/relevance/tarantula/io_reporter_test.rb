@@ -7,6 +7,6 @@ describe 'Relevance::Tarantula::IOReporter' do
     reporter.report stub(:code => "404", :url => "/uh-oh", :success => false)
     $stderr.expects(:puts).with("****** FAILURES")
     $stderr.expects(:puts).with("404: /uh-oh")
-    lambda {reporter.finish_report}.should.raise RuntimeError
+    lambda {reporter.finish_report("test_user_pages")}.should.raise RuntimeError
   end
 end

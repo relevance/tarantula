@@ -45,7 +45,8 @@ describe 'Relevance::Tarantula::Crawler handle_form_results' do
                     :response => response, 
                     :referrer => :action_stub, 
                     :log => nil, 
-                    :method => :stub_method}
+                    :method => :stub_method,
+                    :test_name => nil}
     result = Result.new(result_args)
     Result.expects(:new).with(result_args).returns(result)
     crawler = Crawler.new

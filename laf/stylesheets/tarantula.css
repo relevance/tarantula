@@ -265,19 +265,19 @@ h1 > span {
 	width: 75%;
 }
 
-#page p, #page ul li, #sidebar p, #sidebar ul li {
+p, ul li, #sidebar p, #sidebar ul li {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 82%;
 	margin: .45em;
 	text-align: justify;
 }
 
-#page ul {
+ul {
 	margin-left: 2%;
 	
 }
 
-#page ul li {
+ul li {
 	list-style: square;
 	margin: .15em 1.5%;
 }
@@ -623,8 +623,6 @@ span.r5 {
 	background-color: #c40000;
 	border: 1px solid #dc0000;
 }
-
-
 
 /* Fixes */
 
