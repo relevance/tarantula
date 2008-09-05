@@ -3,30 +3,15 @@ require 'forwardable'
 TARANTULA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "../.."))
 
 # bringing in xss-shield requires a bunch of other dependencies
-# still not certain about this, if it ruins your world please let me know           
-require 'erb'    
-gem 'activesupport'                                                        
+# still not certain about this, if it ruins your world please let me know
+require 'erb'
+gem 'activesupport'
 gem 'actionpack'
 require 'active_support'
 require 'action_controller'
 #xss_shield_path = File.join(TARANTULA_ROOT, %w{vendor xss-shield})
 #$: << File.join(xss_shield_path, "lib")
 #require File.join(xss_shield_path, "init")
-
-REQUIRED_GEMS = ['facets', '>= 2.4.3'],
-                 'htmlentities',
-                 'hpricot'
-      
-gems_missing = false
-REQUIRED_GEMS.each do |name|
-  begin
-    gem *name
-  rescue Gem::LoadError => e
-    puts e
-    gems_missing = true
-  end
-end
-exit if gems_missing
 
 require 'htmlentities'
 require 'facets/kernel/meta'
@@ -35,7 +20,9 @@ require 'facets/metaid'
 module Relevance; end
 module Relevance; module CoreExtensions; end; end
 module Relevance
-  module Tarantula 
+  module Tarantula
+    VERSION = "0.0.1"
+
     def tarantula_home
       File.expand_path(File.join(File.dirname(__FILE__), "../.."))
     end
@@ -47,30 +34,30 @@ module Relevance
     end
     def verbose
       ENV["VERBOSE"]
-    end    
+    end
   end
 end
-     
-require 'relevance/core_extensions/test_case'
-require 'relevance/core_extensions/ellipsize'
-require 'relevance/core_extensions/file'
-require 'relevance/core_extensions/response'
 
-require 'relevance/tarantula/html_reporter'
-require 'relevance/tarantula/html_report_helper'
-require 'relevance/tarantula/io_reporter'
-require 'relevance/tarantula/recording'
-require 'relevance/tarantula/response'
-require 'relevance/tarantula/result'
-require 'relevance/tarantula/log_grabber'
-require 'relevance/tarantula/invalid_html_handler'
-require 'relevance/tarantula/transform'
-require 'relevance/tarantula/crawler'
-require 'relevance/tarantula/form'
-require 'relevance/tarantula/form_submission'
-require 'relevance/tarantula/attack'
-require 'relevance/tarantula/attack_form_submission'
-require 'relevance/tarantula/attack_handler'
-require 'relevance/tarantula/link'
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "test_case"))
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "ellipsize"))
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "file"))
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "response"))
 
-require 'relevance/tarantula/tidy_handler' if ENV['TIDY_PATH']
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_reporter"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_report_helper"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "io_reporter"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "recording"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "response"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "result"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "log_grabber"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "invalid_html_handler"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "transform"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "crawler"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form_submission"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_form_submission"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_handler"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "link"))
+
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "tidy_handler")) if ENV['TIDY_PATH']
