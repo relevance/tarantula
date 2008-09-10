@@ -3,9 +3,9 @@ $:.unshift "#{basedir}/../lib"
 require 'rubygems' 
 gem 'ruby-debug'
 gem 'test-spec'
-gem 'activesupport'
 gem 'actionpack'
 gem 'activerecord'
+gem 'activesupport'
 
 require 'test/spec'
 require 'mocha'    
