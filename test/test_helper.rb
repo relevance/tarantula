@@ -19,6 +19,7 @@ require 'active_support'
 require 'action_controller'
 
 require 'redgreen' unless (Object.const_defined?("TextMate") || ENV["EMACS"]) rescue nil # just a nice to have, don't blow up if not there
+
 class Test::Unit::TestCase 
   def test_output_dir
     File.join(File.dirname(__FILE__), "..", "tmp", "test_output")
