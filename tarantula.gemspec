@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{tarantula}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new("= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance"]
-  s.date = %q{2008-09-09}
+  s.date = %q{2008-09-10}
   s.description = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
   s.email = %q{opensource@thinkrelevance.com}
   s.extra_rdoc_files = ["MIT-LICENSE", "README.rdoc", "lib/relevance/core_extensions/ellipsize.rb", "lib/relevance/core_extensions/file.rb", "lib/relevance/core_extensions/response.rb", "lib/relevance/core_extensions/test_case.rb", "lib/relevance/tarantula/attack.rb", "lib/relevance/tarantula/attack_form_submission.rb", "lib/relevance/tarantula/attack_handler.rb", "lib/relevance/tarantula/crawler.rb", "lib/relevance/tarantula/detail.html.erb", "lib/relevance/tarantula/form.rb", "lib/relevance/tarantula/form_submission.rb", "lib/relevance/tarantula/html_document_handler.rb", "lib/relevance/tarantula/html_report_helper.rb", "lib/relevance/tarantula/html_reporter.rb", "lib/relevance/tarantula/index.html.erb", "lib/relevance/tarantula/invalid_html_handler.rb", "lib/relevance/tarantula/io_reporter.rb", "lib/relevance/tarantula/link.rb", "lib/relevance/tarantula/log_grabber.rb", "lib/relevance/tarantula/rails_integration_proxy.rb", "lib/relevance/tarantula/recording.rb", "lib/relevance/tarantula/response.rb", "lib/relevance/tarantula/result.rb", "lib/relevance/tarantula/test_report.html.erb", "lib/relevance/tarantula/tidy_handler.rb", "lib/relevance/tarantula/transform.rb", "lib/relevance/tarantula.rb", "vendor/xss-shield/MIT-LICENSE"]
@@ -26,17 +26,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
       s.add_runtime_dependency(%q<hpricot>, [">= 0"])
       s.add_runtime_dependency(%q<facets>, [">= 2.4.3"])
-      s.add_development_dependency(%q<echoe>, [">= 0"])
+      s.add_development_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_development_dependency(%q<test-spec>, [">= 0"])
     else
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<hpricot>, [">= 0"])
       s.add_dependency(%q<facets>, [">= 2.4.3"])
-      s.add_dependency(%q<echoe>, [">= 0"])
+      s.add_dependency(%q<ruby-debug>, [">= 0"])
+      s.add_dependency(%q<test-spec>, [">= 0"])
     end
   else
     s.add_dependency(%q<htmlentities>, [">= 0"])
     s.add_dependency(%q<hpricot>, [">= 0"])
     s.add_dependency(%q<facets>, [">= 2.4.3"])
-    s.add_dependency(%q<echoe>, [">= 0"])
+    s.add_dependency(%q<ruby-debug>, [">= 0"])
+    s.add_dependency(%q<test-spec>, [">= 0"])
   end
 end

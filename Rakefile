@@ -27,6 +27,7 @@ echoe = Echoe.new('tarantula') do |p|
   p.test_pattern = 'test/**/*_test.rb'
   p.manifest_name = 'manifest.txt'
   p.dependencies = ['htmlentities', 'hpricot', 'facets >=2.4.3']
+  p.development_dependencies = ['ruby-debug', 'test-spec']
 end
 
 desc 'Default: run unit tests.'
