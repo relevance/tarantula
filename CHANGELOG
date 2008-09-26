@@ -1,1 +1,2 @@
+v0.0.5 Make sure we don't include Relevance::Tarantula into Object - will cause issues Rails dependencies and is a bad idea in general; update Rakefile for dev dependencies; another small clean up tasks
 v0.0.1 Tarantula becomes a gem. (Aaron Bedra)
