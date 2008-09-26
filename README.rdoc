@@ -64,7 +64,7 @@ The latest and greatest gem will always be available from Github:
 
 You can also grab it from Rubyforge, where we will push stable releases but may not be as bleeding edge as the Github gem.
 
-		gem install tarantula
+    gem install tarantula
 
 == Bugs/Requests
 
