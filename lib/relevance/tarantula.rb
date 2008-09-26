@@ -1,3 +1,4 @@
+gem 'facets', "= 2.4.3"
 require 'forwardable'
 
 TARANTULA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "../.."))

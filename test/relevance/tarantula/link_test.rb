@@ -47,3 +47,12 @@ describe "Relevance::Tarantula::Link" do
   
 end
 
+describe "possible conflict when user has an AR model named Link" do
+  it "doesnt break with a Link model" do
+    lambda {
+      class Link < ActiveRecord::Base
+      end
+    }.should.not.raise
+  end
+  
+end

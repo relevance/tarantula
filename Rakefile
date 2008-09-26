@@ -6,8 +6,8 @@ require 'rubygems'
 begin
   gem 'technicalpickles-echoe'
 rescue LoadError => e
-  puts "couldn't find the correct version of echoe - please install from forked version on github: http://github.com/technicalpickles/echoe/"
-  puts "sudo gem install technicalpickles-echoe -s http://gems.github.com"
+  puts "Couldn't find the correct version of echoe - please install from forked version on github: http://github.com/technicalpickles/echoe/ ->"
+  puts "sudo gem install technicalpickles-echoe --source http://gems.github.com"
 end
 
 require 'echoe'
