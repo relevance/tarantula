@@ -4,14 +4,6 @@
 
 Tarantula is a big fuzzy spider. It crawls your Rails application, fuzzing data to see what breaks.
 
-== Dependencies
-
-htmlentities
-hpricot
-facets >= 2.4.3
-actionpack
-activesupport
-
 == Usage
 
    #!sh
@@ -63,6 +55,8 @@ tell Tarantula to allow 404s for URLs matching a regexp:
      t.allow_404_for %r{/users/\d+/}
 
 == Install
+
+See the rakefile for dependencies, or just let Rubygems handle it.
 
 The latest and greatest gem will always be available from Github:
 
