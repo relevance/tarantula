@@ -1,5 +1,4 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
-include Relevance::Tarantula
 
 if defined?(Tidy) && ENV['TIDY_PATH']
   describe "Relevance::Tarantula::TidyHandler default" do
