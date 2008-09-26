@@ -17,7 +17,7 @@ describe "Relevance::Tarantula::AttackFormSubmission" do
 </form>
 END
     @form = Relevance::Tarantula::Form.new(@tag.at('form'))
-    @fs = Relevance::Tarantula::AttackFormSubmission.new(@form, Attack.new({:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'}))
+    @fs = Relevance::Tarantula::AttackFormSubmission.new(@form, Relevance::Tarantula::Attack.new({:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'}))
   end
   
   it "can mutate text areas" do
@@ -49,16 +49,16 @@ END
   end
   
   it "processes all its attacks" do
-    AttackFormSubmission.stubs(:attacks).returns([
-      Attack.new({:name => 'foo_name1', :input => 'foo_input', :output => 'foo_output'}),
-      Attack.new({:name => 'foo_name2', :input => 'foo_input', :output => 'foo_output'}),
+    Relevance::Tarantula::AttackFormSubmission.stubs(:attacks).returns([
+      Relevance::Tarantula::Attack.new({:name => 'foo_name1', :input => 'foo_input', :output => 'foo_output'}),
+      Relevance::Tarantula::Attack.new({:name => 'foo_name2', :input => 'foo_input', :output => 'foo_output'}),
     ])
     Relevance::Tarantula::AttackFormSubmission.mutate(@form).size.should == 2
   end
   
   it "maps hash attacks to Attack instances" do
-    AttackFormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
-    AttackFormSubmission.attacks.should == [Attack.new({:name => "attack name"})]
+    Relevance::Tarantula::AttackFormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
+    Relevance::Tarantula::AttackFormSubmission.attacks.should == [Relevance::Tarantula::Attack.new({:name => "attack name"})]
   end
 end
 

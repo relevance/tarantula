@@ -1,29 +1,28 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
-include Relevance::Tarantula
 
 describe "Relevance::Tarantula::RailsIntegrationProxy rails_integration_test" do
   before {
-    Crawler.any_instance.stubs(:crawl)
-    Crawler.any_instance.stubs(:rails_root).returns("STUB_RAILS_ROOT")
-    RailsIntegrationProxy.stubs(:rails_root).returns("STUB_RAILS_ROOT")
-    RailsIntegrationProxy.stubs(:new).returns(stub(:integration_test => stub(:method_name => @test_name)))
+    Relevance::Tarantula::Crawler.any_instance.stubs(:crawl)
+    Relevance::Tarantula::Crawler.any_instance.stubs(:rails_root).returns("STUB_RAILS_ROOT")
+    Relevance::Tarantula::RailsIntegrationProxy.stubs(:rails_root).returns("STUB_RAILS_ROOT")
+    Relevance::Tarantula::RailsIntegrationProxy.stubs(:new).returns(stub(:integration_test => stub(:method_name => @test_name)))
     @test_name = "test_user_pages"
   }
 
   it "strips leading hostname from link urls" do    
-    crawler = RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com"))
+    crawler = Relevance::Tarantula::RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com"))
     crawler.transform_url("http://foo.com/path").should == "/path"
     crawler.transform_url("http://bar.com/path").should == "http://bar.com/path"
   end
   
   it "allows override of max_url_length" do
-    crawler = RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com"), 
+    crawler = Relevance::Tarantula::RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com"), 
                                              :max_url_length => 16)
     crawler.max_url_length.should == 16
   end
 
   it "has some useful defaults" do
-    crawler = RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com")) 
+    crawler = Relevance::Tarantula::RailsIntegrationProxy.rails_integration_test(stub(:host => "foo.com")) 
     crawler.log_grabber.should.not.be nil
   end
 end

@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
 describe "Relevance::Tarantula::HtmlReporter file output" do
-  include Relevance::Tarantula
+
   before do
     FileUtils.rm_rf(test_output_dir)
     FileUtils.mkdir_p(test_output_dir)

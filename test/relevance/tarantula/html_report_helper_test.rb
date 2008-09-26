@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
 
 module HtmlReportHelperSpec
-  include Relevance::Tarantula
   
   # Is there an idiom for this?
   def self.included(base)

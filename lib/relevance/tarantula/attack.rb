@@ -8,7 +8,7 @@ class Relevance::Tarantula::Attack
     end
   end
   def ==(other)
-    Attack === other && HASHABLE_ATTRS.all? { |attr| send(attr) == other.send(attr)}
+    Relevance::Tarantula::Attack === other && HASHABLE_ATTRS.all? { |attr| send(attr) == other.send(attr)}
   end
 end
 

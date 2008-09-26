@@ -1,9 +1,8 @@
 require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
-include Relevance::Tarantula
 
 describe 'Relevance::Tarantula::LogGrabber' do
   before do
-    @grabber = LogGrabber.new(log_file)
+    @grabber = Relevance::Tarantula::LogGrabber.new(log_file)
     FileUtils.mkdir_p(test_output_dir)
   end
 
