@@ -68,11 +68,9 @@ You can also grab it from Rubyforge, where we will push stable releases but may 
 
 == Bugs/Requests
 
-Please submit your bug reports, patches or feature requests as a ticket under the component "tarantula" on our Trac instance here: 
+Please submit your bug reports, patches or feature requests at Lighthouse:
 
-http://opensource.thinkrelevance.com/
-
-You'll have to create an account (Sorry!  Otherwise we'd get way too much spam).
+http://relevance.lighthouseapp.com/projects/17868-tarantula/overview
 
 == License and Copyright
 

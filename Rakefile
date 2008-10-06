@@ -3,13 +3,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rubygems'
 
-begin
-  gem 'technicalpickles-echoe'
-rescue LoadError => e
-  puts "Couldn't find the correct version of echoe - please install from forked version on github: http://github.com/technicalpickles/echoe/ ->"
-  puts "sudo gem install technicalpickles-echoe --source http://gems.github.com"
-end
-
+gem 'echoe', '~> 3.0.1'
 require 'echoe'
 require 'lib/relevance/tarantula.rb'
 
@@ -20,7 +14,7 @@ echoe = Echoe.new('tarantula') do |p|
   p.version = Relevance::Tarantula::VERSION
   p.summary = "A big hairy fuzzy spider that crawls your site, wreaking havoc"
   p.description = "A big hairy fuzzy spider that crawls your site, wreaking havoc"
-  p.url = "http://opensource.thinkrelevance.com/wiki/tarantula"
+  p.url = "http://github.com/relevance/tarantula"
   p.rdoc_pattern = /^(lib|bin)|txt|rdoc|CHANGELOG|MIT-LICENSE$/
   rdoc_template = `allison --path`.strip << ".rb"
   p.rdoc_template = rdoc_template
