@@ -24,16 +24,6 @@ echoe = Echoe.new('tarantula') do |p|
   p.development_dependencies = ['ruby-debug', 'test-spec', 'mocha']
 end
 
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the tarantula plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
-
 desc 'Generate documentation for the tarantula plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
