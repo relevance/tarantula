@@ -16,8 +16,6 @@ Creates a Rails integration test that looks like this, filling in your own auth 
    # in your test
    def test_with_login
        post '/sessions/create', :password => 'your-pass'
-       assert_response :redirect
-       assert_redirected_to '/'
        follow_redirect!
        tarantula_crawl(self)
    end
@@ -36,9 +34,9 @@ If you want to set custom options, you can get access to the crawler and set pro
 
 Assuming your project is at /work/project/:
 
-         #!sh
-         cd /work/project
-         rake tarantula:test
+   #!sh
+   cd /work/project
+   rake tarantula:test
 
 == Verbose Mode
 
@@ -61,6 +59,21 @@ See the rakefile for dependencies, or just let Rubygems handle it.
 The latest and greatest gem will always be available from Github:
 
     gem install relevance-tarantula --source http://gems.github.com
+
+To setup tarantula in your application add the following line into either config/environment.rb or config/environments/test.rb (preferred).
+This assumes that you have Rails 2.1 or higher installed.
+
+    config.gem 'relevance-tarantula', :source => "http://gems.github.com", :lib => 'relevance/tarantula'
+
+Since rails doesn't (yet) support loading rake tasks that live inside gems you will need to add the following line into your Rakefile.
+
+    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.7.1/tasks/tarantula_tasks.rake")
+
+Substituting the proper version of relevance-tarantula in the path.  This assumes that you have vendored tarantula.  To do so simply run
+
+    gem unpack relevance-tarantula
+
+from the vendor/gems directory of your application.
 
 You can also grab it from Rubyforge, where we will push stable releases but may not be as bleeding edge as the Github gem.
 
