@@ -1,3 +1,5 @@
+require 'rake'
+
 namespace :tarantula do
 
   desc 'Run tarantula tests and (Mac only) open results in your browser.'
