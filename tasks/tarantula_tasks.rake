@@ -11,11 +11,7 @@ namespace :tarantula do
       t.verbose = true
     end
 
-    begin
-      Rake::Task[:tarantula_test].invoke
-    rescue RuntimeError => e
-      puts e.message
-    end
+    Rake::Task[:tarantula_test].invoke
   end
   
   desc 'Run tarantula tests and open results in your browser.'
