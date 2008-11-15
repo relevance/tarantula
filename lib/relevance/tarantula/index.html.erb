@@ -14,35 +14,30 @@
     <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/tarantula.css"/>
     <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/ui.tabs.css"/>
   </head>
-
-  <body id="top">
+  
+  <body>
 
     <div id="container">
 
       <div id="header">
-        <hr class="top"/>
-        <h1><span>Tarantula : Eight Legs, Two Fangs, and an Attitude</span></h1>
-        <ul class="navigation">
-          <li><a href="#" class="result-all"><span>All</span> <em><%= successes.size + failures.size %></em></a></li>
-          <li><a href="#" class="result-failure"><span>Failures</span> <em><%= failures.size %></em></a></li>
-          <li><a href="#" class="result-success"><span>Successful</span> <em><%= successes.size %></em></a></li>
+        <div class="header_text">Tarantula : Eight Legs, Two Fangs, and an Attitude</div>
+      </div>
+
+      <div id="tabs-container">
+        <ul>
         </ul>
       </div>
-    </div>
-    <div id="page-container">
-      <hr class="top"/>
-      <div id="page">
-        <p>Generated on <%= Time.now %></p>
-        <div id="tabs-container">
-          <ul>
-          </ul>
-        </div>
-      </div>
+
       <div id="sidebar">
-        <h3><span>Tarantula</span></h3>
-        <p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.</p>
+	Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by 
+	<a href="http://thinkrelevance.com">Relevance, Inc.</a> 
+	and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.
       </div>
+
+      <div class="clearer"></div>
+
     </div>
+
   </body>
 
 </html>
