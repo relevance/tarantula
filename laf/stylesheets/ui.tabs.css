@@ -37,6 +37,7 @@
     display: block;
     padding: 0 10px;
     background-color: #eee;
+    color: #13a013;
 }
 .ui-tabs-nav a {
     margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
