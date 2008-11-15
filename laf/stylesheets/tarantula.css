@@ -34,11 +34,16 @@ body {
 }
 
 #tabs-container {
+    padding-top: 7px;
+    padding-left: 15px;
+}
+
+#results-container {
     float: left;
     width: 500px;
     margin-left: 20px;
     margin-top: 10px;
-    background-color: #fff;
+    background-color: #fff;    
 }
 
 #sidebar {

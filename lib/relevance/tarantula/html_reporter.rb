@@ -60,7 +60,7 @@ class Relevance::Tarantula::HtmlReporter
     File.open(File.join(basedir, "index.html"), "r+") do |file|
       doc = Hpricot file.read
       tabs_container = doc.search "#tabs-container ul"
-      results_container = doc.search "#tabs-container"
+      results_container = doc.search "#results-container"
       tabs_container.append tab_html(test_name)
       results_container.append results_html(test_name)
       file.rewind
