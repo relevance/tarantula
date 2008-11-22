@@ -40,7 +40,7 @@ body {
 
 #results-container {
     float: left;
-    width: 800px;
+    width: 625px;
     margin-left: 20px;
     margin-top: 10px;
     background-color: #fff;    
@@ -59,4 +59,112 @@ body {
 .clearer {
     clear: both;
 }
+
+.grid {
+    width: 100%;
+    font-size: 12px;
+}
+
+table caption {
+    font-size: 16px;
+}
+
+.even {
+    background-color: #eee;
+}
+
+.odd {
+
+}
+
+#details {
+    margin-left: 10px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+/* Response Codes */
+
+span.r1, span.r2, span.r3, span.r4, 
+span.r5 {
+	display: block;				
+	padding: .15em;
+	margin: .15em;
+	color: #dac7ad;
+}
+
+/* Informational 1xx */
+span.r1 {				
+	background-color: #3333cc;
+	border: 1px solid #376edc;
+}
+
+/* Successfull 2xx */
+span.r2 {
+	background-color: #006600;
+	border: 1px solid #008900;
+}
+
+/* Redirection 3xx */
+span.r3 {
+	background-color: #555652;
+	border: 1px solid #80817b;
+}
+	
+/* Client 4xx */
+span.r4 {
+	background-color: #857400;
+	border: 1px solid #baa200;
+}
+/* Server Error 5xx */
+span.r5 {
+	background-color: #c40000;
+	border: 1px solid #dc0000;
+}
+
+/* Fixes */
+
+/* Safari Bold Fix */			
+/*\*/
+html*table th {
+	font-weight: normal;				
+}/**/
+
+/*\*/			
+html*#header ul.navigation {
+	top: 30px;
+}	/**/
+
+#results table.grid {
+    background-color: #596166;
+}
+
+
+#results table th, #results table td {
+	font-family: Arial, Helvetica, sans-serif;				  
+	color: #fff;			
+	background-color: #596166;
+}	
+
+#results table.grid {
+	border-collapse: separate;				
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+#results table.grid tfoot tr td {
+	padding: 4px;
+	font-weight: 900;
+}
+			
+#results table.grid tbody a {					
+	color: #003399;				
+}
+
+#results table.grid tbody td {
+	padding: 2px 4px;
+	background-color: #f6ffcd;
+	color: #000;
+}
+
 

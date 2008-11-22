@@ -14,18 +14,18 @@
       <tfoot>
         <tr>
           <td colspan="5">
-            Footer
+	    <br /><br />
           </td>
         </tr>
       </tfoot>
       <tbody>
-        <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each do |result| %>
-          <tr>
-            <td class="left"><a href="<%= "#{test_name}/#{result.file_name}" %>"><%= result.url.ellipsize(30) %></a></td>
-            <td class="center"><%= result.method %></td>
-            <td class="center"><span class="<%= class_for_code(result.code) %>"><%= result.code %></span></td>
-            <td><%= result.description %></td>
-            <td><%= result.referrer.ellipsize(30) %></td>
+        <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each_with_index do |result,i| %>
+          <tr class="<%= (i%2 == 0) ? 'even' : 'odd' %>">
+            <td align="center" width="120"><a href="<%= "#{test_name}/#{result.file_name}" %>"><%= result.url.ellipsize(30) %></a></td>
+            <td align="center" width="60"><%= result.method %></td>
+            <td align="center" width="60"><span class="<%= class_for_code(result.code) %>"><%= result.code %></span></td>
+            <td align="center"><%= result.description %></td>
+            <td align="center" width="120"><%= result.referrer.ellipsize(30) %></td>
           </tr>
         <% end %>
       </tbody>

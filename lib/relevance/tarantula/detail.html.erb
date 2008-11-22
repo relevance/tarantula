@@ -5,70 +5,84 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Tarantula report detail <%= short_description %></title>
+
     <script type="text/javascript" src="../javascripts/jquery-1.2.3.js"></script>
     <script type="text/javascript" src="../javascripts/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="../javascripts/jquery-ui-tabs.js"></script>
     <script type="text/javascript" src="../javascripts/tarantula.js"></script>
+    <script type="text/javascript" src="../javascripts/niftycube-details.js"></script>
     <link type="text/css" media="screen" rel="stylesheet" href="../stylesheets/tarantula.css"/>
     <link type="text/css" media="screen" rel="stylesheet" href="../stylesheets/ui.tabs.css"/>
 
-  <!--[if lte IE 7]>
-    <link rel="stylesheet" href="jqeury.tabs-ie.css" type="text/css" media="projection, screen" />
-  <![endif]-->
-    
+    <script type="text/javascript">
+      window.onload=function() {
+        Nifty("div#sidebar", "big");
+        Nifty("div#results-container", "big");
+      }
+    </script>
+
+    <!--[if lte IE 7]>
+	<link rel="stylesheet" href="jqeury.tabs-ie.css" type="text/css" media="projection, screen" />
+    <![endif]-->
   </head>
 
-  <body id="top">
+  <body>
 
     <div id="container">
-
+      
       <div id="header">
-        <hr class="top"/>
-        <h1><span>Tarantula : Eight Legs, Two Fangs, and an Attitude</span></h1>
+        <div class="header_text">Tarantula : Eight Legs, Two Fangs, and an Attitude</div>
+	<div id="tabs-container">
+          <ul>
+            <li><a href="#fragment-1"><span>Data</span></a></li>
+            <li><a href="#fragment-2"><span>Body</span></a></li>
+            <li><a href="#fragment-3"><span>Log</span></a></li>
+	  </ul>
+	</div>
       </div>
 
-      <div id="page-container">
-        <hr class="top"/>
-        <div id="page">
-          <h1>Tarantula report detail <%= short_description %></h1>
+      <div id="results-container">
+        <div id="details">
+          <p>Tarantula report detail <strong><%= short_description %></strong></p>
           <p>Generated on <%= Time.now %> (<a href="../index.html">Back</a>)</p>
           <p>Visit <a href="<%= full_url %>"><%= full_url %></a></p>
           <p>Response: <%= code %></p>
           <p>Referrer: <%= referrer || "" %></p>
-          <div id="tabs-container">            
-            <ul>
-              <li><a href="#fragment-1"><span>Data</span></a></li>
-              <li><a href="#fragment-2"><span>Body</span></a></li>
-              <li><a href="#fragment-3"><span>Log</span></a></li>
-            </ul>
-            <div id="fragment-1">
-              <% if data %>
-                <%= wrap_in_line_number_table(data) %>
-              <% else %>
-                <p>No Data</p>
-              <% end %>
-            </div>
-            <div id="fragment-2">
-              <% if body %>
-                <%= wrap_in_line_number_table(body) %>
-              <% else %>
-                <p>No Body</p>
-              <% end %>
-            </div>
-            <div id="fragment-3">
-              <% if log %>
-                <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
-              <% else %>
-                <p>No Log</p>
-              <% end %>
-            </div>
-          </div>
         </div>
+
+	<div id="results">
+	  <div id="fragment-1">
+            <% if data %>
+              <%= wrap_in_line_number_table(data) %>
+            <% else %>
+              <p>No Data</p>
+            <% end %>
+          </div>
+          <div id="fragment-2">
+            <% if body %>
+              <%= wrap_in_line_number_table(body) %>
+            <% else %>
+              <p>No Body</p>
+              <% end %>
+          </div>
+          <div id="fragment-3">
+            <% if log %>
+              <%= wrap_in_line_number_table(log) {|line| wrap_stack_trace_line(line)} %>
+            <% else %>
+              <p>No Log</p>
+            <% end %>
+          </div>
+	</div>
       </div>
+
       <div id="sidebar">
-        <h3><span>Tarantula</span></h3>
-        <p>Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a> and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.</p>
+	Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by 
+	<a href="http://thinkrelevance.com">Relevance, Inc.</a> 
+	and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.
       </div>
+
+      <div class="clearer"></div>
+
     </div>
   </body>
 
