@@ -7,17 +7,17 @@ module Relevance::Tarantula::HtmlReportHelper
     x.table(:class => "grid tablesorter") do      
       x.thead do
         x.tr do
-          x.th(:class => "sort asc", :align => "left") do
+          x.th(:class => "line-number") do
             x.span("Line \#")
           end
-          x.th(:class => "sort", :align => "center") do
+          x.th(:align => "center") do
             x.span("Line")
           end
         end
       end
       text.split("\n").each_with_index do |line, index|
         x.tr do
-          x.td(index+1, :width => "30", :align => "center")
+          x.td(index+1, :class => "line-number")
           if block_given?
             x.td {x << yield(line)}
           else

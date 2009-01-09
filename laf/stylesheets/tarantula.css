@@ -77,6 +77,11 @@ table caption {
 
 }
 
+table th.line-number, table td.line-number {
+  text-align: center;
+  width: 30px;
+}
+
 #details {
     margin-left: 10px;
     margin-top: 5px;
