@@ -92,15 +92,14 @@ This assumes that you have Rails 2.1 or higher installed.
 
     config.gem 'relevance-tarantula', :source => "http://gems.github.com", :lib => 'relevance/tarantula'
 
-Since rails doesn't (yet) support loading rake tasks that live inside gems you will need to add the following line into your Rakefile.
-
-    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.7.1/tasks/tarantula_tasks.rake")
-
-Substituting the proper version of relevance-tarantula in the path.  This assumes that you have vendored tarantula.  To do so simply run
-
+Since rails doesn't (yet) support loading rake tasks that live inside gems you will need to update your Rakefile.  This assumes that you have vendored tarantula.  Simply run
+	
+	cd vendor/gems
     gem unpack relevance-tarantula
 
-from the vendor/gems directory of your application.
+You can then add the following line into your Rakefile, substituting the proper version of relevance-tarantula in the path.
+
+    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.7.1/tasks/tarantula_tasks.rake")
 
 You can also grab it from Rubyforge, where we will push stable releases but may not be as bleeding edge as the Github gem.
 
