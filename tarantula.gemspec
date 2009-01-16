@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
       s.add_development_dependency(%q<test-spec>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
+      s.add_development_dependency(%q<redgreen>, [">= 0"])
     else
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<hpricot>, [">= 0"])
@@ -42,6 +43,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruby-debug>, [">= 0"])
       s.add_dependency(%q<test-spec>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
+      s.add_dependency(%q<redgreen>, [">= 0"])
     end
   else
     s.add_dependency(%q<htmlentities>, [">= 0"])
@@ -52,5 +54,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ruby-debug>, [">= 0"])
     s.add_dependency(%q<test-spec>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
+    s.add_dependency(%q<redgreen>, [">= 0"])
   end
 end
