@@ -20,7 +20,7 @@ module Relevance; end
 module Relevance; module CoreExtensions; end; end
 module Relevance
   module Tarantula
-    VERSION = "0.0.8.0"
+    VERSION = "0.0.8.1"
 
     def tarantula_home
       File.expand_path(File.join(File.dirname(__FILE__), "../.."))

@@ -99,7 +99,7 @@ Since rails doesn't (yet) support loading rake tasks that live inside gems you w
 
 You can then add the following line into your Rakefile, substituting the proper version of relevance-tarantula in the path.
 
-    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.7.1/tasks/tarantula_tasks.rake")
+    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.8.1/tasks/tarantula_tasks.rake")
 
 You can also grab it from Rubyforge, where we will push stable releases but may not be as bleeding edge as the Github gem.
 
