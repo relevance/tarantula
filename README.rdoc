@@ -46,21 +46,30 @@ app.
    #!sh
    rake tarantula:setup
 
-Assuming users must log in before accessing your application, update the integration test to use the
-authentication parameters necessary to log in to your app. (If your application does *not* require
-authentication, you can safely remove the first two lines of the test.)
+Take a moment to familiarize yourself with the generated test. If parts of your application require
+login, update the test to make sure Tarantula can access those parts of your app.
 
-You will probably want to include all fixtures so that Tarantula has plenty of links to follow, giving
-your app maximum exposure to Tarantula's crawler.
-
-   require 'relevance/tarantula'
-
-   # in your test
-   def test_tarantula
-     post '/session', :login => 'kilgore', :password => 'trout'
-     follow_redirect!
-     tarantula_crawl(self)
-   end   
+   require "relevance/tarantula"
+   
+   class TarantulaTest < ActionController::IntegrationTest
+     # Load enough test data to ensure that there's a link to every page in your
+     # application. Doing so allows Tarantula to follow those links and crawl 
+     # every page.  For many applications, you can load a decent data set by
+     # loading all fixtures.
+     fixtures :all
+   
+     def test_tarantula
+       # If your application requires users to log in before accessing certain 
+       # pages, uncomment the lines below and update them to allow this test to
+       # log in to your application.  Doing so allows Tarantula to crawl the 
+       # pages that are only accessible to logged-in users.
+       # 
+       #   post '/session', :login => 'quentin', :password => 'monkey'
+       #   follow_redirect!
+       
+       tarantula_crawl(self)
+     end
+   end
 
 If you want to set custom options, you can get access to the crawler and set properties before running
 it. For example, this would turn on HTMLTidy.
@@ -70,6 +79,7 @@ it. For example, this would turn on HTMLTidy.
      assert_response :redirect
      assert_redirected_to '/'
      follow_redirect!
+
      t = tarantula_crawler(self)
      t.handlers << Relevance::Tarantula::TidyHandler.new
      t.crawl '/'
