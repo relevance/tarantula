@@ -24,7 +24,7 @@ class Relevance::Tarantula::Link
       @href = link
       @method = :get
     else # should be a tag
-      @href = link['href'].downcase
+      @href = link['href'] ? link['href'].downcase : nil
       @tag = link
     end
   end

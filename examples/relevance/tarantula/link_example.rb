@@ -3,6 +3,12 @@ require File.join(File.dirname(__FILE__), "..", "..", "example_helper.rb")
 describe "Relevance::Tarantula::Link" do
   include ActionView::Helpers::UrlHelper
   
+  it "does not raise an error when initializing without href attribtue" do
+    link = Relevance::Tarantula::Link.new(Hpricot('<a="/foo">foo</a>').at('a'))
+    link.href.should == nil
+    link.method.should == :get    
+  end
+
   it "parses anchor tags" do
     link = Relevance::Tarantula::Link.new(Hpricot('<a href="/foo">foo</a>').at('a'))
     link.href.should == '/foo'
