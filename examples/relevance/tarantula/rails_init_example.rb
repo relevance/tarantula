@@ -1,9 +1,9 @@
-require File.join(File.dirname(__FILE__), "../..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "../..", "example_helper.rb")
 
 describe "Rails init.rb" do
-  teardown { ENV.delete "RAILS_ENV" }
+  after { ENV.delete "RAILS_ENV" }
   
-  xit "requires main tarantula file if in test environment" do
+  pending "requires main tarantula file if in test environment" do
     ENV["RAILS_ENV"] = "test"
     path = File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. .. lib relevance tarantula]))
     Object.any_instance.expects(:require).with('rake')

@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "../..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "../..", "example_helper.rb")
 
 describe "Relevance::Tarantula::Transform" do
   it "can do a simple replace" do
@@ -15,7 +15,6 @@ describe "Relevance::Tarantula::Transform" do
   it "cannot access groups from a block, despite Ruby docs" do
     p = Proc.new {|value| $1.upcase}
     t = Relevance::Tarantula::Transform.new(/([aeiou])/, p)
-    lambda {t["hello world"]}.should.raise(NoMethodError).message.should ==
-                              "undefined method `upcase' for nil:NilClass"
+    lambda {t["hello world"]}.should raise_error(NoMethodError)
   end
 end

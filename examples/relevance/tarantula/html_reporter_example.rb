@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "..", "..", "example_helper.rb")
 
 describe "Relevance::Tarantula::HtmlReporter file output" do
 
@@ -55,7 +55,7 @@ blah blah blah
     stub_puts_and_print(reporter)
     (@success_results + @fail_results).each {|r| reporter.report(r)}
     reporter.finish_report(@test_name)
-    File.should.exist @index
+    File.exist?(@index).should be_true
   end 
   
   it "creates a final report with links to detailed reports in subdirs" do
@@ -76,7 +76,7 @@ blah blah blah
     stub_puts_and_print(reporter)
     (@success_results + @fail_results).each {|r| reporter.report(r)}
     reporter.finish_report(@test_name)    
-    File.should.exist @detail
+    File.exist?(@detail).should be_true
   end
 
 end

@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "..", "example_helper.rb")
 
-describe "Relevance::Tarantula" do
+describe Relevance::Tarantula do
   include Relevance::Tarantula
   attr_accessor :verbose
   
@@ -17,7 +17,7 @@ describe "Relevance::Tarantula" do
   end
   
   it "puts RAILS_ROOT behind a method call" do
-    lambda{rails_root}.should.raise(NameError).message.should == "uninitialized constant RAILS_ROOT"
+    lambda{rails_root}.should raise_error(NameError)
   end
 end
 

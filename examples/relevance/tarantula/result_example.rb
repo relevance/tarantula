@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "..", "..", "example_helper.rb")
 
 describe "Relevance::Tarantula::Result" do
   before do
@@ -77,7 +77,7 @@ describe "Relevance::Tarantula::Result allowed errors" do
   end
   
   it "chains to super method missing" do
-    lambda{Relevance::Tarantula::Result.allow_xxx_for}.should.raise(NoMethodError)
+    lambda{Relevance::Tarantula::Result.allow_xxx_for}.should raise_error(NoMethodError)
   end
   
 end

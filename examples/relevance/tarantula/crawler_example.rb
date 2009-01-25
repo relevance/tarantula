@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), "..", "..", "example_helper.rb")
 
 describe 'Relevance::Tarantula::Crawler#transform_url' do
   before {@crawler = Relevance::Tarantula::Crawler.new}
@@ -67,7 +67,7 @@ describe 'Relevance::Tarantula::Crawler#crawl' do
     crawler = Relevance::Tarantula::Crawler.new
     crawler.expects(:do_crawl).raises(RuntimeError)
     crawler.expects(:report_results)
-    lambda {crawler.crawl('/')}.should.raise(RuntimeError)
+    lambda {crawler.crawl('/')}.should raise_error(RuntimeError)
   end
 end
 
@@ -291,6 +291,6 @@ describe "allow_nnn_for" do
   
   it "chains up to super for method_missing" do
     crawler = Relevance::Tarantula::Crawler.new
-    lambda{crawler.foo}.should.raise(NoMethodError)
+    lambda{crawler.foo}.should raise_error(NoMethodError)
   end
 end
