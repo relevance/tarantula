@@ -13,8 +13,6 @@ require 'action_controller'
 #require File.join(xss_shield_path, "init")
 
 require 'htmlentities'
-require 'facets/kernel/meta'
-require 'facets/metaid'
 
 module Relevance; end
 module Relevance; module CoreExtensions; end; end
@@ -39,6 +37,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "t
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "ellipsize"))
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "file"))
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "response"))
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "metaclass"))
 
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_reporter"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_report_helper"))
