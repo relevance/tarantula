@@ -63,13 +63,7 @@ describe "Relevance::Tarantula::RailsIntegrationProxy patching" do
     @response.meta.ancestors.should include(Relevance::CoreExtensions::Response)
     @response.html?.should == true
   end
-  
-  it "ignores 404s for known static binary types" do
-    File.expects(:extension).returns("pdf")
-    @rip.expects(:log).with("Skipping /url (for now)")
-    @rip.patch_response("/url", @response)
-  end
-  
+    
   it "replaces 404s with 200s, pulling content from public, for known text types" do
     File.expects(:extension).returns("html")
     @rip.expects(:static_content_file).with("/url").returns("File body")
