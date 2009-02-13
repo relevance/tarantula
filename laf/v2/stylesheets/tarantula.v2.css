@@ -203,6 +203,8 @@ div#page table caption  {
   padding: 7px;
   background: #d0d0c4;
   border-bottom: 2px solid #aba7a1;
+  -moz-border-radius-topleft: 2px;
+  -moz-border-radius-topright: 2px;
 }
 
 #list tbody td {
@@ -260,15 +262,17 @@ span.r5 {
 
 #report h3 {
   background: #D0D0C4;
+  border-bottom: 2px solid #ABA7A1;
   -moz-border-radius-topleft: 2px;
    -moz-border-radius-topright: 2px;
+   font-weight: normal;
 }
 
 #report h3,
 #report p { 
 
 width: 50%;
-padding: 4px;
+padding:6px 8px;
  margin: 1px 0;
 
 }
@@ -277,8 +281,13 @@ padding: 4px;
   color: #70B1CA
 }
 
+#report a:hover {
+  text-decoration: none;
+}
+
 #report p b {
   color: #050505;
+  font-weight: normal;
 }
 
 #report p {
@@ -306,7 +315,7 @@ padding: 4px;
 
 /* Output */
 #output {margin: 10px 0; width: 100%; font-size: 82.5%;}
-#output th { background: #b9b9a9; text-align: left; padding-left: 2.25em; font-weight: normal; line-height: 18px; color: #585850; border-bottom: 1px solid #fff; 
+#output th { background: #b9b9a9; text-align: left; padding-left: 2.25em; font-weight: normal; line-height: 18px; color: #463C38; border-bottom: 1px solid #fff; 
   -moz-border-radius-topleft: 2px;
   -moz-border-radius-topright: 2px;
  
