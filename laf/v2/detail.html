@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" href="stylesheets/tarantula.v2.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="stylesheets/tarantula.v2.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 
 	<title>Detail</title>
 	
@@ -29,11 +29,29 @@
       </ul> 
       <div id="report">
         <h3>Detail of GET /widgets/1 <em>Generated on Friday January 9, 2009 at 11:01:45am</em></h3>
-        <p><b>Visit</b> <a href="#">http://localhost:3000/widgets/6</a>
-        <p><b>Response</b> 500</p>
+        <p><b>Resource</b> <a href="#">http://localhost:3000/widgets/6</a></p>
+        <p><b>Response</b> <span class="r5">500</span></p>
         <p><b>Referrer</b> /random/30</p>
         
-        
+        <table id="output">
+          <tbody>
+            <tr>
+              <th colspan="2">#</th>           
+            </tr>
+            <tr>
+              <td class="numbers">
+              	  <span class="line number">1</span>
+             	    <span class="line number">2</span>
+             	    <span class="line number">3</span>
+              </td>
+              <td class="lines">              
+                  <span class="line">{:param1 => :value, :param2 => :another_value} </span>
+                  <span class="line">{:param1 => :value, :param2 => :another_value} </span>
+                  <span class="line">{:param1 => :value, :param2 => :another_value} </span>                 
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

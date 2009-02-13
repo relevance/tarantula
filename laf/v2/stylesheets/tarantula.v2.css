@@ -158,14 +158,15 @@ div#page ul.tabs {
   left: 7px;
 }
 
-div#page table {
+#list {
   width: 100%;
 }
 
-div#page table th, div #page th a, div#page tfoot td {
+#list th, #list th a, #list tfoot td {
   background: #b9b9a9;
   color: #463c38;
   text-decoration: none;
+ 
 }
 
 .sort {
@@ -176,14 +177,14 @@ div#page table th, div #page th a, div#page tfoot td {
 	opacity: 0.5;
 }
 
-div#page table th, div #page th a:hover span {
+#list th, #list th a:hover span {
   filter:alpha(opacity=100);
 	-moz-opacity:1;
 	-khtml-opacity: 1;
 	opacity: 1;  
 }
 
-div#page table td, div#page table th {
+#list td, #list th {
   text-align: center;
   padding: 4px;
   font-size: 14px;
@@ -204,8 +205,12 @@ div#page table caption  {
   border-bottom: 2px solid #aba7a1;
 }
 
-div#page table tbody td {
+#list tbody td {
   background: #f2f2eb;
+}
+
+#list tfoot td {
+   line-height: 18px;
 }
 
 tr.even td {
@@ -250,3 +255,65 @@ span.r5 {
 	background-color: #c40000;
 	border: 1px solid #dc0000;
 }
+
+/* Detail */
+
+#report h3 {
+  background: #D0D0C4;
+  -moz-border-radius-topleft: 2px;
+   -moz-border-radius-topright: 2px;
+}
+
+#report h3,
+#report p { 
+
+width: 50%;
+padding: 4px;
+ margin: 1px 0;
+
+}
+
+#report a {
+  color: #70B1CA
+}
+
+#report p b {
+  color: #050505;
+}
+
+#report p {
+  color: #463C38;
+  background: #f2f2eb;
+  line-height: 22px;
+}
+
+#report p span {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 6px;
+  line-height: 16px;
+}
+
+#report h3 em {
+  display: block;
+  font-family: Consolas, Lucida Console, Monaco, monospace;
+  font-size: 75%;
+  font-style: normal;
+  font-weight: normal;
+  color: #463C38;
+  line-height: 22px;
+}
+
+/* Output */
+#output {margin: 10px 0; width: 100%; font-size: 82.5%;}
+#output th { background: #b9b9a9; text-align: left; padding-left: 2.25em; font-weight: normal; line-height: 18px; color: #585850; border-bottom: 1px solid #fff; 
+  -moz-border-radius-topleft: 2px;
+  -moz-border-radius-topright: 2px;
+ 
+}
+#output td {background: #f2f2eb; padding: 1px; line-height: 18px;}
+#output {font-family: Consolas, Lucida Console, Monaco, monospace;}
+#output .numbers { width: 3em; text-align: right; border-right: 1px solid #fff;}
+#output .lines { width: auto; text-align: left;}
+#output .line {display: block; text-align: left; padding: 1px 4px;}
+#output .line.number {text-align: right;  color: #585850;}
