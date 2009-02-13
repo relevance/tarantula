@@ -259,22 +259,18 @@ span.r5 {
 }
 
 /* Detail */
-
 #report h3 {
-  background: #D0D0C4;
+  background: #D0D0C4; font-weight: normal;
   border-bottom: 2px solid #ABA7A1;
-  -moz-border-radius-topleft: 2px;
-   -moz-border-radius-topright: 2px;
-   font-weight: normal;
+  -moz-border-radius-topleft: 2px; -moz-border-radius-topright: 2px;
+  -webkit-border-top-left-radius: 2px; -webkit-border-top-right-radius: 2px;
 }
 
 #report h3,
 #report p { 
-
-width: 50%;
-padding:6px 8px;
- margin: 1px 0;
-
+  width: 50%;
+  padding:6px 8px;
+  margin: 1px 0;
 }
 
 #report a {
@@ -298,6 +294,7 @@ padding:6px 8px;
 
 #report p span {
   display: inline-block;
+  display: -moz-inline-block;
   margin: 0;
   padding: 2px 6px;
   line-height: 16px;
@@ -316,13 +313,12 @@ padding:6px 8px;
 /* Output */
 #output {margin: 10px 0; width: 100%; font-size: 82.5%;}
 #output th { background: #b9b9a9; text-align: left; padding-left: 2.25em; font-weight: normal; line-height: 18px; color: #463C38; border-bottom: 1px solid #fff; 
-  -moz-border-radius-topleft: 2px;
-  -moz-border-radius-topright: 2px;
- 
+  -moz-border-radius-topleft: 2px; -moz-border-radius-topright: 2px;
+  -webkit-border-top-left-radius: 2px; -webkit-border-top-right-radius: 2px; 
 }
-#output td {background: #f2f2eb; padding: 1px; line-height: 18px;}
-#output {font-family: Consolas, Lucida Console, Monaco, monospace;}
+#output td { background: #f2f2eb; padding: 1px; line-height: 18px; }
+#output { font-family: Consolas, Lucida Console, Monaco, monospace; }
 #output .numbers { width: 3em; text-align: right; border-right: 1px solid #fff;}
 #output .lines { width: auto; text-align: left;}
-#output .line {display: block; text-align: left; padding: 1px 4px;}
-#output .line.number {text-align: right;  color: #585850;}
+#output .line { display: block; text-align: left; padding: 1px 4px;}
+#output .line.number { text-align: right;  color: #585850; }
