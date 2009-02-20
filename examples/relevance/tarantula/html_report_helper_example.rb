@@ -12,10 +12,10 @@ end
 
 describe 'Relevance::Tarantula::HtmlReportHelper#wrap_in_line_number_table' do
   include HtmlReportHelperSpec
-  it "can wrap text in a line number table" do
-    html = @reporter.wrap_in_line_number_table("Line 1\nLine 2")
+  it "can wrap text in a table row used for displaying lines and line numbers" do
+    html = @reporter.wrap_in_line_number_table_row("Line 1\nLine 2")
     html.should == <<-END.strip
-<table class=\"grid tablesorter\"><thead><tr><th class=\"line-number\"><span>Line #</span></th><th align=\"center\"><span>Line</span></th></tr></thead><tr><td class=\"line-number\">1</td><td>Line 1</td></tr><tr><td class=\"line-number\">2</td><td>Line 2</td></tr></table>
+<tr><td class=\"numbers\"><span class=\"line number\">1</span><span class=\"line number\">2</span></td><td class=\"lines\"><span class=\"line\">Line 1</span><span class=\"line\">Line 2</span></td></tr>
 END
   end  
 end

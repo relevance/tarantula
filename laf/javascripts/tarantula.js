@@ -5,6 +5,6 @@ $(document).ready(function() {
 		cssDesc: 'sort desc',       // class name for descending sorting action to header
 		headerClass: 'header'		// class name for headers (th's)
 	});
-    $('#tabs-container > ul').tabs();
+  $('#tabs-container > ul').tabs();
 });
 

@@ -12,7 +12,7 @@ describe "Relevance::Tarantula::HtmlReporter file output" do
         :success => true, 
         :method => "get", 
         :url => "/widgets/#{index}", 
-        :response => stub(:code => 200, :body => "<h1>header</h1>\n<p>text</p>"), 
+        :response => stub(:code => "200", :body => "<h1>header</h1>\n<p>text</p>"), 
         :referrer => "/random/#{rand(100)}", 
         :test_name => @test_name,
         :log => <<-END,
@@ -30,7 +30,7 @@ blah blah blah
         :success => false, 
         :method => "get", 
         :url => "/widgets/#{index}", 
-        :response => stub(:code => 500, :body => "<h1>header</h1>\n<p>text</p>"), 
+        :response => stub(:code => "500", :body => "<h1>header</h1>\n<p>text</p>"), 
         :referrer => "/random/#{rand(100)}", 
         :test_name => @test_name,
         :log => <<-END,
@@ -66,7 +66,7 @@ blah blah blah
     reporter.finish_report(@test_name)
     links = Hpricot(File.read(@index)).search('.left a')
     links.each do |link|
-      link['href'].should.match(/#{@test_name}\/\d+\.html/)
+      link['href'].should match(/#{@test_name}\/\d+\.html/)
     end
   end
 

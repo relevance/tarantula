@@ -1,53 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="Author" content="Erik Yowell; erik[at]thinkrelevance.com"/>
-    <title>Tarantula report</title>
-    <script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
-    <script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="javascripts/jquery-ui-tabs.js"></script>
-    <script type="text/javascript" src="javascripts/tarantula.js"></script>
-    <script type="text/javascript" src="javascripts/niftycube.js"></script>
-    <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/tarantula.css"/>
-    <link type="text/css" media="screen" rel="stylesheet" href="stylesheets/ui.tabs.css"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>                
+  <link rel="stylesheet" href="stylesheets/tarantula.css" type="text/css" media="screen" title="no title" charset="utf-8">   
+	<script type="text/javascript" src="javascripts/jquery-1.2.3.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.tablesorter.js"></script>
+  <script type="text/javascript" src="javascripts/jquery-ui-tabs.js"></script>                                                                                
+  <script type="text/javascript" src="javascripts/tarantula.js"></script>
 
-    <script type="text/javascript">
-      window.onload=function() {
-        Nifty("div#sidebar", "big");
-        Nifty("div#results-container", "big");
-      }
-    </script>
-  </head>
-  
-  <body>
+	<title>Tarantula</title>
+</head>
 
-    <div id="container">
-
-      <div id="header">
-        <div class="header_text">Tarantula : Eight Legs, Two Fangs, and an Attitude</div>
-	<div id="tabs-container">
-          <ul></ul>
-	</div>
-      </div>
-
+<body>       
+  <div id="container">
+    <div id="header">
+      <h1>Tarantula by Relevance</h1>
+      <h2>Eight legs, two fangs ... and an attitude</h2>
+      <p>Tarantula is an open source tool for testing Rails web 
+      applications. Tarantula is developed by <a href="http://thinkrelevance.com">Relevance, Inc.</a>
+      and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.</p>
+      <hr/>
+    </div>
+    <div id="page">  
+      <div id="tabs-container">
+        <ul class="tabs"></ul>
+    	</div>    
+    
       <div id="results-container">
 
       </div>
-
-      <div id="sidebar">
-	Tarantula is an open-source tool for testing Rails web applications. Tarantula is developed by 
-	<a href="http://thinkrelevance.com">Relevance, Inc.</a> 
-	and lives at <a href="http://github.com/relevance/tarantula">http://github.com/relevance/tarantula</a>.
-      </div>
-
-      <div class="clearer"></div>
-
-    </div>
-
-  </body>
-
+    </div>   
+  </div>
+</body>
 </html>

@@ -2,30 +2,23 @@ require "erb"
 module Relevance::Tarantula::HtmlReportHelper 
   include ERB::Util
   include Relevance::Tarantula
-  def wrap_in_line_number_table(text, &blk)
+  def wrap_in_line_number_table_row(text, &blk)
     x = Builder::XmlMarkup.new
-    x.table(:class => "grid tablesorter") do      
-      x.thead do
-        x.tr do
-          x.th(:class => "line-number") do
-            x.span("Line \#")
-          end
-          x.th(:align => "center") do
-            x.span("Line")
-          end
+
+    x.tr do
+      lines = text.split("\n")
+      x.td(:class => "numbers") do
+        lines.size.times do |index|
+          x.span(index+1, :class => "line number")
         end
       end
-      text.split("\n").each_with_index do |line, index|
-        x.tr do
-          x.td(index+1, :class => "line-number")
-          if block_given?
-            x.td {x << yield(line)}
-          else
-            x.td(line)
-          end
+      x.td(:class => "lines") do
+        lines.each do |line|
+          x.span(line, :class => "line")
         end
-      end   
+      end
     end
+
     x.target!
   end 
                                                                             
