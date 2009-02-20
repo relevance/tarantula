@@ -33,10 +33,10 @@ Tarantula into your Rails app.
     cd vendor/gems
     gem unpack relevance-tarantula
 
-You can then add the following line into your Rakefile, substituting the proper version of
-relevance-tarantula in the path.
+You can then add the following line into your Rakefile, which will allow your application to discover 
+Tarantula's rake tasks.
 
-    load File.join(RAILS_ROOT, "vendor/gems/relevance-tarantula-0.0.8.1/tasks/tarantula_tasks.rake")
+  load File.join(RAILS_ROOT, Dir["vendor/gems/relevance-tarantula-*/tasks/*.rake"])
 
 === Crawling Your App
 
