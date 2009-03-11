@@ -1,3 +1,10 @@
+v0.1.6 
+	* add testing for all Rails versions 2.0.2 and up
+	* various clean up and housekeeping tasks; 
+	* start Ruby 1.9 work (but we need Hpricot)
+	* show 50 chars of URL, not 30
+	[Rob Sanheim]
+
 v0.1.5 Initial implementation of updated look-and-feel [Erik Yowell] [Jason Rudolph]
 
 v0.1.4 Bugfix: Include look-and-feel files when building the gem #16 [Jason Rudolph]
