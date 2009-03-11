@@ -140,6 +140,10 @@ Please submit your bug reports, patches, or feature requests at Lighthouse:
 
 http://relevance.lighthouseapp.com/projects/17868-tarantula/overview
 
+You can view the continuous integration results for Tarantula, including results against all supported versions of Rails, on RunCodeRun here:
+
+http://runcoderun.com/relevance/tarantula
+
 == License
 
 Tarantula is released under the MIT license.
