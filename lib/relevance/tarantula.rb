@@ -2,7 +2,6 @@ TARANTULA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "../.."))
 
 require 'forwardable'
 require 'erb'
-require 'rubygems'
 require 'active_support'
 require 'action_controller'
 
@@ -38,6 +37,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "e
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "file"))
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "response"))
 require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "metaclass"))
+require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "string_chars_fix"))
 
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_reporter"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_report_helper"))

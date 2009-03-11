@@ -1,19 +1,27 @@
 lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 
-require 'rubygems'
-gem "spicycode-micronaut", ">= 0.2.0"
+gem "spicycode-micronaut", ">= 0.2.4"
 gem "log_buddy"
 gem "mocha"
 gem 'ruby-debug'
 gem 'test-spec'
+if rails_version = ENV['RAILS_VERSION']
+  gem "rails", rails_version
+end
+require "rails/version"
+if Rails::VERSION::STRING < "2.3.1" && RUBY_VERSION >= "1.9.1"
+  puts "Tarantula requires Rails 2.3.1 or higher for Ruby 1.9 support"
+  exit(1)
+end
+puts "==== Testing with Rails #{Rails::VERSION::STRING} ===="
 gem 'actionpack'
 gem 'activerecord'
 gem 'activesupport'
 
 require 'ostruct'
 require 'ruby-debug'
-require 'activerecord'
+require 'active_record'
 require 'relevance/tarantula'
 require 'micronaut'
 require 'mocha'

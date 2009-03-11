@@ -18,7 +18,7 @@
       <tbody>
         <% send(result_type).sort{|x,y| y.code.to_s <=> x.code.to_s}.each_with_index do |result,i| %>
           <tr class="<%= (i%2 == 0) ? 'even' : 'odd' %>">
-            <td class="left"><a href="<%= "#{test_name}/#{result.file_name}" %>"><%= result.url.ellipsize(30) %></a></td>
+            <td class="left"><a href="<%= "#{test_name}/#{result.file_name}" %>"><%= result.url.ellipsize(50) %></a></td>
             <td class="method"><%= result.method.to_s.upcase %></td> <!-- TODO Clean up demeter violation -->
             <td><span class="<%= class_for_code(result.code) %>"><%= result.code %></span></td>
             <td class="left"><%= result.description %></td>

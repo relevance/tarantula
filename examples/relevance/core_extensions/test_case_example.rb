@@ -13,4 +13,8 @@ describe "TestCase extensions" do
     expects(:tarantula_crawler).returns(crawler)
     tarantula_crawl(:integration_test_stub, :url => "/foo")
   end
+  
+  it "should get mixed into ActionController::IntegrationTest" do
+    ActionController::IntegrationTest.ancestors.should include(Relevance::CoreExtensions::TestCaseExtensions)
+  end
 end

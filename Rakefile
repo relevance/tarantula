@@ -1,8 +1,6 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'rcov/rcovtask'
-require 'rubygems'
 gem "spicycode-micronaut", ">= 0.2.0"
 require 'micronaut'
 require 'micronaut/rake_task'
@@ -48,6 +46,17 @@ namespace :examples do
     t.rcov = true
     t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage --no-validator-links]
   end
+  
+  RAILS_VERSIONS = %w[2.0.2 2.1.0 2.1.1 2.2.2 2.3.1]
+  
+  desc "Run exmaples with multiple versions of rails"
+  task :multi_rails do
+    RAILS_VERSIONS.each do |rails_version|
+      puts "Testing with Rails #{rails_version}"
+      sh "RAILS_VERSION='#{rails_version}' rake examples"
+    end
+  end
+  
 end
 
 task :default => "examples"
