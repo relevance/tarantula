@@ -4,7 +4,6 @@ require 'rake/rdoctask'
 gem "spicycode-micronaut", ">= 0.2.4"
 require 'micronaut'
 require 'micronaut/rake_task'
-require 'lib/relevance/tarantula.rb'
 
 begin
   require 'jeweler'
@@ -59,4 +58,8 @@ namespace :examples do
   
 end
 
-task :default => "examples"
+if ENV["RUN_CODE_RUN"]
+  task :default => "examples:multi_rails"
+else
+  task :default => "examples"
+end
