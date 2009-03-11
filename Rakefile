@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-gem "spicycode-micronaut", ">= 0.2.0"
+gem "spicycode-micronaut", ">= 0.2.4"
 require 'micronaut'
 require 'micronaut/rake_task'
 require 'lib/relevance/tarantula.rb'
@@ -52,7 +52,7 @@ namespace :examples do
   desc "Run exmaples with multiple versions of rails"
   task :multi_rails do
     RAILS_VERSIONS.each do |rails_version|
-      puts "Testing with Rails #{rails_version}"
+      puts
       sh "RAILS_VERSION='#{rails_version}' rake examples"
     end
   end
