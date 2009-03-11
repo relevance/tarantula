@@ -4,8 +4,6 @@ $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 gem "spicycode-micronaut", ">= 0.2.4"
 gem "log_buddy"
 gem "mocha"
-gem 'ruby-debug'
-gem 'test-spec'
 if rails_version = ENV['RAILS_VERSION']
   gem "rails", rails_version
 end
@@ -20,15 +18,12 @@ gem 'activerecord'
 gem 'activesupport'
 
 require 'ostruct'
-require 'ruby-debug'
+require 'active_support'
+require 'action_controller'
 require 'active_record'
 require 'relevance/tarantula'
 require 'micronaut'
 require 'mocha'
-
-# needed for html-scanner, grr
-require 'active_support'
-require 'action_controller'
 
 def test_output_dir
   File.join(File.dirname(__FILE__), "..", "tmp", "test_output")
