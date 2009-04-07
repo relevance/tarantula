@@ -7,11 +7,13 @@ class Relevance::Tarantula::Crawler
   extend Forwardable
   include Relevance::Tarantula
 
+  class CrawlTimeout < RuntimeError; end
+
   attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
                 :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
                 :form_signatures_queued, :max_url_length, :response_code_handler,
-                :times_to_crawl, :fuzzers, :test_name
-  attr_reader   :transform_url_patterns, :referrers, :failures, :successes
+                :times_to_crawl, :fuzzers, :test_name, :crawl_timeout
+  attr_reader   :transform_url_patterns, :referrers, :failures, :successes, :crawl_start_times, :crawl_end_times
 
   def initialize
     @max_url_length = 1024
@@ -22,6 +24,8 @@ class Relevance::Tarantula::Crawler
     @form_signatures_queued = Set.new
     @links_to_crawl = []
     @forms_to_crawl = []
+    @crawl_start_times, @crawl_end_times = [], []
+    @crawl_timeout = 20.minutes
     @referrers = {}
     @skip_uri_patterns = [
       /^javascript/,
@@ -53,13 +57,18 @@ class Relevance::Tarantula::Crawler
     orig_form_signatures_queued = @form_signatures_queued.dup
     orig_links_to_crawl = @links_to_crawl.dup
     orig_forms_to_crawl = @forms_to_crawl.dup
-    @times_to_crawl.times do |i|
+    @times_to_crawl.times do |num|
       queue_link url
-      do_crawl
+      
+      begin 
+        do_crawl num
+      rescue CrawlTimeout => e
+        puts e.message
+      end
+      
+      puts "#{(num+1).ordinalize} crawl" if @times_to_crawl > 1
 
-      puts "#{(i+1).ordinalize} crawl" if @times_to_crawl > 1
-
-      if i + 1 < @times_to_crawl
+      if num + 1 < @times_to_crawl
         @links_queued = orig_links_queued
         @form_signatures_queued = orig_form_signatures_queued
         @links_to_crawl = orig_links_to_crawl
@@ -77,19 +86,21 @@ class Relevance::Tarantula::Crawler
     @links_to_crawl.empty? && @forms_to_crawl.empty?
   end
 
-  def do_crawl
+  def do_crawl(number)
     while (!finished?)
-      crawl_queued_links
-      crawl_queued_forms
+      @crawl_start_times << Time.now
+      crawl_queued_links(number)
+      crawl_queued_forms(number)
+      @crawl_end_times << Time.now
     end
   end
 
-  def crawl_queued_links
+  def crawl_queued_links(number = 0)
     while (link = @links_to_crawl.pop)
       response = proxy.send(link.method, link.href)
       log "Response #{response.code} for #{link}"
       handle_link_results(link, response)
-      blip
+      blip(number)
     end
   end
 
@@ -124,12 +135,16 @@ class Relevance::Tarantula::Crawler
     Relevance::Tarantula::Response.new(:code => "404", :body => e.message, :content_type => "text/plain")
   end
 
-  def crawl_queued_forms
+  def crawl_queued_forms(number = 0)
     while (form = @forms_to_crawl.pop)
       response = crawl_form(form)
       handle_form_results(form, response)
-      blip
+      blip(number)
     end
+  end
+  
+  def elasped_time_for_pass(num)
+    Time.now - crawl_start_times[num]
   end
 
   def grab_log!
@@ -234,9 +249,16 @@ class Relevance::Tarantula::Crawler
       total_links_count - links_remaining_count
   end
 
-  def blip
+  def blip(number = 0)
     unless verbose
       print "\r #{links_completed_count} of #{total_links_count} links completed               "
+      timeout_if_too_long(number)
+    end
+  end
+  
+  def timeout_if_too_long(number = 0)
+    if elasped_time_for_pass(number) > crawl_timeout
+      raise CrawlTimeout, "Exceeded crawl time of #{crawl_timeout} - breaking..."
     end
   end
 end

@@ -147,6 +147,24 @@ describe Relevance::Tarantula::Crawler do
       crawler.expects(:blip)
       crawler.crawl_queued_forms
     end
+    
+    it "breaks out early if a timeout is set" do
+      crawler = Relevance::Tarantula::Crawler.new
+      stub_puts_and_print(crawler)
+      crawler.proxy = stub
+      response = stub(:code => "200")
+      crawler.links_to_crawl = [stub(:href => "/foo", :method => :get)]
+      crawler.proxy.expects(:get).returns(response).times(4)
+      crawler.forms_to_crawl << stub_everything(:method => "post", 
+                                                :action => "/foo",
+                                                :data => "some data",
+                                                :to_s => "stub")
+      crawler.proxy.expects(:post).returns(response).times(2)
+      crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
+      crawler.times_to_crawl = 2
+      crawler.crawl
+                                                
+    end
 
     it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
       crawler = Relevance::Tarantula::Crawler.new
@@ -160,7 +178,7 @@ describe Relevance::Tarantula::Crawler do
                                                 :data => "some data",
                                                 :to_s => "stub")
       crawler.proxy.expects(:post).returns(response).times(2)
-      crawler.expects(:links_completed_count).returns(*(0..6).to_a).times(6)
+      crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
       crawler.times_to_crawl = 2
       crawler.crawl
     end
@@ -182,9 +200,11 @@ describe Relevance::Tarantula::Crawler do
     it "blips the current progress if !verbose" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.stubs(:verbose).returns false
+      crawler.stubs(:timeout_if_too_long)
       crawler.expects(:print).with("\r 0 of 0 links completed               ")
       crawler.blip
     end
+    
     it "blips nothing if verbose" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.stubs(:verbose).returns true
@@ -220,7 +240,7 @@ describe Relevance::Tarantula::Crawler do
     crawler.expects(:finished?).times(3).returns(false, false, true)
     crawler.expects(:crawl_queued_links).times(2)
     crawler.expects(:crawl_queued_forms).times(2)
-    crawler.do_crawl
+    crawler.do_crawl(1)
   end
   
   it "asks each reporter to write its report in report_dir" do
@@ -296,6 +316,7 @@ describe Relevance::Tarantula::Crawler do
   end
   
   describe "allow_nnn_for" do
+
     it "installs result as a response_code_handler" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.response_code_handler.should == Relevance::Tarantula::Result
@@ -312,6 +333,54 @@ describe Relevance::Tarantula::Crawler do
       crawler = Relevance::Tarantula::Crawler.new
       lambda{crawler.foo}.should raise_error(NoMethodError)
     end
+    
+  end
+  
+  describe "timeouts" do
+
+    it "sets start and end times for a single crawl" do
+      start_time = Time.parse("March 1st, 2008 10:00am")
+      end_time = Time.parse("March 1st, 2008 10:10am")
+      Time.stubs(:now).returns(start_time, end_time)
+
+      crawler = Relevance::Tarantula::Crawler.new
+      stub_puts_and_print(crawler)
+      crawler.proxy = stub_everything(:get => response = stub(:code => "200"))
+      crawler.crawl
+      crawler.crawl_start_times.first.should == start_time
+      crawler.crawl_end_times.first.should == end_time
+    end
+    
+    it "has elasped time for a crawl" do
+      start_time = Time.parse("March 1st, 2008 10:00am")
+      elasped_time_check = Time.parse("March 1st, 2008, 10:10:00am")
+      Time.stubs(:now).returns(start_time, elasped_time_check)
+
+      crawler = Relevance::Tarantula::Crawler.new
+      stub_puts_and_print(crawler)
+      crawler.proxy = stub_everything(:get => response = stub(:code => "200"))
+      crawler.crawl
+      crawler.elasped_time_for_pass(0).should == 600.seconds
+    end
+    
+    it "raises out of the crawl if elasped time is greater then the crawl timeout" do
+      start_time = Time.parse("March 1st, 2008 10:00am")
+      elasped_time_check = Time.parse("March 1st, 2008, 10:35:00am")
+      Time.stubs(:now).returns(start_time, elasped_time_check)
+
+      crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_timeout = 5.minutes
+      
+      crawler.links_to_crawl = [stub(:href => "/foo1", :method => :get), stub(:href => "/foo2", :method => :get)]
+      crawler.proxy = stub
+      crawler.proxy.stubs(:get).returns(response = stub(:code => "200"))
+      
+      stub_puts_and_print(crawler)
+      lambda {
+        crawler.do_crawl(0)
+      }.should raise_error
+    end
+    
   end
   
 end

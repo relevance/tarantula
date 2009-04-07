@@ -3,7 +3,7 @@ begin
   gem 'tidy'
   require 'tidy'
 rescue Gem::LoadError
-  # tidy not available
+  puts "Tidy gem not available -- 'gem install tidy' to get it."
 end
 
 if defined? Tidy
