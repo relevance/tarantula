@@ -21,6 +21,7 @@ begin
     s.files = files.flatten
     s.add_dependency 'htmlentities'
     s.add_dependency 'hpricot'
+    s.rubyforge_project = 'thinkrelevance'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
