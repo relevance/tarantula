@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{tarantula}
-  s.version = "0.1.7"
+  s.version = "0.1.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance, Inc."]
-  s.date = %q{2009-03-11}
+  s.date = %q{2009-04-06}
   s.description = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
   s.email = %q{opensource@thinkrelevance.com}
   s.extra_rdoc_files = ["README.rdoc"]
@@ -23,8 +23,14 @@ Gem::Specification.new do |s|
     s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
+      s.add_runtime_dependency(%q<hpricot>, [">= 0"])
     else
+      s.add_dependency(%q<htmlentities>, [">= 0"])
+      s.add_dependency(%q<hpricot>, [">= 0"])
     end
   else
+    s.add_dependency(%q<htmlentities>, [">= 0"])
+    s.add_dependency(%q<hpricot>, [">= 0"])
   end
 end
