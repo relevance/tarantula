@@ -134,6 +134,19 @@ This example adds custom attacks for both SQL injection and XSS. It also tells T
 app 2 times. This is important for XSS attacks because the results won't appear until the second time
 Tarantula performs the crawl.
 
+== Timeout
+
+You can specify a timeout for each specific crawl that Tarantula runs.  For example:
+
+  def test_tarantula
+    t = tarantula_crawler(self)
+    t.times_to_crawl = 2
+    t.crawl_timeout = 5.minutes
+    t.crawl "/"
+  end
+
+The above will crawl your app twice, and each specific crawl will timeout if it takes longer then 5 minutes.  You may need a timeout to keep the tarantula test time reasonable if your app is large or just happens to have a large amount of 'never-ending' links, such as with an any sort of "auto-admin" interface.
+
 == Bugs/Requests
 
 Please submit your bug reports, patches, or feature requests at Lighthouse:

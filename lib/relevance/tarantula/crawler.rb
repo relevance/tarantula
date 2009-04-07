@@ -258,7 +258,7 @@ class Relevance::Tarantula::Crawler
   
   def timeout_if_too_long(number = 0)
     if elasped_time_for_pass(number) > crawl_timeout
-      raise CrawlTimeout, "Exceeded crawl time of #{crawl_timeout} - breaking..."
+      raise CrawlTimeout, "Exceeded crawl timeout of #{crawl_timeout} seconds - skipping to the next crawl..."
     end
   end
 end
