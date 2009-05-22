@@ -5,17 +5,23 @@ namespace :tarantula do
   desc 'Run tarantula tests.'
   task :test do
     rm_rf "tmp/tarantula"
-    task = Rake::TestTask.new(:tarantula_test) do |t|
+    Rake::TestTask.new(:tarantula_test) do |t|
       t.libs << 'test'
       t.pattern = 'test/tarantula/**/*_test.rb'
       t.verbose = true
     end
-
+    
     Rake::Task[:tarantula_test].invoke
   end
-  
+
   desc 'Run tarantula tests and open results in your browser.'
-  task :report => :test do
+  task :report do
+    begin
+      Rake::Task['tarantula:test'].invoke
+    rescue RuntimeError => e
+      puts e.message
+    end    
+    
     Dir.glob("tmp/tarantula/**/index.html") do |file|
       if PLATFORM['darwin']
         system("open #{file}")
