@@ -115,47 +115,48 @@ body {
 }
 
 div#page ul.tabs {
- 
   clear: both;  
 }
 
 div#page ul.tabs li{
+  border: 1px solid #ABA6A1;
   display: block;
   float: left;
+  margin-right: 3px;
 }
 
 div#page ul.tabs li a {
   display: block;
   float: left;
-  clear: right;  
-  margin-right: 5px;
+  clear: right;
+  min-width: 110px;
 }
 
 div#page ul.tabs li a.active, .ui-tabs-selected a {
-  background: transparent url(../images/button_active.png) no-repeat top left !important;   
+  background-color: #EC720B !important;
   color: #050505 !important;
 }
 
 div#page ul.tabs li a {
-  background: transparent url(../images/button_inactive.png) no-repeat top left;
-  height: 38px;
-  width: 110px;
+  background-color: #463B38;
+  height: 36px;
   color: #fff;
-  padding: 8px 0 0 12px;
-  font-size: 14px;
+
+  padding: 12px 12px 0 12px;
+  font-size: 18px;
   line-height: 18px;
   text-decoration: none;
 }
 
 div#page ul.tabs li a:hover {
-  background: transparent url(../images/button_hover.png) no-repeat top left;  
+  background-color: #EAA464 !important;
   color: #613005;
 }
 
 div#page ul.tabs {
   position: absolute;
-  top: 7px;
-  left: 7px;
+  top: 3px;
+  left: 10px;
 }
 
 .list {
