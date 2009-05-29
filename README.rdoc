@@ -12,7 +12,7 @@ The latest and greatest version is always available on GitHub. (See the rakefile
 just let RubyGems handle it.)
 
     gem sources -a http://gems.github.com
-    gem install relevance-tarantula --source http://gems.github.com
+    gem install relevance-tarantula
 
 You can also grab it from RubyForge, where we will push stable releases but may not be as bleeding edge
 as the GitHub gem.
