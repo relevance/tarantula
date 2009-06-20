@@ -1,4 +1,5 @@
 class Relevance::Tarantula::Link
+  include Relevance::Tarantula
   
   class << self
     include ActionView::Helpers::UrlHelper
@@ -17,38 +18,31 @@ class Relevance::Tarantula::Link
     METHOD_REGEXPS[m] = /#{s}/
   end
   
-  def href
-    @href ||= crawler.transform_url(link)
-  end
+  attr_accessor :href, :crawler, :referrer
   
-  # TODO store link, crawler, referrer
-  # TODO handle href properly as lazy attribute
   def initialize(link, crawler, referrer)
+    @crawler, @referrer = crawler, referrer
+    
     if String === link || link.nil?
-      @href = link
+      @href = transform_url(link)
       @method = :get
     else # should be a tag
-      @href = link['href'] ? link['href'].downcase : nil
+      @href = link['href'] ? transform_url(link['href'].downcase) : nil
       @tag = link
     end
   end
   
   def crawl
-    # TODO obey demeter
-    response = crawler.proxy.send(method, href)
-    log "Response #{response.code} for #{link}"
-    handle_link_results(link, make_result(response))
+    response = crawler.follow(method, href)
+    log "Response #{response.code} for #{self}"
+    crawler.handle_link_results(self, make_result(response))
   end
   
   def make_result(response)
-    Result.new(:method    => method,
-               :url       => href,
-               :response  => response,
-               # TODO can we handle this better?
-               :log       => crawler.grab_log!,
-               :referrer  => referrer,
-               # TODO can we handle this better?
-               :test_name => crawler.test_name).freeze  
+    crawler.make_result(:method    => method,
+                        :url       => href,
+                        :response  => response,
+                        :referrer  => referrer)
   end
   
   def method
@@ -59,6 +53,10 @@ class Relevance::Tarantula::Link
        end) ||
       :get
     end
+  end
+  
+  def transform_url(link)
+    crawler.transform_url(link)
   end
   
   def ==(obj)
