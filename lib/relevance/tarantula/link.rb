@@ -17,9 +17,13 @@ class Relevance::Tarantula::Link
     METHOD_REGEXPS[m] = /#{s}/
   end
   
-  attr_accessor :href
+  def href
+    @href ||= crawler.transform_url(link)
+  end
   
-  def initialize(link)
+  # TODO store link, crawler, referrer
+  # TODO handle href properly as lazy attribute
+  def initialize(link, crawler, referrer)
     if String === link || link.nil?
       @href = link
       @method = :get
@@ -27,6 +31,24 @@ class Relevance::Tarantula::Link
       @href = link['href'] ? link['href'].downcase : nil
       @tag = link
     end
+  end
+  
+  def crawl
+    # TODO obey demeter
+    response = crawler.proxy.send(method, href)
+    log "Response #{response.code} for #{link}"
+    handle_link_results(link, make_result(response))
+  end
+  
+  def make_result(response)
+    Result.new(:method    => method,
+               :url       => href,
+               :response  => response,
+               # TODO can we handle this better?
+               :log       => crawler.grab_log!,
+               :referrer  => referrer,
+               # TODO can we handle this better?
+               :test_name => crawler.test_name).freeze  
   end
   
   def method

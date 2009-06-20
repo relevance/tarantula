@@ -97,9 +97,7 @@ class Relevance::Tarantula::Crawler
 
   def crawl_queued_links(number = 0)
     while (link = @links_to_crawl.pop)
-      response = proxy.send(link.method, link.href)
-      log "Response #{response.code} for #{link}"
-      handle_link_results(link, response)
+      link.crawl
       blip(number)
     end
   end
@@ -110,15 +108,10 @@ class Relevance::Tarantula::Crawler
     end
   end
 
-  def handle_link_results(link, response)
+  def handle_link_results(link, result)
     handlers.each do |h|
       begin
-        save_result h.handle(Result.new(:method => link.method,
-                                       :url => link.href,
-                                       :response => response,
-                                       :log => grab_log!,
-                                       :referrer => referrers[link],
-                                       :test_name => test_name).freeze)
+        save_result h.handle(result)
       rescue Exception => e
         log "error handling #{link} #{e.message}"
         # TODO: pass to results
@@ -193,10 +186,8 @@ class Relevance::Tarantula::Crawler
   end
 
   def queue_link(dest, referrer = nil)
-    dest = Link.new(dest)
-    dest.href = transform_url(dest.href)
+    dest = Link.new(dest, crawler, referrer)
     return if should_skip_link?(dest)
-    @referrers[dest] = referrer if referrer
     @links_to_crawl << dest
     @links_queued << dest
     dest
