@@ -127,6 +127,10 @@ class Relevance::Tarantula::Crawler
     log "Skipping #{form.action}, presumed ok that record is missing"
     Relevance::Tarantula::Response.new(:code => "404", :body => e.message, :content_type => "text/plain")
   end
+  
+  def follow(method, url, data=nil)
+    proxy.send(method, url, data)
+  end
 
   def crawl_queued_forms(number = 0)
     while (form = @forms_to_crawl.pop)
@@ -142,6 +146,14 @@ class Relevance::Tarantula::Crawler
 
   def grab_log!
     @log_grabber && @log_grabber.grab!
+  end
+  
+  def make_result(options)
+    defaults = {
+      :log       => grab_log!,
+      :test_name => test_name      
+    }
+    Result.new(defaults.merge(options)).freeze
   end
 
   def handle_form_results(form, response)
@@ -186,7 +198,7 @@ class Relevance::Tarantula::Crawler
   end
 
   def queue_link(dest, referrer = nil)
-    dest = Link.new(dest, crawler, referrer)
+    dest = Link.new(dest, self, referrer)
     return if should_skip_link?(dest)
     @links_to_crawl << dest
     @links_queued << dest
