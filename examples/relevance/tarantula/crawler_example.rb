@@ -2,10 +2,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "example_
 
 describe Relevance::Tarantula::Crawler do
   
-  def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
-    Relevance::Tarantula::Link.new(link, crawler, referrer)
-  end
-  
   describe "transform_url" do
 
     before { @crawler = Relevance::Tarantula::Crawler.new }

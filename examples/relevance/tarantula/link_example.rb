@@ -3,10 +3,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "example_
 describe "Relevance::Tarantula::Link" do
   include ActionView::Helpers::UrlHelper
   
-  def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
-    Relevance::Tarantula::Link.new(link, crawler, referrer)
-  end
-  
   it "does not raise an error when initializing without href attribtue" do
     link = make_link(Hpricot('<a="/foo">foo</a>').at('a'))
     link.href.should == nil
