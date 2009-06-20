@@ -36,6 +36,10 @@ def stub_puts_and_print(obj)
   obj.stubs(:print)
 end
 
+def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
+  Relevance::Tarantula::Link.new(link, crawler, referrer)
+end
+
 def not_in_editor?
   ['TM_MODE', 'EMACS', 'VIM'].all? { |k| !ENV.has_key?(k) }
 end
