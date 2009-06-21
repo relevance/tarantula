@@ -22,7 +22,7 @@ describe "Attacks without an output specified" do
   it "never matches anything" do
     handler = Relevance::Tarantula::AttackHandler.new
     attack = Relevance::Tarantula::Attack.new({:name => 'foo_name', :input => 'foo_code'})
-    Relevance::Tarantula::AttackFormSubmission.stubs(:attacks).returns([attack])
+    Relevance::Tarantula::FormSubmission.stubs(:attacks).returns([attack])
     result = handler.handle(Relevance::Tarantula::Result.new(:response => stub(:html? => true, :body => '<a href="/foo">good</a>')))
     result.should == nil
   end

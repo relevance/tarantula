@@ -49,10 +49,10 @@ require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "log_gra
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "invalid_html_handler"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "transform"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "crawler"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "basic_attack"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form_submission"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_form_submission"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_handler"))
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "link"))
 
