@@ -5,7 +5,7 @@ class Relevance::Tarantula::BasicAttack
 
   def initialize
     @name = "Tarantula Basic Fuzzer"
-    @output = ''
+    @output = nil
     @description = "Supplies purely random but simplistically generated form input."
   end
 
