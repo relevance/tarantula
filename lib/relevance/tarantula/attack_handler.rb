@@ -4,7 +4,7 @@ class Relevance::Tarantula::AttackHandler
   include ERB::Util
   
   def attacks
-    Relevance::Tarantula::AttackFormSubmission.attacks.select(&:output)
+    Relevance::Tarantula::FormSubmission.attacks.select(&:output)
   end
   
   def handle(result)
