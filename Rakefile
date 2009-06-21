@@ -46,7 +46,7 @@ namespace :examples do
   Micronaut::RakeTask.new :coverage do |t|
     t.pattern = "examples/**/*_example.rb"
     t.rcov = true
-    t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage --no-validator-links]
+    t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage]
   end
   
   RAILS_VERSIONS = %w[2.0.2 2.1.0 2.1.1 2.2.2 2.3.1 2.3.2]
