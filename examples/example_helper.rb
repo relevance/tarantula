@@ -1,6 +1,6 @@
 lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
-
+require 'rubygems'
 gem "spicycode-micronaut", ">= 0.2.4"
 gem "log_buddy"
 gem "mocha"

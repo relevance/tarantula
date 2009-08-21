@@ -25,18 +25,18 @@
       </ul>
 
       <div id="report">
-        <h3>Detail of <%= short_description %> <em>Generated on <%= Time.now %></em></h3>
-        <p><b>Resource</b> <a href="<%= full_url %>"><%= full_url %></a></p>
-        <p><b>Response</b> <span class="r<%= code.first %>"><%= code %></span></p>
-        <p><b>Referrer</b> <%= referrer || "" %></p>
+        <h3>Detail of <%= result.short_description %> <em>Generated on <%= Time.now %></em></h3>
+        <p><b>Resource</b> <a href="<%= result.full_url %>"><%= result.full_url %></a></p>
+        <p><b>Response</b> <span class="r<%= result.code.first %>"><%= result.code %></span></p>
+        <p><b>Referrer</b> <%= result.referrer || "" %></p>
 
         <table class="output">
         <tbody>
           <tr>                
             <th colspan="2">#&nbsp;&nbsp;Data</th>           
           </tr>
-          <% if data %>
-            <%= wrap_in_line_number_table_row(data) %>
+          <% if result.data %>
+            <%= result.wrap_in_line_number_table_row(result.data) %>
           <% else %>
             <tr>
               <td colspan="2">No Data</td>
@@ -50,8 +50,8 @@
           <tr>
             <th colspan="2">#&nbsp;&nbsp;Body</th>           
           </tr>
-          <% if body %>
-            <%= wrap_in_line_number_table_row(body) %>
+          <% if result.body %>
+            <%= result.wrap_in_line_number_table_row(result.body) %>
           <% else %>
             <tr>
               <td colspan="2">No Body</td>
@@ -65,8 +65,8 @@
             <tr>
               <th colspan="2">#&nbsp;&nbsp;Log</th>           
             </tr>
-            <% if log %>
-              <%= wrap_in_line_number_table_row(log) {|line| wrap_stack_trace_line(line)} %>
+            <% if result.log %>
+              <%= result.wrap_in_line_number_table_row(result.log) {|line| wrap_stack_trace_line(line)} %>
             <% else %>
               <tr>
                 <td colspan="2">No Log</td>
