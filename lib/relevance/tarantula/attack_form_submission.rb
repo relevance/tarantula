@@ -68,8 +68,9 @@ class Relevance::Tarantula::AttackFormSubmission
 
   def random_data(input)
     case input['name']
-      when /^_method$/      : input['value']
-      else                    attack.input
+      when /^_method$/      then input['value']
+      else                   
+       attack.input
     end
   end
 end

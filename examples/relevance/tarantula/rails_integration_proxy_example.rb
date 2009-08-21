@@ -41,7 +41,7 @@ describe "Relevance::Tarantula::RailsIntegrationProxy" do
   it "adds a response accessor to its delegate rails integration test" do
     o = Object.new
     Relevance::Tarantula::RailsIntegrationProxy.new(o)
-    o.methods(false).sort.should == %w{response response=}
+    o.methods(false).map(&:to_s).sort.should == %w{response response=}
   end
 
 end

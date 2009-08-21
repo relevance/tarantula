@@ -47,12 +47,13 @@ class Relevance::Tarantula::FormSubmission
   
   def random_data(input)
     case input['name']
-      when /amount/         : random_int
-      when /_id$/           : random_whole_number
-      when /uploaded_data/  : nil
-      when /^_method$/      : input['value']
-      when nil              : input['value']
-      else                    random_int
+      when /amount/         then random_int
+      when /_id$/           then random_whole_number
+      when /uploaded_data/  then nil
+      when /^_method$/      then input['value']
+      when nil              then input['value']
+      else                  
+        random_int
     end
   end
   
