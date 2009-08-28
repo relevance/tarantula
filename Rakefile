@@ -49,9 +49,9 @@ namespace :examples do
     t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage --no-validator-links]
   end
   
-  RAILS_VERSIONS = %w[2.0.2 2.1.0 2.1.1 2.2.2 2.3.1 2.3.2]
+  RAILS_VERSIONS = %w[2.0.2 2.1.0 2.1.1 2.2.2 2.3.2 2.3.3]
   
-  desc "Run exmaples with multiple versions of rails"
+  desc "Run examples with multiple versions of rails"
   task :multi_rails do
     RAILS_VERSIONS.each do |rails_version|
       puts
