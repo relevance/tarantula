@@ -98,7 +98,7 @@ describe Relevance::Tarantula::Crawler do
     it 'queues and remembers forms' do
       crawler = Relevance::Tarantula::Crawler.new
       form = Hpricot('<form action="/action" method="post"/>').at('form')
-      signature = Relevance::Tarantula::FormSubmission.new(Relevance::Tarantula::Form.new(form)).signature
+      signature = Relevance::Tarantula::FormSubmission.new(make_form(form)).signature
       crawler.queue_form(form)
       crawler.forms_to_crawl.size.should == 1
       crawler.form_signatures_queued.should == Set.new([signature])
@@ -114,17 +114,10 @@ describe Relevance::Tarantula::Crawler do
   end
   
   describe "crawling" do
-    
-    it "converts ActiveRecord::RecordNotFound into a 404" do
-      (proxy = stub_everything).expects(:send).raises(ActiveRecord::RecordNotFound)
-      crawler = Relevance::Tarantula::Crawler.new
-      crawler.proxy = proxy
-      response = crawler.crawl_form stub_everything(:method => nil)
-      response.code.should == "404"
-      response.content_type.should == "text/plain"
-      response.body.should == "ActiveRecord::RecordNotFound"
+    before do
+      @form = Hpricot('<form action="/action" method="post"/>').at('form')
     end
-
+    
     it "does two things with each link: crawl and blip" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.proxy = stub
@@ -139,12 +132,8 @@ describe Relevance::Tarantula::Crawler do
 
     it "invokes queued forms, logs responses, and calls handlers" do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.forms_to_crawl << stub_everything(:method => "get", 
-                                                :action => "/foo",
-                                                :data => "some data",
-                                                :to_s => "stub")
-      crawler.proxy = stub_everything(:send => stub(:code => "200" ))
-      crawler.expects(:log).with("Response 200 for stub")
+      crawler.forms_to_crawl << Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler))
+      crawler.expects(:submit).returns(stub(:code => "200"))
       crawler.expects(:blip)
       crawler.crawl_queued_forms
     end
@@ -154,32 +143,23 @@ describe Relevance::Tarantula::Crawler do
       crawler = Relevance::Tarantula::Crawler.new
       stub_puts_and_print(crawler)
       response = stub(:code => "200")
-      crawler.links_to_crawl = [make_link("/foo", crawler)]
+      crawler.queue_link('/foo')
       crawler.expects(:follow).returns(response).times(4) # (stub and "/") * 2
-      crawler.forms_to_crawl << stub_everything(:method => "post", 
-                                                :action => "/foo",
-                                                :data => "some data",
-                                                :to_s => "stub")
-      crawler.proxy = stub
-      crawler.proxy.expects(:post).returns(response).times(2)
+      crawler.queue_form(@form)
+      crawler.expects(:submit).returns(response).times(2)
       crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
       crawler.times_to_crawl = 2
-      crawler.crawl
-                                                
+      crawler.crawl                                                
     end
 
     it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
       crawler = Relevance::Tarantula::Crawler.new
       stub_puts_and_print(crawler)
       response = stub(:code => "200")
-      crawler.links_to_crawl = [make_link("/foo", crawler)]
+      crawler.queue_link('/foo')
       crawler.expects(:follow).returns(response).times(4) # (stub and "/") * 2
-      crawler.forms_to_crawl << stub_everything(:method => "post", 
-                                                :action => "/foo",
-                                                :data => "some data",
-                                                :to_s => "stub")
-      crawler.proxy = stub
-      crawler.proxy.expects(:post).returns(response).times(2)
+      crawler.queue_form(@form)
+      crawler.expects(:submit).returns(response).times(2)
       crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
       crawler.times_to_crawl = 2
       crawler.crawl

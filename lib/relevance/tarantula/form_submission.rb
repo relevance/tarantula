@@ -1,5 +1,6 @@
 class Relevance::Tarantula::FormSubmission
-  attr_accessor :method, :action, :data, :attack
+  include Relevance::Tarantula
+  attr_accessor :method, :action, :data, :attack, :form
 
   class << self
     def attacks
@@ -19,10 +20,23 @@ class Relevance::Tarantula::FormSubmission
   @attacks = [Relevance::Tarantula::BasicAttack.new]
 
   def initialize(form, attack = Relevance::Tarantula::BasicAttack.new)
+    @form = form
     @method = form.method
     @action = form.action
     @attack = attack
     @data = mutate_selects(form).merge(mutate_text_areas(form)).merge(mutate_inputs(form))
+  end
+  
+  def crawl
+    begin
+      response = form.crawler.submit(method, action, data)
+      log "Response #{response.code} for #{self}"
+    rescue ActiveRecord::RecordNotFound => e
+      log "Skipping #{action}, presumed ok that record is missing"
+      response = Relevance::Tarantula::Response.new(:code => "404", :body => e.message, :content_type => "text/plain")
+    end
+    form.crawler.handle_form_results(self, response)
+    response
   end
 
   def self.mutate(form)

@@ -40,6 +40,10 @@ def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
   Relevance::Tarantula::Link.new(link, crawler, referrer)
 end
 
+def make_form(form, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
+  Relevance::Tarantula::Form.new(form, crawler, referrer)
+end
+
 def not_in_editor?
   ['TM_MODE', 'EMACS', 'VIM'].all? { |k| !ENV.has_key?(k) }
 end

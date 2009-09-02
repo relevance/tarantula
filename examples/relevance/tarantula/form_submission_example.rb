@@ -19,9 +19,31 @@ describe Relevance::Tarantula::FormSubmission do
       })
     end
 
+    describe "crawl" do
+
+      it "converts ActiveRecord::RecordNotFound into a 404" do
+        (crawler = stub_everything).expects(:submit).raises(ActiveRecord::RecordNotFound)
+        form = Relevance::Tarantula::FormSubmission.new(make_form(@tag.at('form'), crawler))
+        response = form.crawl
+        response.code.should == "404"
+        response.content_type.should == "text/plain"
+        response.body.should == "ActiveRecord::RecordNotFound"
+      end
+      
+      it "submits the form and logs response" do
+        doc = Hpricot('<form action="/action" method="post"/>')
+        form = make_form(doc.at('form'))
+        fs = Relevance::Tarantula::FormSubmission.new(form)
+        form.crawler.expects(:submit).returns(stub(:code => "200"))
+        fs.expects(:log).with("Response 200 for #{fs}")
+        fs.crawl
+      end
+      
+    end
+
     describe "with default attack" do
       before do
-        @form = Relevance::Tarantula::Form.new(@tag.at('form'))
+        @form = make_form(@tag.at('form'))
         @fs = Relevance::Tarantula::FormSubmission.new(@form)
       end
   
@@ -57,7 +79,7 @@ describe Relevance::Tarantula::FormSubmission do
     
     describe "with a custom attack" do
       before do
-        @form = Relevance::Tarantula::Form.new(@tag.at('form'))
+        @form = make_form(@tag.at('form'))
         @attack = Relevance::Tarantula::Attack.new(:name => 'foo_name', 
                                                    :input => 'foo_code', 
                                                    :output => 'foo_code')
@@ -118,7 +140,7 @@ describe Relevance::Tarantula::FormSubmission do
     
     describe "with default attack" do
       before do
-        @form = Relevance::Tarantula::Form.new(@tag.at('form'))
+        @form = make_form(@tag.at('form'))
         @fs = Relevance::Tarantula::FormSubmission.new(@form)
       end
 
@@ -129,7 +151,7 @@ describe Relevance::Tarantula::FormSubmission do
 
     describe "with a custom attack" do
       before do
-        @form = Relevance::Tarantula::Form.new(@tag.at('form'))
+        @form = make_form(@tag.at('form'))
         @fs = Relevance::Tarantula::FormSubmission.new(@form, {:name => 'foo_name', :input => 'foo_code', :output => 'foo_code'})
       end
 

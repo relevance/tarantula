@@ -119,23 +119,17 @@ class Relevance::Tarantula::Crawler
     end
   end
 
-  def crawl_form(form)
-    response = proxy.send(form.method, form.action, form.data)
-    log "Response #{response.code} for #{form}"
-    response
-  rescue ActiveRecord::RecordNotFound => e
-    log "Skipping #{form.action}, presumed ok that record is missing"
-    Relevance::Tarantula::Response.new(:code => "404", :body => e.message, :content_type => "text/plain")
-  end
-  
   def follow(method, url, data=nil)
     proxy.send(method, url, data)
+  end
+  
+  def submit(method, action, data)
+    proxy.send(method, action, data)
   end
 
   def crawl_queued_forms(number = 0)
     while (form = @forms_to_crawl.pop)
-      response = crawl_form(form)
-      handle_form_results(form, response)
+      form.crawl
       blip(number)
     end
   end
@@ -207,8 +201,8 @@ class Relevance::Tarantula::Crawler
 
   def queue_form(form, referrer = nil)
     fuzzers.each do |fuzzer|
-      fuzzer.mutate(Form.new(form)).each do |fs|
-        # fs = fuzzer.new(Form.new(form))
+      fuzzer.mutate(Form.new(form, self, referrer)).each do |fs|
+        # fs = fuzzer.new(Form.new(form, self, referrer))
         fs.action = transform_url(fs.action)
         return if should_skip_form_submission?(fs)
         @referrers[fs.action] = referrer if referrer
