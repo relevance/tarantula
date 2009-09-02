@@ -91,7 +91,7 @@ describe Relevance::Tarantula::Crawler do
       crawler.expects(:transform_url).with("/url").returns("/transformed").at_least_once
       crawler.queue_link("/url")
       # TODO not sure this is the best way to test this anymore; relying on result of transform in both actual and expected
-      crawler.links_to_crawl.should == [make_link("/url", crawler)]
+      crawler.crawl_queue.should == [make_link("/url", crawler)]
       crawler.links_queued.should == Set.new([make_link("/url", crawler)])
     end
 
@@ -100,7 +100,7 @@ describe Relevance::Tarantula::Crawler do
       form = Hpricot('<form action="/action" method="post"/>').at('form')
       signature = Relevance::Tarantula::FormSubmission.new(make_form(form)).signature
       crawler.queue_form(form)
-      crawler.forms_to_crawl.size.should == 1
+      crawler.crawl_queue.size.should == 1
       crawler.form_signatures_queued.should == Set.new([signature])
     end
 
@@ -121,21 +121,21 @@ describe Relevance::Tarantula::Crawler do
     it "does two things with each link: crawl and blip" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.proxy = stub
-      crawler.links_to_crawl = links = [make_link("/foo1", crawler), make_link("/foo2", crawler)]
+      crawler.crawl_queue = links = [make_link("/foo1", crawler), make_link("/foo2", crawler)]
       
       links.each{|link| link.expects(:crawl)}
       crawler.expects(:blip).times(2)
       
-      crawler.crawl_queued_links
-      crawler.links_to_crawl.should == []
+      crawler.crawl_the_queue
+      crawler.crawl_queue.should == []
     end
 
     it "invokes queued forms, logs responses, and calls handlers" do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.forms_to_crawl << Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler))
+      crawler.crawl_queue << Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler))
       crawler.expects(:submit).returns(stub(:code => "200"))
       crawler.expects(:blip)
-      crawler.crawl_queued_forms
+      crawler.crawl_the_queue
     end
     
     # TODO this is the same as "resets to the initial links/forms ..." and doesn't appear to test anything related to a timeout.
@@ -205,13 +205,13 @@ describe Relevance::Tarantula::Crawler do
 
     it "isn't finished when links remain" do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.links_to_crawl = [:stub_link]
+      crawler.crawl_queue = [:stub_link]
       crawler.finished?.should == false
     end
 
-    it "isn't finished when links remain" do
+    it "isn't finished when forms remain" do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.forms_to_crawl = [:stub_form]
+      crawler.crawl_queue = [:stub_form]
       crawler.finished?.should == false
     end
     
@@ -220,8 +220,7 @@ describe Relevance::Tarantula::Crawler do
   it "crawls links and forms again and again until finished?==true" do
     crawler = Relevance::Tarantula::Crawler.new
     crawler.expects(:finished?).times(3).returns(false, false, true)
-    crawler.expects(:crawl_queued_links).times(2)
-    crawler.expects(:crawl_queued_forms).times(2)
+    crawler.expects(:crawl_the_queue).times(2)
     crawler.do_crawl(1)
   end
   
@@ -277,9 +276,9 @@ describe Relevance::Tarantula::Crawler do
   
     it 'skips blank links' do
       @crawler.queue_link(nil)
-      @crawler.links_to_crawl.should == []
+      @crawler.crawl_queue.should == []
       @crawler.queue_link("")
-      @crawler.links_to_crawl.should == []
+      @crawler.crawl_queue.should == []
     end
   
     it "logs and skips links that match a pattern" do
@@ -353,7 +352,7 @@ describe Relevance::Tarantula::Crawler do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.crawl_timeout = 5.minutes
       
-      crawler.links_to_crawl = [stub(:href => "/foo1", :method => :get), stub(:href => "/foo2", :method => :get)]
+      crawler.crawl_queue = [stub(:href => "/foo1", :method => :get), stub(:href => "/foo2", :method => :get)]
       crawler.proxy = stub
       crawler.proxy.stubs(:get).returns(response = stub(:code => "200"))
       

@@ -10,7 +10,7 @@ class Relevance::Tarantula::Crawler
   class CrawlTimeout < RuntimeError; end
 
   attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
-                :reporters, :links_to_crawl, :links_queued, :forms_to_crawl,
+                :reporters, :crawl_queue, :links_queued,
                 :form_signatures_queued, :max_url_length, :response_code_handler,
                 :times_to_crawl, :fuzzers, :test_name, :crawl_timeout
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes, :crawl_start_times, :crawl_end_times
@@ -22,8 +22,7 @@ class Relevance::Tarantula::Crawler
     @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
-    @links_to_crawl = []
-    @forms_to_crawl = []
+    @crawl_queue = []
     @crawl_start_times, @crawl_end_times = [], []
     @crawl_timeout = 20.minutes
     @referrers = {}
@@ -55,8 +54,7 @@ class Relevance::Tarantula::Crawler
   def crawl(url = "/")
     orig_links_queued = @links_queued.dup
     orig_form_signatures_queued = @form_signatures_queued.dup
-    orig_links_to_crawl = @links_to_crawl.dup
-    orig_forms_to_crawl = @forms_to_crawl.dup
+    orig_crawl_queue = @crawl_queue.dup
     @times_to_crawl.times do |num|
       queue_link url
       
@@ -71,8 +69,7 @@ class Relevance::Tarantula::Crawler
       if num + 1 < @times_to_crawl
         @links_queued = orig_links_queued
         @form_signatures_queued = orig_form_signatures_queued
-        @links_to_crawl = orig_links_to_crawl
-        @forms_to_crawl = orig_forms_to_crawl
+        @crawl_queue = orig_crawl_queue
         @referrers = {}
       end
     end
@@ -83,21 +80,20 @@ class Relevance::Tarantula::Crawler
   end
 
   def finished?
-    @links_to_crawl.empty? && @forms_to_crawl.empty?
+    @crawl_queue.empty?
   end
 
   def do_crawl(number)
     while (!finished?)
       @crawl_start_times << Time.now
-      crawl_queued_links(number)
-      crawl_queued_forms(number)
+      crawl_the_queue(number)
       @crawl_end_times << Time.now
     end
   end
 
-  def crawl_queued_links(number = 0)
-    while (link = @links_to_crawl.pop)
-      link.crawl
+  def crawl_the_queue(number = 0)
+    while (request = @crawl_queue.pop)
+      request.crawl
       blip(number)
     end
   end
@@ -127,13 +123,6 @@ class Relevance::Tarantula::Crawler
     proxy.send(method, action, data)
   end
 
-  def crawl_queued_forms(number = 0)
-    while (form = @forms_to_crawl.pop)
-      form.crawl
-      blip(number)
-    end
-  end
-  
   def elasped_time_for_pass(num)
     Time.now - crawl_start_times[num]
   end
@@ -194,7 +183,7 @@ class Relevance::Tarantula::Crawler
   def queue_link(dest, referrer = nil)
     dest = Link.new(dest, self, referrer)
     return if should_skip_link?(dest)
-    @links_to_crawl << dest
+    @crawl_queue << dest
     @links_queued << dest
     dest
   end
@@ -206,7 +195,7 @@ class Relevance::Tarantula::Crawler
         fs.action = transform_url(fs.action)
         return if should_skip_form_submission?(fs)
         @referrers[fs.action] = referrer if referrer
-        @forms_to_crawl << fs
+        @crawl_queue << fs
         @form_signatures_queued << fs.signature
       end
     end
@@ -239,7 +228,7 @@ class Relevance::Tarantula::Crawler
   end
 
   def links_remaining_count
-    @links_to_crawl.size + @forms_to_crawl.size
+    @crawl_queue.size
   end
 
   def links_completed_count
