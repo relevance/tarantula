@@ -1,3 +1,4 @@
+require 'rubygems'
 lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
 require 'rubygems'
@@ -33,6 +34,14 @@ end
 def stub_puts_and_print(obj)
   obj.stubs(:puts)
   obj.stubs(:print)
+end
+
+def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
+  Relevance::Tarantula::Link.new(link, crawler, referrer)
+end
+
+def make_form(form, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
+  Relevance::Tarantula::Form.new(form, crawler, referrer)
 end
 
 def not_in_editor?

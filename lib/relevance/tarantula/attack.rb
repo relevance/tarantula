@@ -10,6 +10,9 @@ class Relevance::Tarantula::Attack
   def ==(other)
     Relevance::Tarantula::Attack === other && HASHABLE_ATTRS.all? { |attr| send(attr) == other.send(attr)}
   end
+  def input(input_field=nil)
+    @input
+  end
 end
 
 

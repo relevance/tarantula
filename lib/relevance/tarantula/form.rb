@@ -2,8 +2,10 @@ class Relevance::Tarantula::Form
   extend Forwardable
   def_delegators("@tag", :search)
   
-  def initialize(tag)
-    @tag = tag
+  attr_accessor :crawler, :referrer
+  
+  def initialize(tag, crawler, referrer)
+    @tag, @crawler, @referrer = tag, crawler, referrer
   end
   
   def action
