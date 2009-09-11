@@ -15,11 +15,12 @@ class Relevance::Tarantula::BasicAttack
 
   def input(input_field)
     case input_field['name']
-      when /amount/         : random_int
-      when /_id$/           : random_whole_number
-      when /uploaded_data/  : nil
-      when nil              : input['value']
-      else                    random_int
+      when /amount/         then random_int
+      when /_id$/           then random_whole_number
+      when /uploaded_data/  then nil
+      when nil              then input['value']
+      else
+        random_int
     end
   end
 
