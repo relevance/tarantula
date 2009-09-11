@@ -41,7 +41,7 @@ class Relevance::Tarantula::RailsIntegrationProxy
     if response.code == '404'
       if File.exist?(static_content_path(url))
         case ext = File.extension(url)
-        when /html|te?xt|css|js|jpe?g|gif|psd|png|eps|pdf/
+        when /html|te?xt|css|js|jpe?g|gif|psd|png|eps|pdf|ico/
           response.body = static_content_file(url)
           response.headers["type"] = "text/#{ext}"  # readable as response.content_type
           response.meta.attr_accessor :code
