@@ -20,4 +20,3 @@ describe Relevance::Tarantula do
     lambda{rails_root}.should raise_error(NameError)
   end
 end
-

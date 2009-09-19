@@ -57,3 +57,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "link"))
 
 require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "tidy_handler")) if ENV['TIDY_PATH']
+
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "config"))
+require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "file_loader"))
