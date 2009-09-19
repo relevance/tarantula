@@ -7,6 +7,7 @@ module Relevance::Tarantula::Config
     def crawl
       # TODO create and initialize crawler
       # TODO crawl
+      # TODO report results
     end
   end
   
