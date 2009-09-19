@@ -122,9 +122,15 @@ describe Relevance::Tarantula::FormSubmission do
         Relevance::Tarantula::FormSubmission.mutate(@form).size.should == 2
       end
 
-      xit "maps hash attacks to Attack instances" do
-        Relevance::Tarantula::FormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
-        Relevance::Tarantula::FormSubmission.attacks.should == [Relevance::Tarantula::Attack.new({:name => "attack name"})]
+      it "maps hash attacks to Attack instances" do
+        saved_attacks = Relevance::Tarantula::FormSubmission.instance_variable_get("@attacks")
+        begin
+          Relevance::Tarantula::FormSubmission.instance_variable_set("@attacks", [{ :name => "attack name"}])
+          Relevance::Tarantula::FormSubmission.attacks.should == [Relevance::Tarantula::Attack.new({:name => "attack name"})]
+        ensure
+          # isolate this test properly
+          Relevance::Tarantula::FormSubmission.instance_variable_set("@attacks", saved_attacks)
+        end
       end
     end
   end
