@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{tarantula}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance, Inc."]
-  s.date = %q{2009-09-11}
+  s.date = %q{2009-09-24}
   s.description = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
   s.email = %q{opensource@thinkrelevance.com}
   s.extra_rdoc_files = [
@@ -25,7 +25,9 @@ Gem::Specification.new do |s|
      "examples/relevance/core_extensions/test_case_example.rb",
      "examples/relevance/tarantula/attack_handler_example.rb",
      "examples/relevance/tarantula/basic_attack_example.rb",
+     "examples/relevance/tarantula/config_example.rb",
      "examples/relevance/tarantula/crawler_example.rb",
+     "examples/relevance/tarantula/file_loader_example.rb",
      "examples/relevance/tarantula/form_example.rb",
      "examples/relevance/tarantula/form_submission_example.rb",
      "examples/relevance/tarantula/html_document_handler_example.rb",
@@ -58,8 +60,10 @@ Gem::Specification.new do |s|
      "lib/relevance/tarantula/attack.rb",
      "lib/relevance/tarantula/attack_handler.rb",
      "lib/relevance/tarantula/basic_attack.rb",
+     "lib/relevance/tarantula/config.rb",
      "lib/relevance/tarantula/crawler.rb",
      "lib/relevance/tarantula/detail.html.erb",
+     "lib/relevance/tarantula/file_loader.rb",
      "lib/relevance/tarantula/form.rb",
      "lib/relevance/tarantula/form_submission.rb",
      "lib/relevance/tarantula/html_document_handler.rb",
@@ -94,7 +98,9 @@ Gem::Specification.new do |s|
      "examples/relevance/core_extensions/test_case_example.rb",
      "examples/relevance/tarantula/attack_handler_example.rb",
      "examples/relevance/tarantula/basic_attack_example.rb",
+     "examples/relevance/tarantula/config_example.rb",
      "examples/relevance/tarantula/crawler_example.rb",
+     "examples/relevance/tarantula/file_loader_example.rb",
      "examples/relevance/tarantula/form_example.rb",
      "examples/relevance/tarantula/form_submission_example.rb",
      "examples/relevance/tarantula/html_document_handler_example.rb",
