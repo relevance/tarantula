@@ -220,6 +220,7 @@ class Relevance::Tarantula::Crawler
   end
 
   def report_results
+    puts "Crawled #{total_links_count} links and forms."
     generate_reports
   end
 
@@ -237,7 +238,7 @@ class Relevance::Tarantula::Crawler
 
   def blip(number = 0)
     unless verbose
-      print "\r #{links_completed_count} of #{total_links_count} links completed               "
+      print "\r #{links_completed_count} of #{total_links_count} links completed               " if $stdout.tty?
       timeout_if_too_long(number)
     end
   end

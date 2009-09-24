@@ -57,6 +57,7 @@ namespace :examples do
   
   desc "Run examples with multiple versions of rails"
   task :multi_rails do
+    puts "$stdout.tty? = #{$stdout.tty?}"
     RAILS_VERSIONS.each do |rails_version|
       puts
       sh "RAILS_VERSION='#{rails_version}' rake examples"

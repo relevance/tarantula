@@ -168,9 +168,18 @@ describe Relevance::Tarantula::Crawler do
   end
   
   describe "report_results" do
+    
+    it "prints a final summary line" do
+      crawler = Relevance::Tarantula::Crawler.new
+      crawler.stubs(:generate_reports)
+      crawler.expects(:total_links_count).returns(42)
+      crawler.expects(:puts).with("Crawled 42 links and forms.")
+      crawler.report_results
+    end
 
     it "delegates to generate_reports" do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.stubs(:puts)
       crawler.expects(:generate_reports)
       crawler.report_results
     end
@@ -180,6 +189,7 @@ describe Relevance::Tarantula::Crawler do
   describe "blip" do
 
     it "blips the current progress if !verbose" do
+      $stdout.stubs(:tty?).returns(true)
       crawler = Relevance::Tarantula::Crawler.new
       crawler.stubs(:verbose).returns false
       crawler.stubs(:timeout_if_too_long)
@@ -187,7 +197,17 @@ describe Relevance::Tarantula::Crawler do
       crawler.blip
     end
     
+    it "suppresses the blip message if not writing to a tty" do
+      $stdout.stubs(:tty?).returns(false)
+      crawler = Relevance::Tarantula::Crawler.new
+      crawler.stubs(:verbose).returns false
+      crawler.stubs(:timeout_if_too_long)
+      crawler.expects(:print).never
+      crawler.blip
+    end
+    
     it "blips nothing if verbose" do
+      $stdout.stubs(:tty?).returns(true)
       crawler = Relevance::Tarantula::Crawler.new
       crawler.stubs(:verbose).returns true
       crawler.expects(:print).never
