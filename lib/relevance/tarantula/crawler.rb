@@ -38,6 +38,8 @@ class Relevance::Tarantula::Crawler
     @decoder = HTMLEntities.new
     @times_to_crawl = 1
     @fuzzers = [Relevance::Tarantula::FormSubmission]
+    
+    @stdout_tty = $stdout.tty?
   end
 
   def method_missing(meth, *args)
@@ -61,6 +63,7 @@ class Relevance::Tarantula::Crawler
       begin 
         do_crawl num
       rescue CrawlTimeout => e
+        puts
         puts e.message
       end
       
@@ -238,7 +241,7 @@ class Relevance::Tarantula::Crawler
 
   def blip(number = 0)
     unless verbose
-      print "\r #{links_completed_count} of #{total_links_count} links completed               " if $stdout.tty?
+      print "\r #{links_completed_count} of #{total_links_count} links completed               " if @stdout_tty
       timeout_if_too_long(number)
     end
   end
