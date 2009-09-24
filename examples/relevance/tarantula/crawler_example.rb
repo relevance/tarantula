@@ -138,19 +138,7 @@ describe Relevance::Tarantula::Crawler do
       crawler.crawl_the_queue
     end
     
-    # TODO this is the same as "resets to the initial links/forms ..." and doesn't appear to test anything related to a timeout.
-    it "breaks out early if a timeout is set" do
-      crawler = Relevance::Tarantula::Crawler.new
-      stub_puts_and_print(crawler)
-      response = stub(:code => "200")
-      crawler.queue_link('/foo')
-      crawler.expects(:follow).returns(response).times(4) # (stub and "/") * 2
-      crawler.queue_form(@form)
-      crawler.expects(:submit).returns(response).times(2)
-      crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
-      crawler.times_to_crawl = 2
-      crawler.crawl                                                
-    end
+    it "breaks out early if a timeout is set"
 
     it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
       crawler = Relevance::Tarantula::Crawler.new
@@ -160,7 +148,7 @@ describe Relevance::Tarantula::Crawler do
       crawler.expects(:follow).returns(response).times(4) # (stub and "/") * 2
       crawler.queue_form(@form)
       crawler.expects(:submit).returns(response).times(2)
-      crawler.expects(:links_completed_count).returns(0,1,2,3,4,5).times(6)
+      crawler.expects(:blip).times(6)
       crawler.times_to_crawl = 2
       crawler.crawl
     end
