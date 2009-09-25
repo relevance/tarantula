@@ -23,6 +23,7 @@ require 'active_support'
 require 'action_controller'
 require 'active_record'
 require 'relevance/tarantula'
+require 'relevance/tarantula/dsl'
 require 'micronaut'
 require 'mocha'
 

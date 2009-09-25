@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
      "lib/relevance/tarantula/config.rb",
      "lib/relevance/tarantula/crawler.rb",
      "lib/relevance/tarantula/detail.html.erb",
+     "lib/relevance/tarantula/dsl.rb",
      "lib/relevance/tarantula/file_loader.rb",
      "lib/relevance/tarantula/form.rb",
      "lib/relevance/tarantula/form_submission.rb",

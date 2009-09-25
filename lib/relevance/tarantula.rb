@@ -60,9 +60,6 @@ end
   attack
   attack_handler
   link
-  config
-  file_loader
-  runner
 }.each do |fn|
   require File.join(TARANTULA_ROOT, 'lib/relevance/tarantula', fn)
 end
