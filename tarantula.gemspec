@@ -6,9 +6,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance, Inc."]
-  s.date = %q{2009-09-24}
+  s.date = %q{2009-09-25}
+  s.default_executable = %q{tarantula}
   s.description = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
   s.email = %q{opensource@thinkrelevance.com}
+  s.executables = ["tarantula"]
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
@@ -18,6 +20,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION.yml",
+     "bin/tarantula",
      "examples/example_helper.rb",
      "examples/relevance/core_extensions/ellipsize_example.rb",
      "examples/relevance/core_extensions/file_example.rb",
@@ -78,6 +81,7 @@ Gem::Specification.new do |s|
      "lib/relevance/tarantula/recording.rb",
      "lib/relevance/tarantula/response.rb",
      "lib/relevance/tarantula/result.rb",
+     "lib/relevance/tarantula/runner.rb",
      "lib/relevance/tarantula/test_report.html.erb",
      "lib/relevance/tarantula/tidy_handler.rb",
      "lib/relevance/tarantula/transform.rb",

@@ -32,31 +32,39 @@ module Relevance
   end
 end
 
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "test_case"))
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "ellipsize"))
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "file"))
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "response"))
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "metaclass"))
-require File.expand_path(File.join(File.dirname(__FILE__), "core_extensions", "string_chars_fix"))
+%w{
+  test_case
+  ellipsize
+  file
+  response
+  metaclass
+  string_chars_fix
+}.each do |fn|
+  require File.join(TARANTULA_ROOT, 'lib/relevance/core_extensions', fn)
+end
 
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_reporter"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "html_report_helper"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "io_reporter"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "recording"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "response"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "result"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "log_grabber"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "invalid_html_handler"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "transform"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "crawler"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "basic_attack"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "form_submission"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "attack_handler"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "link"))
+%w{
+  html_reporter
+  html_report_helper
+  io_reporter
+  recording
+  response
+  result
+  log_grabber
+  invalid_html_handler
+  transform
+  crawler
+  basic_attack
+  form
+  form_submission
+  attack
+  attack_handler
+  link
+  config
+  file_loader
+  runner
+}.each do |fn|
+  require File.join(TARANTULA_ROOT, 'lib/relevance/tarantula', fn)
+end
 
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "tidy_handler")) if ENV['TIDY_PATH']
-
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "config"))
-require File.expand_path(File.join(File.dirname(__FILE__), "tarantula", "file_loader"))
+require File.join(TARANTULA_ROOT, 'lib/relevance/tarantula', 'tidy_handler') if ENV['TIDY_PATH']

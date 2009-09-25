@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require './config/boot' # TODO figure out a way to find this
+require File.expand_path(File.dirname(__FILE__) + "/../lib/relevance/tarantula")
+exit ::Relevance::Tarantula::Runner.run

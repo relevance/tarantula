@@ -7,7 +7,7 @@ require 'micronaut/rake_task'
 begin
   require 'jeweler'
   files = ["CHANGELOG", "MIT-LICENSE", "Rakefile", "README.rdoc", "VERSION.yml"]
-  files << Dir["examples/**/*", "laf/**/*", "lib/**/*", "tasks/**/*", "template/**/*"]
+  files << Dir["bin/*", "examples/**/*", "laf/**/*", "lib/**/*", "tasks/**/*", "template/**/*"]
   
   Jeweler::Tasks.new do |s|
     s.name = "tarantula"

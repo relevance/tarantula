@@ -18,20 +18,22 @@ Tarantula runner that doesn't depend on test/unit or RSpec.
 
 ## Basic crawl, starting from '/'
 
-    Tarantula.crawl
+    crawl
     
-## Basic crawl, starting from '/' and '/admin'
+## Basic crawl, starting from '/admin'
 
-    Tarantula.crawl('both') do |t|
-      t.root_page '/'
+    crawl('Admin interface') do |t|
       t.root_page '/admin'
     end
+    
+(The current concensus is that it doesn't make sense to have multiple
+root pages for a single crawl.)
     
 ## Crawl with the Tidy handler
 
     # the operand to the crawl method, if supplied, will be used
     # as the tab label in the report.
-    Tarantula.crawl("tidy") do |t|
+    crawl("tidy") do |t|
       t.add_handler :tidy
     end
     
@@ -39,7 +41,7 @@ Tarantula runner that doesn't depend on test/unit or RSpec.
 
 This is necessary to fix [this bug](http://github.com/relevance/tarantula/issues#issue/3)
 
-    Tarantula.crawl do |t|
+    crawl do |t|
       # Treat the following controllers as "resourceful",
       # reordering appropriately (see my comment on
       # <http://github.com/relevance/tarantula/issues#issue/3>)
@@ -57,7 +59,7 @@ need to be reusable across multiple crawl blocks somehow.)
 
 ## Selectively allowing errors
 
-    Tarantula.crawl("ignoring not-found users") do |t|
+    crawl("ignoring not-found users") do |t|
       t.allow_errors :not_found, %r{/users/\d+/}
       # or
       t.allow_errors :not_found, :controller => 'users', :action => 'show'
@@ -65,7 +67,7 @@ need to be reusable across multiple crawl blocks somehow.)
 
 ## Attacks
 
-    Tarantula.crawl("attacks") do |t|
+    crawl("attacks") do |t|
       t.attack :xss, :input => "<script>gotcha!</script>", :output => :input
       t.attack :sql_injection, :input => "a'; DROP TABLE posts;"
       t.times_to_crawl 2
@@ -73,24 +75,24 @@ need to be reusable across multiple crawl blocks somehow.)
     
 We should have prepackaged attack suites that understand various techniques.
 
-    Tarantula.crawl("xss suite") do |t|
+    crawl("xss suite") do |t|
       t.attack :xss, :suite => 'standard'
     end
     
-    Tarantula.crawl("sql injection suite") do |t|
+    crawl("sql injection suite") do |t|
       t.attack :sql_injection, :suite => 'standard'
     end
     
 ## Timeout
 
-    Tarantula.crawl do |t|
+    crawl do |t|
       t.times_to_crawl 2
       t.stop_after 2.minutes
     end
     
 ## Fuzzing
 
-    Tarantula.crawl do |t|
+    crawl do |t|
       # :valid input uses SQL types and knowledge of model validations
       # to attempt to generate valid input.  You can override the defaults.
       t.fuzz_with :valid_input do |f|
@@ -103,7 +105,7 @@ We should have prepackaged attack suites that understand various techniques.
       t.crawl_for 45.minutes
     end
     
-    Tarantula.crawl do |t|
+    crawl do |t|
       # :typed_input uses SQL types to generate "reasonable" but probably
       # invalid input (e.g., numeric fields will get strings of digits, 
       # but they'll be too large or negative; date fields will get dates,
@@ -113,8 +115,44 @@ We should have prepackaged attack suites that understand various techniques.
       t.crawl_for 30.minutes
     end
     
-    Tarantula.crawl do |t|
+    crawl do |t|
       # :random_input just plugs in random strings everywhere.
       t.fuzz_with :random_input
       t.crawl_for 2.hours
     end
+
+## Shared configuration
+
+Some of these options should apply to all (or at least most) of
+the crawls, and it would be best not to have to supply them all each
+time.
+
+I'll probably leave this out at first; you can use Ruby to alleviate most
+of the pain:
+
+    def common_config(t)
+      t.resources 'post', 'comment'
+      t.reorder_for 'news', :actions => %w{show read unread mark_read}
+      t.reorder_for 'history', :compare => lambda{|x, y| ... }
+    end
+
+    crawl do |t|
+      common_config(t)
+      t.attack :xss, :suite => 'standard'
+    end
+
+That seems reasonable until it's clear what form a more DSLish mechanism
+should look like (and whether we need one at all).  I'm currently leaning
+toward this:
+
+    tarantula do |t|
+      t.resources 'post', 'comment'
+      t.reorder_for 'news', :actions => %w{show read unread mark_read}
+      t.reorder_for 'history', :compare => lambda{|x, y| ... }
+
+      t.crawl do |t|
+        t.attack :xss, :suite => 'standard'
+      end
+    end
+
+That doesn't seem like a big enough improvement to be worth the trouble.
