@@ -1,5 +1,4 @@
 require 'test_help'
-require 'test/unit/testresult'
 
 class Test::Unit::TestResult
   attr_reader :errors
