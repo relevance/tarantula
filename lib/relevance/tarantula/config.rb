@@ -1,4 +1,5 @@
 require 'test_help'
+require 'test/unit/testresult' unless RUBY_VERSION =~ /^1\.9\./
 
 class Test::Unit::TestResult
   attr_reader :errors
