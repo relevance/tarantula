@@ -1,6 +1,7 @@
 require 'rubygems'
 lib_path = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
+RAILS_ROOT = File.expand_path(File.dirname(__FILE__) + "/../STUB_RAILS_ROOT")
 require 'rubygems'
 gem "spicycode-micronaut", ">= 0.2.4"
 gem "log_buddy"

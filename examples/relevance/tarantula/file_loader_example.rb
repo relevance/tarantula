@@ -7,10 +7,10 @@ describe Relevance::Tarantula::FileLoader do
     result.should == 'foo'
   end
   
-  it "loads the file with the config module in scope" do
-    IO.stubs(:read).returns('meta.ancestors')
+  it "loads the file with the config class in scope" do
+    IO.stubs(:read).returns('self')
     result = Relevance::Tarantula::FileLoader.load_file('some_file')
-    result.should include(Relevance::Tarantula::Config)
+    result.should == Relevance::Tarantula::Config
   end
 
 end

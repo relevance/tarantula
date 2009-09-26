@@ -17,6 +17,6 @@ describe Relevance::Tarantula do
   end
   
   it "puts RAILS_ROOT behind a method call" do
-    lambda{rails_root}.should raise_error(NameError)
+    rails_root.should == RAILS_ROOT
   end
 end
