@@ -18,23 +18,14 @@ begin
     s.authors = ["Relevance, Inc."]
     s.require_paths = ["lib"]
     s.files = files.flatten
-    s.add_dependency 'htmlentities'
-    s.add_dependency 'hpricot'
+    s.add_dependency 'htmlentities', '>= 4.2.0'
+    s.add_dependency 'hpricot', '>= 0.8.1'
     s.add_development_dependency 'micronaut'
     s.add_development_dependency 'log_buddy'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-
-desc 'Generate documentation for the tarantula plugin.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'Tarantula'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README.rdoc')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  puts "Jeweler not available. Install it with: gem install jeweler"
 end
 
 desc "Run all micronaut examples"
@@ -42,13 +33,14 @@ Micronaut::RakeTask.new :examples do |t|
   t.pattern = "examples/**/*_example.rb"
 end
 
+desc "Run all micronaut examples using rcov"
+Micronaut::RakeTask.new :rcov do |t|
+  t.pattern = "examples/**/*_example.rb"
+  t.rcov = true
+  t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage]
+end
+
 namespace :examples do
-  desc "Run all micronaut examples using rcov"
-  Micronaut::RakeTask.new :coverage do |t|
-    t.pattern = "examples/**/*_example.rb"
-    t.rcov = true
-    t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage]
-  end
   
   RAILS_VERSIONS = %w[2.3.2 2.3.4]
   
@@ -68,7 +60,24 @@ namespace :examples do
 end
 
 if ENV["RUN_CODE_RUN"]
-  task :default => "examples:multi_rails"
+  task :default => [:check_dependencies, "examples:multi_rails"]
 else
   task :default => [:check_dependencies, :examples]
+end
+
+begin
+  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
+  require 'sdoc_helpers'
+rescue LoadError => ex
+  puts "sdoc support not enabled:"
+  puts ex.inspect
+end
+
+require 'rake/rdoctask'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ''
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "tarantula #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end
