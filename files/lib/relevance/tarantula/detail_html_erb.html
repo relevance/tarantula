@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>detail.html.erb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            detail.html.erb
+        </h1>
+        <ul class="files">
+            <li>lib/relevance/tarantula/detail.html.erb</li>
+            <li>Last modified: Fri Oct 09 10:27:24 -0400 2009</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+<!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.0 Strict//EN&#8220;
+</p>
+<pre>
+        &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+</pre>
+<p>
+<html xmlns=&#8220;<a
+href="http://www.w3.org/1999/xhtml">www.w3.org/1999/xhtml</a>&#8220;
+xml:lang=&#8220;en&#8221; lang=&#8220;en&#8221;> <head>
+</p>
+<pre>
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;../stylesheets/tarantula.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; title=&quot;no title&quot; charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;Detail&lt;/title&gt;
+</pre>
+<p>
+</head> <body>
+</p>
+<pre>
+  &lt;div id=&quot;container&quot;&gt;
+    &lt;div id=&quot;header&quot;&gt;
+      &lt;h1&gt;Tarantula by Relevance&lt;/h1&gt;
+      &lt;h2&gt;Eight legs, two fangs ... and an attitude&lt;/h2&gt;
+      &lt;p&gt;Tarantula is an open source tool for testing Rails web
+      applications. Tarantula is developed by &lt;a href=&quot;http://thinkrelevance.com&quot;&gt;Relevance, Inc.&lt;/a&gt;
+      and lives at &lt;a href=&quot;http://github.com/relevance/tarantula&quot;&gt;http://github.com/relevance/tarantula&lt;/a&gt;.&lt;/p&gt;
+      &lt;hr/&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;page&quot;&gt;
+      &lt;ul class=&quot;tabs&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;../index.html&quot;&gt;&amp;laquo; Back&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#fragment-1&quot; class=&quot;active&quot;&gt;Body&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#fragment-2&quot; class=&quot;active&quot;&gt;Log&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+
+      &lt;div id=&quot;report&quot;&gt;
+        &lt;h3&gt;Detail of &lt;%= result.short_description %&gt; &lt;em&gt;Generated on &lt;%= Time.now %&gt;&lt;/em&gt;&lt;/h3&gt;
+        &lt;p&gt;&lt;b&gt;Resource&lt;/b&gt; &lt;a href=&quot;&lt;%= result.full_url %&gt;&quot;&gt;&lt;%= result.full_url %&gt;&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;b&gt;Response&lt;/b&gt; &lt;span class=&quot;r&lt;%= result.code.first %&gt;&quot;&gt;&lt;%= result.code %&gt;&lt;/span&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;b&gt;Referrer&lt;/b&gt; &lt;%= result.referrer || &quot;&quot; %&gt;&lt;/p&gt;
+
+        &lt;table class=&quot;output&quot;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;th colspan=&quot;2&quot;&gt;#&amp;nbsp;&amp;nbsp;Data&lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;% if result.data %&gt;
+            &lt;%= result.wrap_in_line_number_table_row(result.data) %&gt;
+          &lt;% else %&gt;
+            &lt;tr&gt;
+              &lt;td colspan=&quot;2&quot;&gt;No Data&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;% end %&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+
+        &lt;table class=&quot;output&quot; id=&quot;fragment-1&quot;&gt;
+          &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;th colspan=&quot;2&quot;&gt;#&amp;nbsp;&amp;nbsp;Body&lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;% if result.body %&gt;
+            &lt;%= result.wrap_in_line_number_table_row(result.body) %&gt;
+          &lt;% else %&gt;
+            &lt;tr&gt;
+              &lt;td colspan=&quot;2&quot;&gt;No Body&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;% end %&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+
+        &lt;table class=&quot;output&quot; id=&quot;fragment-2&quot;&gt;
+          &lt;tbody&gt;
+            &lt;tr&gt;
+              &lt;th colspan=&quot;2&quot;&gt;#&amp;nbsp;&amp;nbsp;Log&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;% if result.log %&gt;
+              &lt;%= result.wrap_in_line_number_table_row(result.log) {|line| wrap_stack_trace_line(line)} %&gt;
+            &lt;% else %&gt;
+              &lt;tr&gt;
+                &lt;td colspan=&quot;2&quot;&gt;No Log&lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;% end %&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+</pre>
+<p>
+</body> </html>
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+    </div>
+  </body>
+</html>

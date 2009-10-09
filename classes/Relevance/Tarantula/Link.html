@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::Link</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::Link 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/link_rb.html">lib/relevance/tarantula/link.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>#</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000104">==</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000100">crawl</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000105">eql?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>H</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000106">hash</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000101">make_result</a>,</li>
+                
+                <li><a href="#M000102">method</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000099">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>P</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000098">protect_against_forgery?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000107">to_s</a>,</li>
+                
+                <li><a href="#M000103">transform_url</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+        <li>
+            
+            <span>ActionView::Helpers::UrlHelper</span>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Constants</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class="attr-name">METHOD_REGEXPS</td>
+            <td>=</td>
+            <td class="attr-value">{}</td>
+        </tr>
+        
+        
+    </table>
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>href</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>crawler</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>referrer</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000099">
+                    
+                    <a name="M000099"></a><b>new</b>(link, crawler, referrer)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000099_source')" id="l_M000099_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L23" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000099_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 23</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">link</span>, <span class="ruby-identifier">crawler</span>, <span class="ruby-identifier">referrer</span>)
+    <span class="ruby-ivar">@crawler</span>, <span class="ruby-ivar">@referrer</span> = <span class="ruby-identifier">crawler</span>, <span class="ruby-identifier">referrer</span>
+    
+    <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">link</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-ivar">@href</span> = <span class="ruby-identifier">transform_url</span>(<span class="ruby-identifier">link</span>)
+      <span class="ruby-ivar">@method</span> = <span class="ruby-identifier">:get</span>
+    <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># should be a tag</span>
+      <span class="ruby-ivar">@href</span> = <span class="ruby-identifier">link</span>[<span class="ruby-value str">'href'</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">transform_url</span>(<span class="ruby-identifier">link</span>[<span class="ruby-value str">'href'</span>].<span class="ruby-identifier">downcase</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@tag</span> = <span class="ruby-identifier">link</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000098">
+                    
+                    <a name="M000098"></a><b>protect_against_forgery?</b>()
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+method_javascript_function needs this method
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000098_source')" id="l_M000098_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L7" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000098_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">protect_against_forgery?</span>
+      <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000104">
+                    
+                    <a name="M000104"></a><b>==</b>(obj)
+                    
+                </div>
+                
+                
+                <div class="aka">
+                    This method is also aliased as
+                    
+                    <a href="Link.html#M000105">eql?</a>
+                    
+                </div>
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000104_source')" id="l_M000104_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L62" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000104_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 62</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">obj</span>)
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:href</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:method</span>) <span class="ruby-operator">&amp;&amp;</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">href</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">href</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000100">
+                    
+                    <a name="M000100"></a><b>crawl</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000100_source')" id="l_M000100_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L35" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000100_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">crawl</span>
+    <span class="ruby-identifier">response</span> = <span class="ruby-identifier">crawler</span>.<span class="ruby-identifier">follow</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">href</span>)
+    <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Response #{response.code} for #{self}&quot;</span>
+    <span class="ruby-identifier">crawler</span>.<span class="ruby-identifier">handle_link_results</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">make_result</span>(<span class="ruby-identifier">response</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000105">
+                    
+                    <a name="M000105"></a><b>eql?</b>(obj)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Alias for #==
+</p>
+
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000106">
+                    
+                    <a name="M000106"></a><b>hash</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000106_source')" id="l_M000106_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L68" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000106_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 68</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hash</span>
+    <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">hash</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000101">
+                    
+                    <a name="M000101"></a><b>make_result</b>(response)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000101_source')" id="l_M000101_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L41" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000101_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 41</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_result</span>(<span class="ruby-identifier">response</span>)
+    <span class="ruby-identifier">crawler</span>.<span class="ruby-identifier">make_result</span>(<span class="ruby-identifier">:method</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>,
+                        <span class="ruby-identifier">:url</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">href</span>,
+                        <span class="ruby-identifier">:response</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">response</span>,
+                        <span class="ruby-identifier">:referrer</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">referrer</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000102">
+                    
+                    <a name="M000102"></a><b>method</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000102_source')" id="l_M000102_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L48" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000102_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 48</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method</span>
+    <span class="ruby-ivar">@method</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">begin</span>
+      (<span class="ruby-ivar">@tag</span> <span class="ruby-operator">&amp;&amp;</span>
+       [<span class="ruby-identifier">:put</span>, <span class="ruby-identifier">:delete</span>, <span class="ruby-identifier">:post</span>].<span class="ruby-identifier">detect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-comment cmt"># post should be last since it's least specific</span>
+         <span class="ruby-ivar">@tag</span>[<span class="ruby-value str">'onclick'</span>] <span class="ruby-operator">=~</span> <span class="ruby-constant">METHOD_REGEXPS</span>[<span class="ruby-identifier">m</span>]
+       <span class="ruby-keyword kw">end</span>) <span class="ruby-operator">||</span>
+      <span class="ruby-identifier">:get</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000107">
+                    
+                    <a name="M000107"></a><b>to_s</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000107_source')" id="l_M000107_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L72" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000107_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 72</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+    <span class="ruby-node">&quot;&lt;Relevance::Tarantula::Link href=#{href}, method=#{method}&gt;&quot;</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000103">
+                    
+                    <a name="M000103"></a><b>transform_url</b>(link)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000103_source')" id="l_M000103_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/a396d45a3325aac5ba1323dfb500c835f7f6b366/lib/relevance/tarantula/link.rb#L58" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000103_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/link.rb, line 58</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transform_url</span>(<span class="ruby-identifier">link</span>)
+    <span class="ruby-identifier">crawler</span>.<span class="ruby-identifier">transform_url</span>(<span class="ruby-identifier">link</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

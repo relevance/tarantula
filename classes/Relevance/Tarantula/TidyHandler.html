@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::TidyHandler</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::TidyHandler 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/tidy_handler_rb.html">lib/relevance/tarantula/tidy_handler.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>H</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000131">handle</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000130">new</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000130">
+                    
+                    <a name="M000130"></a><b>new</b>(options = {})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000130_source')" id="l_M000130_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/c39c561b54ff4e522e132dc265f7c5dcbfdee918/lib/relevance/tarantula/tidy_handler.rb#L14" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000130_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/tidy_handler.rb, line 14</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
+      <span class="ruby-ivar">@options</span> = {<span class="ruby-identifier">:show_warnings=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000131">
+                    
+                    <a name="M000131"></a><b>handle</b>(result)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000131_source')" id="l_M000131_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/c39c561b54ff4e522e132dc265f7c5dcbfdee918/lib/relevance/tarantula/tidy_handler.rb#L17" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000131_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/tidy_handler.rb, line 17</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle</span>(<span class="ruby-identifier">result</span>)
+      <span class="ruby-identifier">response</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">response</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">html?</span>
+      <span class="ruby-identifier">tidy</span> = <span class="ruby-constant">Tidy</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@options</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tidy</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">xml</span> = <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">clean</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
+        <span class="ruby-identifier">tidy</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">blank?</span>
+        <span class="ruby-identifier">error_result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">dup</span>
+        <span class="ruby-identifier">error_result</span>.<span class="ruby-identifier">description</span> = <span class="ruby-value str">&quot;Bad HTML (Tidy)&quot;</span>
+        <span class="ruby-identifier">error_result</span>.<span class="ruby-identifier">data</span> = <span class="ruby-identifier">tidy</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">inspect</span>
+        <span class="ruby-identifier">error_result</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

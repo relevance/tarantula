@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>README.rdoc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+    <script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            README.rdoc
+        </h1>
+        <ul class="files">
+            <li>README.rdoc</li>
+            <li>Last modified: Fri Oct 09 10:27:24 -0400 2009</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <h1>Tarantula</h1>
+<h2>DESCRIPTION</h2>
+<p>
+Tarantula is a big fuzzy spider. It crawls your Rails application, fuzzing
+data to see what breaks.
+</p>
+<h2>Usage</h2>
+<h3>Installation</h3>
+<p>
+The latest and greatest version is always available on GitHub. (See the
+rakefile for dependencies, or just let RubyGems handle it.)
+</p>
+<pre>
+    gem sources -a http://gems.github.com
+    gem install relevance-tarantula
+</pre>
+<p>
+You can also grab it from RubyForge, where we will push stable releases but
+may not be as bleeding edge as the GitHub gem.
+</p>
+<pre>
+    gem install tarantula
+</pre>
+<h3>Project Setup</h3>
+<p>
+To set up Tarantula into your application, add the following line into
+either config/environment.rb or config/environments/test.rb (preferred).
+This assumes that you have Rails 2.1 or higher installed.
+</p>
+<pre>
+    config.gem 'relevance-tarantula', :source =&gt; &quot;http://gems.github.com&quot;, :lib =&gt; 'relevance/tarantula'
+</pre>
+<p>
+Since Rails doesn&#8217;t (yet) support automatically loading rake tasks
+that live inside gems, you will need to update your Rakefile to load
+Tarantula&#8217;s rake tasks. The simplest approach is to start by
+vendoring Tarantula into your Rails app.
+</p>
+<pre>
+    mkdir -p vendor/gems
+    cd vendor/gems
+    gem unpack relevance-tarantula
+</pre>
+<p>
+You can then add the following line into your Rakefile, which will allow
+your application to discover Tarantula&#8217;s rake tasks.
+</p>
+<pre>
+  load File.join(RAILS_ROOT, Dir[&quot;vendor/gems/relevance-tarantula-*/tasks/*.rake&quot;])
+</pre>
+<h3>Crawling Your App</h3>
+<p>
+Use the included rake task to create a Rails integration test that will
+allow Tarantula to crawl your app.
+</p>
+<pre>
+   #!sh
+   rake tarantula:setup
+</pre>
+<p>
+Take a moment to familiarize yourself with the generated test. If parts of
+your application require login, update the test to make sure Tarantula can
+access those parts of your app.
+</p>
+<pre>
+   require &quot;relevance/tarantula&quot;
+
+   class TarantulaTest &lt; ActionController::IntegrationTest
+     # Load enough test data to ensure that there's a link to every page in your
+     # application. Doing so allows Tarantula to follow those links and crawl
+     # every page.  For many applications, you can load a decent data set by
+     # loading all fixtures.
+     fixtures :all
+
+     def test_tarantula
+       # If your application requires users to log in before accessing certain
+       # pages, uncomment the lines below and update them to allow this test to
+       # log in to your application.  Doing so allows Tarantula to crawl the
+       # pages that are only accessible to logged-in users.
+       #
+       #   post '/session', :login =&gt; 'quentin', :password =&gt; 'monkey'
+       #   follow_redirect!
+
+       tarantula_crawl(self)
+     end
+   end
+</pre>
+<p>
+If you want to set custom options, you can get access to the crawler and
+set properties before running it. For example, this would turn on HTMLTidy.
+</p>
+<pre>
+   def test_tarantula
+     post '/session', :login =&gt; 'kilgore', :password =&gt; 'trout'
+     assert_response :redirect
+     assert_redirected_to '/'
+     follow_redirect!
+
+     t = tarantula_crawler(self)
+     t.handlers &lt;&lt; Relevance::Tarantula::TidyHandler.new
+     t.crawl '/'
+   end
+</pre>
+<p>
+Now it&#8217;s time to turn Tarantula loose on your app. Assuming your
+project is at /work/project/:
+</p>
+<pre>
+   #!sh
+   cd /work/project
+   rake tarantula:test
+</pre>
+<h2>Verbose Mode</h2>
+<p>
+If you run the test using the steps shown above, Tarantula will produce a
+report in tmp/tarantula. You can also set VERBOSE=true to see more detail
+as the test runs.
+</p>
+<p>
+For more options, please see the test suite.
+</p>
+<h2>Allowed Errors</h2>
+<p>
+If, for example, a 404 is an appropriate response for some URLs, you can
+tell Tarantula to allow 404s for URLs matching a given regex:
+</p>
+<pre>
+     t = tarantula_crawler(self)
+     t.allow_404_for %r{/users/\d+/}
+</pre>
+<h2>Testing for Common Attacks</h2>
+<p>
+You can specify the attack strings that Tarantula throws at your
+application.
+</p>
+<pre>
+    def test_tarantula
+      t = tarantula_crawler(self)
+
+      Relevance::Tarantula::FormSubmission.attacks &lt;&lt; {
+        :name =&gt; :xss,
+        :input =&gt; &quot;&lt;script&gt;gotcha!&lt;/script&gt;&quot;,
+        :output =&gt; &quot;&lt;script&gt;gotcha!&lt;/script&gt;&quot;,
+      }
+
+      Relevance::Tarantula::FormSubmission.attacks &lt;&lt; {
+        :name =&gt; :sql_injection,
+        :input =&gt; &quot;a'; DROP TABLE posts;&quot;,
+      }
+
+      t.handlers &lt;&lt; Relevance::Tarantula::AttackHandler.new
+      t.times_to_crawl = 2
+      t.crawl &quot;/posts&quot;
+    end
+</pre>
+<p>
+This example adds custom attacks for both SQL injection and XSS. It also
+tells Tarantula to crawl the app 2 times. This is important for XSS attacks
+because the results won&#8217;t appear until the second time Tarantula
+performs the crawl.
+</p>
+<h2>Timeout</h2>
+<p>
+You can specify a timeout for each specific crawl that Tarantula runs. For
+example:
+</p>
+<pre>
+  def test_tarantula
+    t = tarantula_crawler(self)
+    t.times_to_crawl = 2
+    t.crawl_timeout = 5.minutes
+    t.crawl &quot;/&quot;
+  end
+</pre>
+<p>
+The above will crawl your app twice, and each specific crawl will timeout
+if it takes longer then 5 minutes. You may need a timeout to keep the
+tarantula test time reasonable if your app is large or just happens to have
+a large amount of &#8216;never-ending&#8217; links, such as with an any
+sort of &#8220;auto-admin&#8221; interface.
+</p>
+<h2>Bugs/Requests</h2>
+<p>
+Please submit your bug reports, patches, or feature requests at Lighthouse:
+</p>
+<p>
+<a
+href="http://relevance.lighthouseapp.com/projects/17868-tarantula/overview">relevance.lighthouseapp.com/projects/17868-tarantula/overview</a>
+</p>
+<p>
+You can view the continuous integration results for Tarantula, including
+results against all supported versions of Rails, on RunCodeRun here:
+</p>
+<p>
+<a
+href="http://runcoderun.com/relevance/tarantula">runcoderun.com/relevance/tarantula</a>
+</p>
+<h2>License</h2>
+<p>
+Tarantula is released under the MIT license.
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::IOReporter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::IOReporter 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/io_reporter_rb.html">lib/relevance/tarantula/io_reporter.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000097">finish_report</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000095">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000096">report</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Constants</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class="attr-name">IOResultOverview</td>
+            <td>=</td>
+            <td class="attr-value">Struct.new(:code, :url)</td>
+        </tr>
+        
+        
+    </table>
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>io</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>results</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000095">
+                    
+                    <a name="M000095"></a><b>new</b>(io)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000095_source')" id="l_M000095_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/da4fd43555d4ba493a0db110f2bbbdbcc946559f/lib/relevance/tarantula/io_reporter.rb#L9" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000095_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/io_reporter.rb, line 9</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">io</span>)
+    <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">io</span>
+    <span class="ruby-ivar">@results</span> = <span class="ruby-constant">Struct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:successes</span>, <span class="ruby-identifier">:failures</span>).<span class="ruby-identifier">new</span>([], [])
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000097">
+                    
+                    <a name="M000097"></a><b>finish_report</b>(test_name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000097_source')" id="l_M000097_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/da4fd43555d4ba493a0db110f2bbbdbcc946559f/lib/relevance/tarantula/io_reporter.rb#L24" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000097_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/io_reporter.rb, line 24</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish_report</span>(<span class="ruby-identifier">test_name</span>)
+    <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">failures</span>).<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;****** FAILURES&quot;</span>
+      <span class="ruby-identifier">failures</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">failure</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{failure.code}: #{failure.url}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;#{failures.size} failures&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000096">
+                    
+                    <a name="M000096"></a><b>report</b>(result)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000096_source')" id="l_M000096_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/da4fd43555d4ba493a0db110f2bbbdbcc946559f/lib/relevance/tarantula/io_reporter.rb#L14" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000096_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/io_reporter.rb, line 14</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report</span>(<span class="ruby-identifier">result</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+    
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">success</span> <span class="ruby-comment cmt"># collection = result.success ? results.successes : results.failures</span>
+      <span class="ruby-identifier">results</span>.<span class="ruby-identifier">failures</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">IOResultOverview</span>.<span class="ruby-identifier">new</span>(
+        <span class="ruby-identifier">result</span>.<span class="ruby-identifier">code</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">url</span>
+      )
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

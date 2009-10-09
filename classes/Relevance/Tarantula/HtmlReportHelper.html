@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::HtmlReportHelper</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Module</span> 
+            Relevance::Tarantula::HtmlReportHelper 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/html_report_helper_rb.html">lib/relevance/tarantula/html_report_helper.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000082">textmate_url</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>W</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000079">wrap_in_line_number_table_row</a>,</li>
+                
+                <li><a href="#M000083">wrap_stack_trace_line</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <span>ERB::Util</span>
+            
+            START:includes
+        </li>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000082">
+                    
+                    <a name="M000082"></a><b>textmate_url</b>(file, line_no)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000082_source')" id="l_M000082_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/0ea9d8bd44beaabefefd6d82f280c62b6f4a87c5/lib/relevance/tarantula/html_report_helper.rb#L25" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000082_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_report_helper.rb, line 25</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">textmate_url</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">line_no</span>)
+    <span class="ruby-node">&quot;txmt://open?url=file://#{File.expand_path(File.join(rails_root,file))}&amp;line_no=#{line_no}&quot;</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000079">
+                    
+                    <a name="M000079"></a><b>wrap_in_line_number_table_row</b>(text, &amp;blk)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000079_source')" id="l_M000079_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/0ea9d8bd44beaabefefd6d82f280c62b6f4a87c5/lib/relevance/tarantula/html_report_helper.rb#L5" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000079_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_report_helper.rb, line 5</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wrap_in_line_number_table_row</span>(<span class="ruby-identifier">text</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+    <span class="ruby-identifier">x</span> = <span class="ruby-constant">Builder</span><span class="ruby-operator">::</span><span class="ruby-constant">XmlMarkup</span>.<span class="ruby-identifier">new</span>
+
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">tr</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">td</span>(<span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;numbers&quot;</span>) <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">x</span>.<span class="ruby-identifier">span</span>(<span class="ruby-identifier">index</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;line number&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">td</span>(<span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;lines&quot;</span>) <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">x</span>.<span class="ruby-identifier">span</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;line&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">target!</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000083">
+                    
+                    <a name="M000083"></a><b>wrap_stack_trace_line</b>(text)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000083_source')" id="l_M000083_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/0ea9d8bd44beaabefefd6d82f280c62b6f4a87c5/lib/relevance/tarantula/html_report_helper.rb#L29" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000083_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_report_helper.rb, line 29</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wrap_stack_trace_line</span>(<span class="ruby-identifier">text</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">%r{^\s*(/[^:]+):(\d+):([^:]+)$}</span>
+      <span class="ruby-identifier">file</span> = <span class="ruby-identifier">h</span>(<span class="ruby-identifier">$1</span>) <span class="ruby-comment cmt"># .to_s_xss_protected</span>
+      <span class="ruby-identifier">line_number</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-identifier">message</span> = <span class="ruby-identifier">h</span>(<span class="ruby-identifier">$3</span>) <span class="ruby-comment cmt"># .to_s_xss_protected</span>
+      <span class="ruby-node">&quot;&lt;a href='#{textmate_url(file, line_number)}'&gt;#{file}:#{line_number}&lt;/a&gt;:#{message}&quot;</span> <span class="ruby-comment cmt"># .mark_as_xss_protected</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">h</span>(<span class="ruby-identifier">text</span>) <span class="ruby-comment cmt"># .to_s_xss_protected</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

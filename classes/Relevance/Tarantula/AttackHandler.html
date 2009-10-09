@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::AttackHandler</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::AttackHandler 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/attack_handler_rb.html">lib/relevance/tarantula/attack_handler.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000021">attacks</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>H</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000022">handle</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <span>ERB::Util</span>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000021">
+                    
+                    <a name="M000021"></a><b>attacks</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000021_source')" id="l_M000021_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/837628bc9d3f8db0cf76d0c8b27914b8b4973dfd/lib/relevance/tarantula/attack_handler.rb#L6" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000021_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/attack_handler.rb, line 6</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attacks</span>
+    <span class="ruby-constant">Relevance</span><span class="ruby-operator">::</span><span class="ruby-constant">Tarantula</span><span class="ruby-operator">::</span><span class="ruby-constant">FormSubmission</span>.<span class="ruby-identifier">attacks</span>.<span class="ruby-identifier">select</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:output</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000022">
+                    
+                    <a name="M000022"></a><b>handle</b>(result)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000022_source')" id="l_M000022_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/837628bc9d3f8db0cf76d0c8b27914b8b4973dfd/lib/relevance/tarantula/attack_handler.rb#L10" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000022_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/attack_handler.rb, line 10</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle</span>(<span class="ruby-identifier">result</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">attacks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">regexp</span> = <span class="ruby-value str">'('</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">attacks</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">output</span>}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'|'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">')'</span>
+    <span class="ruby-identifier">response</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">response</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">html?</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">n</span> = (<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/#{regexp}/</span>)
+      <span class="ruby-identifier">error_result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">dup</span>
+      <span class="ruby-identifier">error_result</span>.<span class="ruby-identifier">success</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-identifier">error_result</span>.<span class="ruby-identifier">description</span> = <span class="ruby-node">&quot;XSS error found, match was: #{h($1)}&quot;</span>
+      <span class="ruby-identifier">error_result</span>.<span class="ruby-identifier">data</span> = <span class="ruby-value str">&quot;########################################################################\n# Text around unescaped string: \#{$1}\n########################################################################\n\#{response.body[[0, n - 200].max , 400]}\n\n\n\n\n\n########################################################################\n# Attack information:\n########################################################################\n\#{attacks.select {|a| a.output == $1}[0].to_yaml}\n&quot;</span>
+      <span class="ruby-identifier">error_result</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

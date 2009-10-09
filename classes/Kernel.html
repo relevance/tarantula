@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Kernel</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+    <script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Module</span> 
+            Kernel 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/relevance/core_extensions/metaclass_rb.html">lib/relevance/core_extensions/metaclass.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+From lib/core/facets/metaid.rb
+</p>
+<hr size="1"></hr><p>
+From /lib/more/facets/kernel/meta.rb
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>E</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000009">eigenclass</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000011">meta</a>,</li>
+                
+                <li><a href="#M000004">meta_alias</a>,</li>
+                
+                <li><a href="#M000007">meta_class</a>,</li>
+                
+                <li><a href="#M000006">meta_def</a>,</li>
+                
+                <li><a href="#M000005">meta_eval</a>,</li>
+                
+                <li><a href="#M000008">metaclass</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000009">
+                    
+                    <a name="M000009"></a><b>eigenclass</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000009_source')" id="l_M000009_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L36" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000009_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 36</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eigenclass</span>
+    (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000011">
+                    
+                    <a name="M000011"></a><b>meta</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000011_source')" id="l_M000011_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L56" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000011_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 56</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta</span>
+    <span class="ruby-ivar">@_meta_functor</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Functor</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">op</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+      (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>).<span class="ruby-identifier">send</span>(<span class="ruby-identifier">op</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000004">
+                    
+                    <a name="M000004"></a><b>meta_alias</b>(*args)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000004_source')" id="l_M000004_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L6" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000004_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 6</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_alias</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">meta_class</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">alias_method</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000007">
+                    
+                    <a name="M000007"></a><b>meta_class</b>(&amp;block)
+                    
+                </div>
+                
+                
+                <div class="aka">
+                    This method is also aliased as
+                    
+                    <a href="Kernel.html#M000008">metaclass</a>
+                    
+                </div>
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000007_source')" id="l_M000007_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L26" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000007_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 26</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_class</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+      (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>).<span class="ruby-identifier">class_eval</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">else</span>
+      (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000006">
+                    
+                    <a name="M000006"></a><b>meta_def</b>( name, &amp;block )
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000006_source')" id="l_M000006_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L20" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000006_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 20</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_def</span>( <span class="ruby-identifier">name</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+    <span class="ruby-identifier">meta_class</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">define_method</span>( <span class="ruby-identifier">name</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000005">
+                    
+                    <a name="M000005"></a><b>meta_eval</b>(str=nil, &amp;blk)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000005_source')" id="l_M000005_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/6437f0e24bf3cdba56afe91f9c8fc940ed3037ec/lib/relevance/core_extensions/metaclass.rb#L12" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000005_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/core_extensions/metaclass.rb, line 12</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_eval</span>(<span class="ruby-identifier">str</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>
+      <span class="ruby-identifier">meta_class</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">str</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">meta_class</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000008">
+                    
+                    <a name="M000008"></a><b>metaclass</b>(&amp;block)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+Alias for <a href="Kernel.html#M000007">meta_class</a>
+</p>
+
+                </div>
+                
+                
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,14 @@
+Autotest.add_hook :initialize do |autotest|
+
+ # Check every 5 seconds
+ # autotest.sleep = 3
+
+ # Ignore files with suffix
+ %w{.svn .log .hg .git .erb .rhtml .png .txt .sh .project .rjs .rake .jpg .css .xml}.each { |exception| autotest.add_exception(exception) }
+
+ autotest.add_mapping(/relevance\/tarantula/) do |f, _|
+   autotest.files_matching(/^test.*rb$/)
+ end
+
+end
+

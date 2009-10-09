@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>test_report.html.erb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            test_report.html.erb
+        </h1>
+        <ul class="files">
+            <li>lib/relevance/tarantula/test_report.html.erb</li>
+            <li>Last modified: Fri Oct 09 10:27:24 -0400 2009</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+    
+    <div class="description">
+        <p>
+<div id=&#8221;<%= test_name %>&#8221;>
+</p>
+<pre>
+  &lt;% %w{failures successes}.each do |result_type| %&gt;
+    &lt;table class=&quot;list tablesorter&quot; cellspacing=&quot;0&quot;&gt;
+      &lt;caption&gt;&lt;%= send(result_type).size %&gt; &lt;%= result_type.capitalize %&gt;&lt;/caption&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th class=&quot;sort asc&quot;&gt;&lt;span&gt;URL&lt;/span&gt;&lt;span class=&quot;sort&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;span&gt;Action&lt;/span&gt;&lt;span class=&quot;sort&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;span&gt;Response&lt;/span&gt;&lt;span class=&quot;sort&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/th&gt;
+          &lt;th class=&quot;left&quot;&gt;&lt;span&gt;Description&lt;/span&gt;&lt;span class=&quot;sort&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/th&gt;
+          &lt;th&gt;&lt;span&gt;Referrer&lt;/span&gt;&lt;span class=&quot;sort&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tfoot&gt;
+         &lt;tr&gt;&lt;td colspan=&quot;5&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tfoot&gt;
+
+      &lt;tbody&gt;
+        &lt;% send(result_type).sort{|x,y| y.code.to_s &lt;=&gt; x.code.to_s}.each_with_index do |result,i| %&gt;
+          &lt;tr class=&quot;&lt;%= (i%2 == 0) ? 'even' : 'odd' %&gt;&quot;&gt;
+            &lt;td class=&quot;left&quot;&gt;&lt;a href=&quot;&lt;%= &quot;#{test_name}/#{result.file_name}&quot; %&gt;&quot;&gt;&lt;%= result.url.ellipsize(50) %&gt;&lt;/a&gt;&lt;/td&gt;
+            &lt;td class=&quot;method&quot;&gt;&lt;%= result.method.to_s.upcase %&gt;&lt;/td&gt; &lt;!-- TODO Clean up demeter violation --&gt;
+            &lt;td&gt;&lt;span class=&quot;&lt;%= class_for_code(result.code) %&gt;&quot;&gt;&lt;%= result.code %&gt;&lt;/span&gt;&lt;/td&gt;
+            &lt;td class=&quot;left&quot;&gt;&lt;%= result.description %&gt;&lt;/td&gt;
+            &lt;td class=&quot;left&quot;&gt;&lt;%= result.referrer.ellipsize(30) %&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;% end %&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;br/&gt;
+  &lt;% end %&gt;
+</pre>
+<p>
+</div>
+</p>
+
+    </div>
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+    </div>
+  </body>
+</html>

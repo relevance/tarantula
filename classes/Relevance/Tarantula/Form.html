@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::Form 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/form_rb.html">lib/relevance/tarantula/form.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>A</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000059">action</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>M</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000060">method</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000058">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000061">rails_method_hack</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>crawler</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>referrer</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000058">
+                    
+                    <a name="M000058"></a><b>new</b>(tag, crawler, referrer)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000058_source')" id="l_M000058_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7feacff0895b1899f87629d791d4bc264a09e35d/lib/relevance/tarantula/form.rb#L7" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000058_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/form.rb, line 7</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">crawler</span>, <span class="ruby-identifier">referrer</span>)
+    <span class="ruby-ivar">@tag</span>, <span class="ruby-ivar">@crawler</span>, <span class="ruby-ivar">@referrer</span> = <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">crawler</span>, <span class="ruby-identifier">referrer</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000059">
+                    
+                    <a name="M000059"></a><b>action</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000059_source')" id="l_M000059_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7feacff0895b1899f87629d791d4bc264a09e35d/lib/relevance/tarantula/form.rb#L11" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000059_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/form.rb, line 11</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action</span>
+    <span class="ruby-ivar">@tag</span>[<span class="ruby-value str">'action'</span>].<span class="ruby-identifier">downcase</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000060">
+                    
+                    <a name="M000060"></a><b>method</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000060_source')" id="l_M000060_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7feacff0895b1899f87629d791d4bc264a09e35d/lib/relevance/tarantula/form.rb#L15" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000060_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/form.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method</span>
+    (<span class="ruby-identifier">rails_method_hack</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@tag</span>[<span class="ruby-value str">'method'</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-value str">'get'</span>).<span class="ruby-identifier">downcase</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000061">
+                    
+                    <a name="M000061"></a><b>rails_method_hack</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000061_source')" id="l_M000061_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7feacff0895b1899f87629d791d4bc264a09e35d/lib/relevance/tarantula/form.rb#L19" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000061_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/form.rb, line 19</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rails_method_hack</span>
+    (<span class="ruby-identifier">tag</span> = <span class="ruby-ivar">@tag</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value str">'input[@name=&quot;_method&quot;]'</span>)) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">tag</span>[<span class="ruby-value str">&quot;value&quot;</span>]
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

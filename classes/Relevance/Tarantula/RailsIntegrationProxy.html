@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::RailsIntegrationProxy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::RailsIntegrationProxy 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/rails_integration_proxy_rb.html">lib/relevance/tarantula/rails_integration_proxy.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000113">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>P</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000114">patch_response</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000111">rails_integration_test</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>S</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000115">static_content_file</a>,</li>
+                
+                <li><a href="#M000116">static_content_path</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>integration_test</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000113">
+                    
+                    <a name="M000113"></a><b>new</b>(integration_test)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000113_source')" id="l_M000113_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/076350dcda83ce0b636674ae22d3f34e16a986f3/lib/relevance/tarantula/rails_integration_proxy.rb#L26" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000113_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/rails_integration_proxy.rb, line 26</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">integration_test</span>)
+    <span class="ruby-ivar">@integration_test</span> = <span class="ruby-identifier">integration_test</span>
+    <span class="ruby-ivar">@integration_test</span>.<span class="ruby-identifier">meta</span>.<span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:response</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000111">
+                    
+                    <a name="M000111"></a><b>rails_integration_test</b>(integration_test, options = {})
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000111_source')" id="l_M000111_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/076350dcda83ce0b636674ae22d3f34e16a986f3/lib/relevance/tarantula/rails_integration_proxy.rb#L9" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000111_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/rails_integration_proxy.rb, line 9</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rails_integration_test</span>(<span class="ruby-identifier">integration_test</span>, <span class="ruby-identifier">options</span> = {})
+    <span class="ruby-identifier">t</span> = <span class="ruby-constant">Crawler</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">max_url_length</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:max_url_length</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:max_url_length</span>] 
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">proxy</span> = <span class="ruby-constant">RailsIntegrationProxy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">integration_test</span>)    
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">handlers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">HtmlDocumentHandler</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">t</span>)
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">handlers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">InvalidHtmlHandler</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">log_grabber</span> = <span class="ruby-constant">Relevance</span><span class="ruby-operator">::</span><span class="ruby-constant">Tarantula</span><span class="ruby-operator">::</span><span class="ruby-constant">LogGrabber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">rails_root</span>, <span class="ruby-value str">&quot;log/test.log&quot;</span>))
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">skip_uri_patterns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-regexp re">/logout$/</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">transform_url_patterns</span> <span class="ruby-operator">+=</span> [
+      [<span class="ruby-regexp re">/\?\d+$/</span>, <span class="ruby-value str">''</span>],                               <span class="ruby-comment cmt"># strip trailing numbers for assets</span>
+      [<span class="ruby-node">/^http:\/\/#{integration_test.host}/</span>, <span class="ruby-value str">''</span>]    <span class="ruby-comment cmt"># strip full path down to relative</span>
+    ]
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">test_name</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">proxy</span>.<span class="ruby-identifier">integration_test</span>.<span class="ruby-identifier">method_name</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">reporters</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Relevance</span><span class="ruby-operator">::</span><span class="ruby-constant">Tarantula</span><span class="ruby-operator">::</span><span class="ruby-constant">HtmlReporter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">report_dir</span>)
+    <span class="ruby-identifier">t</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000114">
+                    
+                    <a name="M000114"></a><b>patch_response</b>(url, response)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000114_source')" id="l_M000114_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/076350dcda83ce0b636674ae22d3f34e16a986f3/lib/relevance/tarantula/rails_integration_proxy.rb#L40" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000114_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/rails_integration_proxy.rb, line 40</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">patch_response</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">response</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">code</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'404'</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">static_content_path</span>(<span class="ruby-identifier">url</span>))
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ext</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">extension</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/html|te?xt|css|js|jpe?g|gif|psd|png|eps|pdf|ico/</span>
+          <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">static_content_file</span>(<span class="ruby-identifier">url</span>)
+          <span class="ruby-identifier">response</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;type&quot;</span>] = <span class="ruby-node">&quot;text/#{ext}&quot;</span>  <span class="ruby-comment cmt"># readable as response.content_type</span>
+          <span class="ruby-identifier">response</span>.<span class="ruby-identifier">meta</span>.<span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:code</span>
+          <span class="ruby-identifier">response</span>.<span class="ruby-identifier">code</span> = <span class="ruby-value str">&quot;200&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Skipping unknown type #{url}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># don't count on metaclass taking block, e.g.</span>
+    <span class="ruby-comment cmt"># http://relevancellc.com/2008/2/12/how-should-metaclass-work</span>
+    <span class="ruby-identifier">response</span>.<span class="ruby-identifier">metaclass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">include</span> <span class="ruby-constant">Relevance</span><span class="ruby-operator">::</span><span class="ruby-constant">CoreExtensions</span><span class="ruby-operator">::</span><span class="ruby-constant">Response</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000115">
+                    
+                    <a name="M000115"></a><b>static_content_file</b>(url)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000115_source')" id="l_M000115_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/076350dcda83ce0b636674ae22d3f34e16a986f3/lib/relevance/tarantula/rails_integration_proxy.rb#L61" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000115_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/rails_integration_proxy.rb, line 61</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">static_content_file</span>(<span class="ruby-identifier">url</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">static_content_path</span>(<span class="ruby-identifier">url</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000116">
+                    
+                    <a name="M000116"></a><b>static_content_path</b>(url)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000116_source')" id="l_M000116_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/076350dcda83ce0b636674ae22d3f34e16a986f3/lib/relevance/tarantula/rails_integration_proxy.rb#L65" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000116_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/rails_integration_proxy.rb, line 65</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">static_content_path</span>(<span class="ruby-identifier">url</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">rails_root</span>, <span class="ruby-value str">&quot;public&quot;</span>, <span class="ruby-identifier">url</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

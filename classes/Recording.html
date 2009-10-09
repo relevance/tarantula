@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Recording</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+    <script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Module</span> 
+            Recording 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/relevance/tarantula/recording_rb.html">lib/relevance/tarantula/recording.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>S</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000112">stderr</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000112">
+                    
+                    <a name="M000112"></a><b>stderr</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000112_source')" id="l_M000112_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/30b6efea155b50775ccd18d19ba104c8400f9f29/lib/relevance/tarantula/recording.rb#L2" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000112_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/recording.rb, line 2</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">stderr</span>
+    <span class="ruby-identifier">$stderr</span> = <span class="ruby-identifier">recorder</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-keyword kw">yield</span>
+    <span class="ruby-keyword kw">ensure</span>
+      <span class="ruby-identifier">$stderr</span> = <span class="ruby-constant">STDERR</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">recorder</span>.<span class="ruby-identifier">rewind</span>
+    <span class="ruby-identifier">recorder</span>.<span class="ruby-identifier">read</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    

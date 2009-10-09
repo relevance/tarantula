@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Relevance::Tarantula::HtmlReporter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+    <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>     
+    <div class="banner">
+        <h1>
+            <span class="type">Class</span> 
+            Relevance::Tarantula::HtmlReporter 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/relevance/tarantula/html_reporter_rb.html">lib/relevance/tarantula/html_reporter.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+    
+
+    
+
+    
+    
+
+    
+    
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+    
+        <dt>C</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000093">class_for_code</a>,</li>
+                
+                <li><a href="#M000084">copy_styles</a>,</li>
+                
+                <li><a href="#M000081">create_detail_report</a>,</li>
+                
+                <li><a href="#M000085">create_index</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>F</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000080">finish_report</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>I</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000087">index_exists?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>N</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000077">new</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>O</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000092">output</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>R</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000078">report</a>,</li>
+                
+                <li><a href="#M000090">results_html</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>S</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000088">styles_exist?</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>T</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000089">tab_html</a>,</li>
+                
+                <li><a href="#M000091">template</a></li>
+                
+            </ul>
+        </dd>
+    
+        <dt>U</dt>
+        <dd>
+            <ul>
+                
+                <li><a href="#M000086">update_index</a></li>
+                
+            </ul>
+        </dd>
+    
+    </dl>
+    
+
+    
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+        
+        <li>
+            
+            <a href="../CoreExtensions/File.html">Relevance::CoreExtensions::File</a>
+            
+            START:includes
+        </li>
+        
+    </ul>
+    
+
+    
+
+    
+
+    
+    <div class="sectiontitle">Constants</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class="attr-name">HtmlResultOverview</td>
+            <td>=</td>
+            <td class="attr-value">Struct.new(:code, :url, :description, :method, :referrer, :file_name)</td>
+        </tr>
+        
+        
+    </table>
+    
+
+    
+    <div class="sectiontitle">Attributes</div>
+    <table border='0' cellpadding='5'>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>basedir</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+        <tr valign='top'>
+            <td class='attr-rw'>
+                [RW]
+            </td>
+            <td class='attr-name'>results</td>
+            <td class='attr-desc'></td>
+        </tr>
+        
+    </table>
+    
+
+    
+            <div class="sectiontitle">Class Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000077">
+                    
+                    <a name="M000077"></a><b>new</b>(basedir)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000077_source')" id="l_M000077_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L9" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000077_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 9</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">basedir</span>)
+    <span class="ruby-ivar">@basedir</span> = <span class="ruby-identifier">basedir</span>    
+    <span class="ruby-ivar">@results</span> = <span class="ruby-constant">Struct</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:successes</span>, <span class="ruby-identifier">:failures</span>).<span class="ruby-identifier">new</span>([], [])
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-ivar">@basedir</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="sectiontitle">Instance Public methods</div>
+            
+            <div class="method">
+                <div class="title" id="M000093">
+                    
+                    <a name="M000093"></a><b>class_for_code</b>(code)
+                    
+                </div>
+                
+                <div class="description">
+                  <p>
+CSS class for HTML status codes
+</p>
+
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000093_source')" id="l_M000093_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L100" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000093_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 100</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">class_for_code</span>(<span class="ruby-identifier">code</span>)
+    <span class="ruby-node">&quot;r#{Integer(code)/100}&quot;</span> 
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000084">
+                    
+                    <a name="M000084"></a><b>copy_styles</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000084_source')" id="l_M000084_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L38" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000084_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 38</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_styles</span>
+    <span class="ruby-comment cmt"># not using cp_r because it picks up .svn crap</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;stylesheets&quot;</span>))
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-node">&quot;#{tarantula_home}/laf/stylesheets/*.css&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">file</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;stylesheets&quot;</span>)) 
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;images&quot;</span>))
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-node">&quot;#{tarantula_home}/laf/images/*.{jpg,gif,png}&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">file</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;images&quot;</span>)) 
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;javascripts&quot;</span>))
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-node">&quot;#{tarantula_home}/laf/javascripts/*.js&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">file</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;javascripts&quot;</span>)) 
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000081">
+                    
+                    <a name="M000081"></a><b>create_detail_report</b>(result)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000081_source')" id="l_M000081_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L33" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000081_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 33</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_detail_report</span>(<span class="ruby-identifier">result</span>)
+    <span class="ruby-identifier">template</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>(<span class="ruby-value str">&quot;detail.html.erb&quot;</span>))
+    <span class="ruby-identifier">output</span>(<span class="ruby-identifier">result</span>.<span class="ruby-identifier">file_name</span>, <span class="ruby-identifier">template</span>.<span class="ruby-identifier">result</span>(<span class="ruby-identifier">result</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:binding</span>)), <span class="ruby-identifier">result</span>.<span class="ruby-identifier">test_name</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000085">
+                    
+                    <a name="M000085"></a><b>create_index</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000085_source')" id="l_M000085_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L54" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000085_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 54</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_index</span>
+    <span class="ruby-identifier">template</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>(<span class="ruby-value str">&quot;index.html.erb&quot;</span>))
+    <span class="ruby-identifier">output</span>(<span class="ruby-value str">&quot;index.html&quot;</span>, <span class="ruby-identifier">template</span>.<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000080">
+                    
+                    <a name="M000080"></a><b>finish_report</b>(test_name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000080_source')" id="l_M000080_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L26" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000080_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 26</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish_report</span>(<span class="ruby-identifier">test_name</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Writing results to #{basedir}&quot;</span>
+    <span class="ruby-identifier">copy_styles</span>  <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">styles_exist?</span>
+    <span class="ruby-identifier">create_index</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">index_exists?</span>
+    <span class="ruby-identifier">update_index</span>(<span class="ruby-identifier">test_name</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000087">
+                    
+                    <a name="M000087"></a><b>index_exists?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000087_source')" id="l_M000087_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L71" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000087_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 71</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_exists?</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;index.html&quot;</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000092">
+                    
+                    <a name="M000092"></a><b>output</b>(name, body, subdir = '')
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000092_source')" id="l_M000092_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L92" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000092_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 92</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">body</span>, <span class="ruby-identifier">subdir</span> = <span class="ruby-value str">''</span>)
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-identifier">subdir</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">subdir</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-identifier">subdir</span>, <span class="ruby-identifier">name</span>), <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">body</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000078">
+                    
+                    <a name="M000078"></a><b>report</b>(result)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000078_source')" id="l_M000078_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L15" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000078_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report</span>(<span class="ruby-identifier">result</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+    
+    <span class="ruby-identifier">create_detail_report</span>(<span class="ruby-identifier">result</span>)
+    
+    <span class="ruby-identifier">collection</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">success</span> <span class="ruby-value">? </span><span class="ruby-identifier">results</span>.<span class="ruby-identifier">successes</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">failures</span>
+    <span class="ruby-identifier">collection</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">HtmlResultOverview</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-identifier">result</span>.<span class="ruby-identifier">code</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">url</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">description</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">method</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">referrer</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">file_name</span>
+    )
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000090">
+                    
+                    <a name="M000090"></a><b>results_html</b>(test_name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000090_source')" id="l_M000090_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L83" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000090_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 83</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">results_html</span>(<span class="ruby-identifier">test_name</span>)
+    <span class="ruby-identifier">template</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>(<span class="ruby-value str">&quot;test_report.html.erb&quot;</span>))
+    <span class="ruby-identifier">template</span>.<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000088">
+                    
+                    <a name="M000088"></a><b>styles_exist?</b>()
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000088_source')" id="l_M000088_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L75" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000088_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 75</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">styles_exist?</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;stylesheets&quot;</span>, <span class="ruby-value str">&quot;tarantula.css&quot;</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000089">
+                    
+                    <a name="M000089"></a><b>tab_html</b>(test_name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000089_source')" id="l_M000089_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L79" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000089_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 79</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tab_html</span>(<span class="ruby-identifier">test_name</span>)
+    <span class="ruby-node">&quot;&lt;li&gt;&lt;a href='##{test_name}'&gt;&lt;span&gt;#{test_name}&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&quot;</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000091">
+                    
+                    <a name="M000091"></a><b>template</b>(name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000091_source')" id="l_M000091_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L88" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000091_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 88</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>), <span class="ruby-identifier">name</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="method">
+                <div class="title" id="M000086">
+                    
+                    <a name="M000086"></a><b>update_index</b>(test_name)
+                    
+                </div>
+                
+                
+                
+                
+                <div class="sourcecode">
+                    <p class="source-link">
+                        Source: <a href="javascript:toggleSource('M000086_source')" id="l_M000086_source">show</a>
+                        
+                        | <a href="http://github.com/relevance/tarantula/blob/7df5142bf05d528105f088fbfc9f5e3798c3ff12/lib/relevance/tarantula/html_reporter.rb#L59" target="_blank" class="github_url">on GitHub</a>
+                        
+                    </p>
+                    <div id="M000086_source" class="dyn-source">
+                        <pre><span class="ruby-comment cmt"># File lib/relevance/tarantula/html_reporter.rb, line 59</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_index</span>(<span class="ruby-identifier">test_name</span>)    
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">basedir</span>, <span class="ruby-value str">&quot;index.html&quot;</span>), <span class="ruby-value str">&quot;r+&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">doc</span> = <span class="ruby-constant">Hpricot</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">read</span>
+      <span class="ruby-identifier">tabs_container</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">search</span> <span class="ruby-value str">&quot;#tabs-container ul&quot;</span>
+      <span class="ruby-identifier">results_container</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">search</span> <span class="ruby-value str">&quot;#results-container&quot;</span>
+      <span class="ruby-identifier">tabs_container</span>.<span class="ruby-identifier">append</span> <span class="ruby-identifier">tab_html</span>(<span class="ruby-identifier">test_name</span>)
+      <span class="ruby-identifier">results_container</span>.<span class="ruby-identifier">append</span> <span class="ruby-identifier">results_html</span>(<span class="ruby-identifier">test_name</span>)
+      <span class="ruby-identifier">file</span>.<span class="ruby-identifier">rewind</span>
+      <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+                    </div>
+                </div>
+                
+            </div>
+            
+</div>
+    </div>
+  </body>
+</html>    
