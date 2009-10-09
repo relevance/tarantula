@@ -20,8 +20,10 @@ begin
     s.files = files.flatten
     s.add_dependency 'htmlentities'
     s.add_dependency 'hpricot'
-    s.rubyforge_project = 'thinkrelevance'
+    s.add_development_dependency 'micronaut'
+    s.add_development_dependency 'log_buddy'
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
@@ -68,5 +70,5 @@ end
 if ENV["RUN_CODE_RUN"]
   task :default => "examples:multi_rails"
 else
-  task :default => "examples"
+  task :default => [:check_dependencies, :examples]
 end
