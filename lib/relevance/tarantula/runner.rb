@@ -1,10 +1,11 @@
 module Relevance::Tarantula
   module Runner
     def self.run
+      FileUtils.rm_rf Dir["#{RAILS_ROOT}/tmp/tarantula/*"]
       ARGV.each do |filename|
         ::Relevance::Tarantula::FileLoader.load_file(filename)
       end
-      result = ::Relevance::Tarantula::Config.result
+      result = ::Relevance::Tarantula::Config::TarantulaIntegrationTest.result
       result.errors.each do |error|
         puts error.long_display
       end

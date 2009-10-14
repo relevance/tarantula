@@ -175,31 +175,54 @@ describe Relevance::Tarantula::Crawler do
   end
   
   describe "blip" do
-
-    it "blips the current progress if !verbose" do
-      $stdout.stubs(:tty?).returns(true)
-      crawler = Relevance::Tarantula::Crawler.new
-      crawler.stubs(:verbose).returns false
-      crawler.stubs(:timeout_if_too_long)
-      crawler.expects(:print).with("\r 0 of 0 links completed               ")
-      crawler.blip
+    
+    describe "messages" do
+      it "blips the current progress if verbose" do
+        $stdout.stubs(:tty?).returns(true)
+        crawler = Relevance::Tarantula::Crawler.new
+        crawler.stubs(:verbose).returns true
+        crawler.stubs(:timeout_if_too_long)
+        crawler.expects(:print).with("\r 0 of 0 links completed               ")
+        crawler.blip
+      end
+    
+      it "suppresses the blip message if not writing to a tty" do
+        $stdout.stubs(:tty?).returns(false)
+        crawler = Relevance::Tarantula::Crawler.new
+        crawler.stubs(:verbose).returns false
+        crawler.stubs(:timeout_if_too_long)
+        crawler.expects(:print).never
+        crawler.blip
+      end
+    
+      it "blips nothing if !verbose" do
+        $stdout.stubs(:tty?).returns(true)
+        crawler = Relevance::Tarantula::Crawler.new
+        crawler.stubs(:verbose).returns false
+        crawler.stubs(:timeout_if_too_long)
+        crawler.expects(:print).never
+        crawler.blip
+      end
     end
     
-    it "suppresses the blip message if not writing to a tty" do
-      $stdout.stubs(:tty?).returns(false)
-      crawler = Relevance::Tarantula::Crawler.new
-      crawler.stubs(:verbose).returns false
-      crawler.stubs(:timeout_if_too_long)
-      crawler.expects(:print).never
-      crawler.blip
-    end
-    
-    it "blips nothing if verbose" do
-      $stdout.stubs(:tty?).returns(true)
-      crawler = Relevance::Tarantula::Crawler.new
-      crawler.stubs(:verbose).returns true
-      crawler.expects(:print).never
-      crawler.blip
+    describe "timeout checking" do
+      before do
+        $stdout.stubs(:tty?).returns(true)
+        @crawler = Relevance::Tarantula::Crawler.new
+        @crawler.stubs(:print)
+      end
+      
+      it "checks for timeout when verbose" do
+        @crawler.stubs(:verbose).returns true
+        @crawler.expects(:timeout_if_too_long)
+        @crawler.blip
+      end
+      
+      it "checks for timeout when !verbose" do
+        @crawler.stubs(:verbose).returns false
+        @crawler.expects(:timeout_if_too_long)
+        @crawler.blip
+      end
     end
     
   end

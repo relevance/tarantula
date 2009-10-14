@@ -62,7 +62,7 @@ class Relevance::Tarantula::HtmlReporter
       tabs_container = doc.search "#tabs-container ul"
       results_container = doc.search "#results-container"
       tabs_container.append tab_html(test_name)
-      results_container.append results_html(test_name)
+      results_container.append results_html(safe_name(test_name))
       file.rewind
       file.write doc.to_s
     end
@@ -77,7 +77,7 @@ class Relevance::Tarantula::HtmlReporter
   end
 
   def tab_html(test_name)
-    "<li><a href='##{test_name}'><span>#{test_name}</span></a></li>"
+    "<li><a href='##{safe_name(test_name)}'><span>#{test_name}</span></a></li>"
   end
 
   def results_html(test_name)
@@ -94,7 +94,11 @@ class Relevance::Tarantula::HtmlReporter
     File.open(File.join(basedir, subdir, name), "w") do |file|
       file.write body
     end
-  end      
+  end   
+  
+  def safe_name(name)
+    name.gsub(/\W/, '_')
+  end   
   
   # CSS class for HTML status codes
   def class_for_code(code)

@@ -64,7 +64,11 @@ class Relevance::Tarantula::Crawler
         puts e.message
       end
       
-      puts "#{(num+1).ordinalize} crawl" if @times_to_crawl > 1
+      if @times_to_crawl > 1
+        puts "#{(num+1).ordinalize} crawl}"
+      elsif verbose
+        puts
+      end
 
       if num + 1 < @times_to_crawl
         @links_queued = orig_links_queued
@@ -237,10 +241,10 @@ class Relevance::Tarantula::Crawler
   end
 
   def blip(number = 0)
-    unless verbose
+    if verbose
       print "\r #{links_completed_count} of #{total_links_count} links completed               " if $stdout.tty?
-      timeout_if_too_long(number)
     end
+    timeout_if_too_long(number)
   end
   
   def timeout_if_too_long(number = 0)
