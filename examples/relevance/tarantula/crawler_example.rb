@@ -156,7 +156,7 @@ describe Relevance::Tarantula::Crawler do
   end
   
   describe "report_results" do
-    
+
     it "prints a final summary line" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.stubs(:generate_reports)

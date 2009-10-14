@@ -38,6 +38,8 @@ class Relevance::Tarantula::Crawler
     @decoder = HTMLEntities.new
     @times_to_crawl = 1
     @fuzzers = [Relevance::Tarantula::FormSubmission]
+    
+    @stdout_tty = $stdout.tty?
   end
 
   def method_missing(meth, *args)
@@ -61,6 +63,7 @@ class Relevance::Tarantula::Crawler
       begin 
         do_crawl num
       rescue CrawlTimeout => e
+        puts
         puts e.message
       end
       
