@@ -2,8 +2,7 @@ require 'active_record'
 require 'active_record/base'
 require File.expand_path(File.join(File.dirname(__FILE__), "rails_integration_proxy"))
 require File.expand_path(File.join(File.dirname(__FILE__), "html_document_handler.rb"))
-
-require 'algorithms'
+require File.expand_path(File.join(File.dirname(__FILE__), "priority_queue.rb"))
 
 class Relevance::Tarantula::Crawler
   extend Forwardable
@@ -24,7 +23,7 @@ class Relevance::Tarantula::Crawler
     @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
-    @crawl_queue = Containers::PriorityQueue.new #{ |x, y| (x <=> y) == -1 }
+    @crawl_queue = Relevance::Tarantula::PriorityQueue.new #{ |x, y| (x <=> y) == -1 }
     @crawl_start_times, @crawl_end_times = [], []
     @crawl_timeout = 20.minutes
     @referrers = {}
