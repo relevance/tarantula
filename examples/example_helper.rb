@@ -39,7 +39,7 @@ def stub_puts_and_print(obj)
 end
 
 def make_link(link, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)
-  Relevance::Tarantula::Link.new(0, link, crawler, referrer)
+  Relevance::Tarantula::Link.new(link, crawler, referrer)
 end
 
 def make_form(form, crawler=Relevance::Tarantula::Crawler.new, referrer=nil)

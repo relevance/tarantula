@@ -18,10 +18,10 @@ class Relevance::Tarantula::Link
     METHOD_REGEXPS[m] = /#{s}/
   end
   
-  attr_accessor :href, :crawler, :referrer, :priority
+  attr_accessor :href, :crawler, :referrer
   
-  def initialize(priority, link, crawler, referrer)
-    @priority, @crawler, @referrer = priority, crawler, referrer
+  def initialize(link, crawler, referrer)
+    @crawler, @referrer = crawler, referrer
     
     if String === link || link.nil?
       @href = transform_url(link)
@@ -67,10 +67,6 @@ class Relevance::Tarantula::Link
   
   def hash
     to_s.hash
-  end
-  
-  def log_msg
-    "Link: priority=#{priority}, href=#{href}, method=#{method}"
   end
   
   def to_s

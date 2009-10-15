@@ -23,7 +23,7 @@ class Relevance::Tarantula::Crawler
     @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
-    @crawl_queue = Relevance::Tarantula::PriorityQueue.new #{ |x, y| (x <=> y) == -1 }
+    @crawl_queue = Relevance::Tarantula::FifoQueue.new
     @crawl_start_times, @crawl_end_times = [], []
     @crawl_timeout = 20.minutes
     @referrers = {}
@@ -58,7 +58,7 @@ class Relevance::Tarantula::Crawler
     orig_links_queued = @links_queued.dup
     orig_form_signatures_queued = @form_signatures_queued.dup
     @times_to_crawl.times do |num|
-      queue_link 0, url
+      queue_link url
       
       begin 
         do_crawl num
@@ -99,7 +99,7 @@ class Relevance::Tarantula::Crawler
 
   def crawl_the_queue(number = 0)
     while (request = @crawl_queue.next!)
-      log("Crawling #{request.log_msg}")
+      log("Crawling #{request}")
       request.crawl
       blip(number)
     end
@@ -149,12 +149,12 @@ class Relevance::Tarantula::Crawler
   def handle_form_results(form, response)
     handlers.each do |h|
       save_result h.handle(Result.new(:method => form.method,
-                                     :url => form.action,
-                                     :response => response,
-                                     :log => grab_log!,
-                                     :referrer => form.action,
-                                     :data => form.data.inspect,
-                                     :test_name => test_name).freeze)
+                                      :url => form.action,
+                                      :response => response,
+                                      :log => grab_log!,
+                                      :referrer => form.action,
+                                      :data => form.data.inspect,
+                                      :test_name => test_name).freeze)
     end
   end
 
@@ -187,31 +187,25 @@ class Relevance::Tarantula::Crawler
     url
   end
 
-  def queue_link(link_num, dest, referrer = nil)
-    dest = Link.new(make_priority(link_num), dest, self, referrer)
+  def queue_link(dest, referrer = nil)
+    dest = Link.new(dest, self, referrer)
     return if should_skip_link?(dest)
-    @crawl_queue.push dest, dest.priority
+    @crawl_queue.push dest
     @links_queued << dest
     dest
   end
   
-  def queue_form(link_num, form, referrer = nil)
-    fuzz_num = 0
+  def queue_form(form, referrer = nil)
     fuzzers.each do |fuzzer|
       fuzzer.mutate(Form.new(form, self, referrer)).each do |fs|
         # fs = fuzzer.new(Form.new(form, self, referrer))
         fs.action = transform_url(fs.action)
         return if should_skip_form_submission?(fs)
         @referrers[fs.action] = referrer if referrer
-        fs.priority = make_priority(link_num, fuzz_num += 1)
-        @crawl_queue.push fs, fs.priority
+        @crawl_queue.push fs
         @form_signatures_queued << fs.signature
       end
     end
-  end
-
-  def make_priority(link_num, fuzz_num=0)
-    (links_completed_count * 1_000_000) + (fuzz_num * 1_000) + link_num
   end
 
   def report_dir
