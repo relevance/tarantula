@@ -18,10 +18,10 @@ class Relevance::Tarantula::Link
     METHOD_REGEXPS[m] = /#{s}/
   end
   
-  attr_accessor :href, :crawler, :referrer
+  attr_accessor :href, :crawler, :referrer, :priority
   
-  def initialize(link, crawler, referrer)
-    @crawler, @referrer = crawler, referrer
+  def initialize(priority, link, crawler, referrer)
+    @priority, @crawler, @referrer = priority, crawler, referrer
     
     if String === link || link.nil?
       @href = transform_url(link)
@@ -46,13 +46,13 @@ class Relevance::Tarantula::Link
   end
   
   def method
-    @method ||= begin
-      (@tag &&
-       [:put, :delete, :post].detect do |m| # post should be last since it's least specific
-         @tag['onclick'] =~ METHOD_REGEXPS[m]
-       end) ||
-      :get
+    return @method if @method
+    
+    if @tag
+      @method = [:put, :delete, :post].find{|m| @tag['onclick'] =~ METHOD_REGEXPS[m] }
     end
+    
+    @method ||= :get
   end
   
   def transform_url(link)
@@ -67,6 +67,10 @@ class Relevance::Tarantula::Link
   
   def hash
     to_s.hash
+  end
+  
+  def log_msg
+    "Link: priority=#{priority}, href=#{href}, method=#{method}"
   end
   
   def to_s

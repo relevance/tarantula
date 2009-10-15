@@ -69,9 +69,10 @@ describe Relevance::Tarantula::Crawler do
     
     it 'queues the first url, does crawl, and then reports results' do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.expects(:queue_link).with("/foobar")
+      crawler.expects(:queue_link).with(kind_of(Numeric), "/foobar")
       crawler.expects(:do_crawl)
       crawler.expects(:report_results)
+      crawler.stubs(:verbose).returns(true) # silence stray puts
       crawler.crawl("/foobar")
     end
 
@@ -89,9 +90,10 @@ describe Relevance::Tarantula::Crawler do
     it 'queues and remembers links' do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.expects(:transform_url).with("/url").returns("/transformed").at_least_once
-      crawler.queue_link("/url")
+      crawler.queue_link(0, "/url")
       # TODO not sure this is the best way to test this anymore; relying on result of transform in both actual and expected
-      crawler.crawl_queue.should == [make_link("/url", crawler)]
+      crawler.crawl_queue.size.should == 1
+      crawler.crawl_queue.next.should == make_link("/url", crawler)
       crawler.links_queued.should == Set.new([make_link("/url", crawler)])
     end
 
@@ -99,16 +101,16 @@ describe Relevance::Tarantula::Crawler do
       crawler = Relevance::Tarantula::Crawler.new
       form = Hpricot('<form action="/action" method="post"/>').at('form')
       signature = Relevance::Tarantula::FormSubmission.new(make_form(form)).signature
-      crawler.queue_form(form)
+      crawler.queue_form(0, form)
       crawler.crawl_queue.size.should == 1
       crawler.form_signatures_queued.should == Set.new([signature])
     end
 
     it "passes link, self, and referrer when creating Link objects" do
       crawler = Relevance::Tarantula::Crawler.new
-      Relevance::Tarantula::Link.expects(:new).with('/url', crawler, '/some-referrer')
+      Relevance::Tarantula::Link.expects(:new).with(0, '/url', crawler, '/some-referrer').returns(stub(:priority => 0))
       crawler.stubs(:should_skip_link?)
-      crawler.queue_link('/url', '/some-referrer')
+      crawler.queue_link(0, '/url', '/some-referrer')
     end
     
   end
@@ -121,18 +123,22 @@ describe Relevance::Tarantula::Crawler do
     it "does two things with each link: crawl and blip" do
       crawler = Relevance::Tarantula::Crawler.new
       crawler.proxy = stub
-      crawler.crawl_queue = links = [make_link("/foo1", crawler), make_link("/foo2", crawler)]
+      links = [make_link("/foo1", crawler), make_link("/foo2", crawler)]
       
-      links.each{|link| link.expects(:crawl)}
+      links.each do |link| 
+        crawler.crawl_queue.push link, link.priority
+        link.expects(:crawl)
+      end
+      
       crawler.expects(:blip).times(2)
       
       crawler.crawl_the_queue
-      crawler.crawl_queue.should == []
+      crawler.crawl_queue.should be_empty
     end
 
     it "invokes queued forms, logs responses, and calls handlers" do
       crawler = Relevance::Tarantula::Crawler.new
-      crawler.crawl_queue << Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler))
+      crawler.crawl_queue.push Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler)), 0
       crawler.expects(:submit).returns(stub(:code => "200"))
       crawler.expects(:blip)
       crawler.crawl_the_queue
@@ -140,13 +146,14 @@ describe Relevance::Tarantula::Crawler do
     
     it "breaks out early if a timeout is set"
 
-    it "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
+    # This doesn't really make sense anymore; we're restricting to one initial link per crawl.
+    disabled "resets to the initial links/forms on subsequent crawls when times_to_crawl > 1" do
       crawler = Relevance::Tarantula::Crawler.new
       stub_puts_and_print(crawler)
       response = stub(:code => "200")
-      crawler.queue_link('/foo')
+      crawler.queue_link(0, '/foo')
       crawler.expects(:follow).returns(response).times(4) # (stub and "/") * 2
-      crawler.queue_form(@form)
+      crawler.queue_form(0, @form)
       crawler.expects(:submit).returns(response).times(2)
       crawler.expects(:blip).times(6)
       crawler.times_to_crawl = 2
@@ -177,10 +184,10 @@ describe Relevance::Tarantula::Crawler do
   describe "blip" do
     
     describe "messages" do
-      it "blips the current progress if verbose" do
+      it "blips the current progress if !verbose" do
         $stdout.stubs(:tty?).returns(true)
         crawler = Relevance::Tarantula::Crawler.new
-        crawler.stubs(:verbose).returns true
+        crawler.stubs(:verbose).returns false
         crawler.stubs(:timeout_if_too_long)
         crawler.expects(:print).with("\r 0 of 0 links completed               ")
         crawler.blip
@@ -195,10 +202,10 @@ describe Relevance::Tarantula::Crawler do
         crawler.blip
       end
     
-      it "blips nothing if !verbose" do
+      it "blips nothing if verbose (because more elaborate verbose messages serve the same purpose)" do
         $stdout.stubs(:tty?).returns(true)
         crawler = Relevance::Tarantula::Crawler.new
-        crawler.stubs(:verbose).returns false
+        crawler.stubs(:verbose).returns true
         crawler.stubs(:timeout_if_too_long)
         crawler.expects(:print).never
         crawler.blip
@@ -275,7 +282,7 @@ describe Relevance::Tarantula::Crawler do
   it "skips links that are already queued" do
     crawler = Relevance::Tarantula::Crawler.new
     crawler.should_skip_link?(make_link("/foo")).should == false
-    crawler.queue_link("/foo").should == make_link("/foo")
+    crawler.queue_link(0, "/foo").should == make_link("/foo")
     crawler.should_skip_link?(make_link("/foo")).should == true
   end
   
@@ -306,17 +313,17 @@ describe Relevance::Tarantula::Crawler do
     end
   
     it 'skips blank links' do
-      @crawler.queue_link(nil)
-      @crawler.crawl_queue.should == []
-      @crawler.queue_link("")
-      @crawler.crawl_queue.should == []
+      @crawler.queue_link(0, nil)
+      @crawler.crawl_queue.should be_empty
+      @crawler.queue_link(0, "")
+      @crawler.crawl_queue.should be_empty
     end
   
     it "logs and skips links that match a pattern" do
       @crawler.expects(:log).with("Skipping /the-red-button")
       @crawler.skip_uri_patterns << /red-button/
-      @crawler.queue_link("/blue-button").should == make_link("/blue-button")
-      @crawler.queue_link("/the-red-button").should == nil
+      @crawler.queue_link(0, "/blue-button").should == make_link("/blue-button")
+      @crawler.queue_link(0, "/the-red-button").should == nil
     end   
   
     it "logs and skips form submissions that match a pattern" do

@@ -20,22 +20,22 @@ describe "Relevance::Tarantula::HtmlDocumentHandler" do
   end
   
   it "queues anchor tags" do
-    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/foo" && args[1] == nil}
+    @handler.expects(:queue_link).with {|*args| args[1]['href'] == "/foo" && args[2] == nil}
     @handler.handle(Relevance::Tarantula::Result.new(:response => stub(:html? => true, :body => '<a href="/foo">foo</a>')))
   end
 
   it "queues link tags" do
-    @handler.expects(:queue_link).with {|*args| args[0]['href'] == "/bar" && args[1] == nil}
+    @handler.expects(:queue_link).with {|*args| args[1]['href'] == "/bar" && args[2] == nil}
     @handler.handle(Relevance::Tarantula::Result.new(:response => stub(:html? => true, :body => '<link href="/bar">bar</a>')))
   end
   
   it "queues forms" do
-    @handler.expects(:queue_form).with{|tag,referrer| Hpricot::Elem === tag}
+    @handler.expects(:queue_form).with{|priority,tag,referrer| Hpricot::Elem === tag}
     @handler.handle(Relevance::Tarantula::Result.new(:url => "/page-url", :response => stub(:html? => true, :body => '<form>stuff</form>')))
   end
   
   it "infers form action from page url if form is not explicit" do
-    @handler.expects(:queue_form).with{|tag,referrer| tag['action'].should == '/page-url'; true }
+    @handler.expects(:queue_form).with{|priority,tag,referrer| tag['action'].should == '/page-url'; true }
     @handler.handle(Relevance::Tarantula::Result.new(:url => "/page-url", :response => stub(:html? => true, :body => '<form>stuff</form>')))
   end
   

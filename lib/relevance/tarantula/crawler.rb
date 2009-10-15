@@ -3,6 +3,8 @@ require 'active_record/base'
 require File.expand_path(File.join(File.dirname(__FILE__), "rails_integration_proxy"))
 require File.expand_path(File.join(File.dirname(__FILE__), "html_document_handler.rb"))
 
+require 'algorithms'
+
 class Relevance::Tarantula::Crawler
   extend Forwardable
   include Relevance::Tarantula
@@ -22,7 +24,7 @@ class Relevance::Tarantula::Crawler
     @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
-    @crawl_queue = []
+    @crawl_queue = Containers::PriorityQueue.new #{ |x, y| (x <=> y) == -1 }
     @crawl_start_times, @crawl_end_times = [], []
     @crawl_timeout = 20.minutes
     @referrers = {}
@@ -56,9 +58,8 @@ class Relevance::Tarantula::Crawler
   def crawl(url = "/")
     orig_links_queued = @links_queued.dup
     orig_form_signatures_queued = @form_signatures_queued.dup
-    orig_crawl_queue = @crawl_queue.dup
     @times_to_crawl.times do |num|
-      queue_link url
+      queue_link 0, url
       
       begin 
         do_crawl num
@@ -68,15 +69,14 @@ class Relevance::Tarantula::Crawler
       end
       
       if @times_to_crawl > 1
-        puts "#{(num+1).ordinalize} crawl}"
-      elsif verbose
+        puts "#{(num+1).ordinalize} crawl"
+      elsif !verbose
         puts
       end
 
       if num + 1 < @times_to_crawl
         @links_queued = orig_links_queued
         @form_signatures_queued = orig_form_signatures_queued
-        @crawl_queue = orig_crawl_queue
         @referrers = {}
       end
     end
@@ -99,7 +99,8 @@ class Relevance::Tarantula::Crawler
   end
 
   def crawl_the_queue(number = 0)
-    while (request = @crawl_queue.pop)
+    while (request = @crawl_queue.next!)
+      log("Crawling #{request.log_msg}")
       request.crawl
       blip(number)
     end
@@ -187,25 +188,31 @@ class Relevance::Tarantula::Crawler
     url
   end
 
-  def queue_link(dest, referrer = nil)
-    dest = Link.new(dest, self, referrer)
+  def queue_link(link_num, dest, referrer = nil)
+    dest = Link.new(make_priority(link_num), dest, self, referrer)
     return if should_skip_link?(dest)
-    @crawl_queue << dest
+    @crawl_queue.push dest, dest.priority
     @links_queued << dest
     dest
   end
-
-  def queue_form(form, referrer = nil)
+  
+  def queue_form(link_num, form, referrer = nil)
+    fuzz_num = 0
     fuzzers.each do |fuzzer|
       fuzzer.mutate(Form.new(form, self, referrer)).each do |fs|
         # fs = fuzzer.new(Form.new(form, self, referrer))
         fs.action = transform_url(fs.action)
         return if should_skip_form_submission?(fs)
         @referrers[fs.action] = referrer if referrer
-        @crawl_queue << fs
+        fs.priority = make_priority(link_num, fuzz_num += 1)
+        @crawl_queue.push fs, fs.priority
         @form_signatures_queued << fs.signature
       end
     end
+  end
+
+  def make_priority(link_num, fuzz_num=0)
+    (links_completed_count * 1_000_000) + (fuzz_num * 1_000) + link_num
   end
 
   def report_dir
@@ -244,7 +251,7 @@ class Relevance::Tarantula::Crawler
   end
 
   def blip(number = 0)
-    if verbose
+    unless verbose
       print "\r #{links_completed_count} of #{total_links_count} links completed               " if $stdout.tty?
     end
     timeout_if_too_long(number)

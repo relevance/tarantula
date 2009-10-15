@@ -12,6 +12,10 @@ class Relevance::Tarantula::Config #< ActionController::IntegrationTest
       :attack => Relevance::Tarantula::AttackHandler.new
     }
     
+    if defined? Tidy
+      HANDLERS[:tidy] = Relevance::Tarantula::TidyHandler.new
+    end
+    
     attr_accessor :test_case
 
     def initialize(label)
@@ -30,8 +34,17 @@ class Relevance::Tarantula::Config #< ActionController::IntegrationTest
       @test_case.root_page = url
     end
     
+    def crawl_timeout(time)
+      @crawler.crawl_timeout = time
+    end
+    
     def times_to_crawl(number)
       @crawler.times_to_crawl = number
+    end
+    
+    def method_missing(meth, *args)
+      super unless Relevance::Tarantula::Result::ALLOW_NNN_FOR =~ meth.to_s
+      @crawler.response_code_handler.send(meth, *args)
     end
     
     def attack(name, options)

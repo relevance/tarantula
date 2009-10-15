@@ -1,6 +1,6 @@
 class Relevance::Tarantula::FormSubmission
   include Relevance::Tarantula
-  attr_accessor :method, :action, :data, :attack, :form
+  attr_accessor :method, :action, :data, :attack, :form, :priority
 
   class << self
     def attacks
@@ -41,6 +41,10 @@ class Relevance::Tarantula::FormSubmission
 
   def self.mutate(form)
     attacks.map{|attack| new(form, attack)} if attacks
+  end
+  
+  def log_msg
+    "Form: priority=#{priority}, action=#{action}, method=#{method}, data=#{data.inspect}, attack=#{attack.inspect}"
   end
 
   def to_s

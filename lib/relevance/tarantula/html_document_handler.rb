@@ -21,16 +21,25 @@ class Relevance::Tarantula::HtmlDocumentHandler
     url = result.url
     return unless response.html?
     body = html_doc_without_stderr_noise(response.body)
-    body.search('a').each do |tag|
-      queue_link(tag, url)
+    body.search('a, link, form').each_with_index do |tag, i|
+      case tag.name
+      when 'a', 'link'
+        queue_link(i, tag, url)
+      when 'form'
+        tag['action'] = url unless tag['action']
+        queue_form(i, tag, url)
+      end
     end
-    body.search('link').each do |tag|
-      queue_link(tag, url)
-    end
-    body.search('form').each do |form|
-      form['action'] = url unless form['action']
-      queue_form(form, url)
-    end
+    # body.search('a').each do |tag|
+    #   queue_link(tag, url)
+    # end
+    # body.search('link').each do |tag|
+    #   queue_link(tag, url)
+    # end
+    # body.search('form').each do |form|
+    #   form['action'] = url unless form['action']
+    #   queue_form(form, url)
+    # end
     nil
   end
 end
