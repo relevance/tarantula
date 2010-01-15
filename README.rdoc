@@ -11,8 +11,7 @@ Tarantula is a big fuzzy spider. It crawls your Rails application, fuzzing data 
 The latest and greatest version is always available on GitHub. (See the rakefile for dependencies, or
 just let RubyGems handle it.)
 
-    gem sources -a http://gems.github.com
-    gem install relevance-tarantula
+    gem install tarantula
 
 You can also grab it from RubyForge, where we will push stable releases but may not be as bleeding edge
 as the GitHub gem.
@@ -24,7 +23,7 @@ as the GitHub gem.
 To set up Tarantula into your application, add the following line into either config/environment.rb or
 config/environments/test.rb (preferred). This assumes that you have Rails 2.1 or higher installed.
 
-    config.gem 'relevance-tarantula', :source => "http://gems.github.com", :lib => 'relevance/tarantula'
+    config.gem 'tarantula', :lib => 'relevance/tarantula'
 
 Since Rails doesn't (yet) support automatically loading rake tasks that live inside gems, you will need
 to update your Rakefile to load Tarantula's rake tasks. The simplest approach is to start by vendoring 
@@ -32,12 +31,12 @@ Tarantula into your Rails app.
 
     mkdir -p vendor/gems
     cd vendor/gems
-    gem unpack relevance-tarantula
+    gem unpack tarantula
 
 You can then add the following line into your Rakefile, which will allow your application to discover 
 Tarantula's rake tasks.
 
-  load File.join(RAILS_ROOT, Dir["vendor/gems/relevance-tarantula-*/tasks/*.rake"])
+  load File.join(RAILS_ROOT, Dir["vendor/gems/tarantula-*/tasks/*.rake"])
 
 === Crawling Your App
 
