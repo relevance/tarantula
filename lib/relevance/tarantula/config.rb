@@ -16,6 +16,12 @@ class Relevance::Tarantula::Config #< ActionController::IntegrationTest
       HANDLERS[:tidy] = Relevance::Tarantula::TidyHandler.new
     end
     
+    QUEUES = {
+      :fifo   => Relevance::Tarantula::FifoQueue,
+      :lifo   => Relevance::Tarantula::LifoQueue,
+      :random => Relevance::Tarantula::RandomQueue
+    }
+    
     attr_accessor :test_case
 
     def initialize(label)
@@ -75,6 +81,19 @@ class Relevance::Tarantula::Config #< ActionController::IntegrationTest
 
       unless @crawler.handlers.include?(handler_instance)
         @crawler.handlers << handler_instance
+      end
+    end
+    
+    def crawl_order(*args)
+      @crawler.crawl_queues = args.map do |arg|
+        case arg
+        when Symbol, String
+          QUEUES[arg.to_sym].new
+        when Class
+          arg.new
+        else
+          arg
+        end
       end
     end
   end

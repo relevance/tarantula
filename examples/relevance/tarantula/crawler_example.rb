@@ -89,6 +89,7 @@ describe Relevance::Tarantula::Crawler do
 
     it 'queues and remembers links' do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       crawler.expects(:transform_url).with("/url").returns("/transformed").at_least_once
       crawler.queue_link("/url")
       # TODO not sure this is the best way to test this anymore; relying on result of transform in both actual and expected
@@ -99,6 +100,7 @@ describe Relevance::Tarantula::Crawler do
 
     it 'queues and remembers forms' do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       form = Hpricot('<form action="/action" method="post"/>').at('form')
       signature = Relevance::Tarantula::FormSubmission.new(make_form(form)).signature
       crawler.queue_form(form)
@@ -108,6 +110,7 @@ describe Relevance::Tarantula::Crawler do
 
     it "passes link, self, and referrer when creating Link objects" do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       Relevance::Tarantula::Link.expects(:new).with('/url', crawler, '/some-referrer').returns(stub(:priority => 0))
       crawler.stubs(:should_skip_link?)
       crawler.queue_link('/url', '/some-referrer')
@@ -122,6 +125,7 @@ describe Relevance::Tarantula::Crawler do
     
     it "does two things with each link: crawl and blip" do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       crawler.proxy = stub
       links = [make_link("/foo1", crawler), make_link("/foo2", crawler)]
       
@@ -138,6 +142,7 @@ describe Relevance::Tarantula::Crawler do
 
     it "invokes queued forms, logs responses, and calls handlers" do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       crawler.crawl_queue.push Relevance::Tarantula::FormSubmission.new(make_form(@form, crawler))
       crawler.expects(:submit).returns(stub(:code => "200"))
       crawler.expects(:blip)
@@ -187,6 +192,7 @@ describe Relevance::Tarantula::Crawler do
       it "blips the current progress if !verbose" do
         $stdout.stubs(:tty?).returns(true)
         crawler = Relevance::Tarantula::Crawler.new
+        crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
         crawler.stubs(:verbose).returns false
         crawler.stubs(:timeout_if_too_long)
         crawler.expects(:print).with("\r 0 of 0 links completed               ")
@@ -216,6 +222,7 @@ describe Relevance::Tarantula::Crawler do
       before do
         $stdout.stubs(:tty?).returns(true)
         @crawler = Relevance::Tarantula::Crawler.new
+        @crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
         @crawler.stubs(:print)
       end
       
@@ -238,6 +245,7 @@ describe Relevance::Tarantula::Crawler do
 
     it "is finished when the links and forms are crawled" do
       crawler = Relevance::Tarantula::Crawler.new
+      crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
       crawler.finished?.should == true
     end
 
@@ -281,6 +289,7 @@ describe Relevance::Tarantula::Crawler do
   
   it "skips links that are already queued" do
     crawler = Relevance::Tarantula::Crawler.new
+    crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new
     crawler.should_skip_link?(make_link("/foo")).should == false
     crawler.queue_link("/foo").should == make_link("/foo")
     crawler.should_skip_link?(make_link("/foo")).should == true
@@ -288,7 +297,10 @@ describe Relevance::Tarantula::Crawler do
   
   describe "link skipping" do
 
-    before { @crawler = Relevance::Tarantula::Crawler.new }
+    before do
+      @crawler = Relevance::Tarantula::Crawler.new
+      @crawler.crawl_queue = Relevance::Tarantula::FifoQueue.new 
+    end
     
     it "skips links that are too long" do
       @crawler.should_skip_link?(make_link("/foo")).should == false

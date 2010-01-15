@@ -97,6 +97,7 @@ module Relevance::Tarantula
       @heap.pop
     end
     alias_method :next!, :pop
+    alias_method :pull, :pop
 
     # call-seq:
     #     delete(priority) -> object
@@ -126,7 +127,6 @@ module Relevance::Tarantula
     def push(object)
       super(object, @counter += 1)
     end
-    alias_method :pull, :pop
   end
   
   class FifoQueue < PriorityQueue
@@ -138,18 +138,12 @@ module Relevance::Tarantula
     def push(object)
       super(object, @counter += 1)
     end
-    alias_method :pull, :pop
   end
   
   class RandomQueue < PriorityQueue
-    def initialize
-      super
-    end
-    
     def push(object)
       super(object, rand(10000))
     end
-    alias_method :pull, :pop
   end
-
+  
 end

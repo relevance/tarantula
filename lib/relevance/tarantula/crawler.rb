@@ -11,7 +11,7 @@ class Relevance::Tarantula::Crawler
   class CrawlTimeout < RuntimeError; end
 
   attr_accessor :proxy, :handlers, :skip_uri_patterns, :log_grabber,
-                :reporters, :crawl_queue, :links_queued,
+                :reporters, :crawl_queues, :crawl_queue, :links_queued,
                 :form_signatures_queued, :max_url_length, :response_code_handler,
                 :times_to_crawl, :fuzzers, :test_name, :crawl_timeout
   attr_reader   :transform_url_patterns, :referrers, :failures, :successes, :crawl_start_times, :crawl_end_times
@@ -23,7 +23,6 @@ class Relevance::Tarantula::Crawler
     @handlers = [@response_code_handler = Result]
     @links_queued = Set.new
     @form_signatures_queued = Set.new
-    @crawl_queue = Relevance::Tarantula::FifoQueue.new
     @crawl_start_times, @crawl_end_times = [], []
     @crawl_timeout = 20.minutes
     @referrers = {}
@@ -55,9 +54,14 @@ class Relevance::Tarantula::Crawler
   end
 
   def crawl(url = "/")
-    orig_links_queued = @links_queued.dup
-    orig_form_signatures_queued = @form_signatures_queued.dup
+    @crawl_queues ||= [Relevance::Tarantula::FifoQueue.new]
+    @times_to_crawl = [@times_to_crawl, @crawl_queues.size].max
     @times_to_crawl.times do |num|
+      @crawl_queue = @crawl_queues[num % @times_to_crawl]
+      @links_queued = Set.new
+      @form_signatures_queued = Set.new
+      @referrers = {}
+
       queue_link url
       
       begin 
@@ -71,12 +75,6 @@ class Relevance::Tarantula::Crawler
         puts "#{(num+1).ordinalize} crawl"
       elsif !verbose
         puts
-      end
-
-      if num + 1 < @times_to_crawl
-        @links_queued = orig_links_queued
-        @form_signatures_queued = orig_form_signatures_queued
-        @referrers = {}
       end
     end
   rescue Interrupt
