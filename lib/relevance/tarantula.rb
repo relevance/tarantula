@@ -4,7 +4,6 @@ require 'forwardable'
 require 'erb'
 require 'active_support'
 require 'action_controller'
-
 # bringing in xss-shield requires a bunch of other dependencies
 # still not certain about this, if it ruins your world please let me know
 #xss_shield_path = File.join(TARANTULA_ROOT, %w{vendor xss-shield})
@@ -24,7 +23,7 @@ module Relevance
       puts msg if verbose
     end
     def rails_root
-      ::RAILS_ROOT
+      ::Rails.root.to_s
     end
     def verbose
       ENV["VERBOSE"]

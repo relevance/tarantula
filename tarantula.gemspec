@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{tarantula}
+  s.name = %q{tarantula-rails3}
   s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance, Inc."]
-  s.date = %q{2009-09-24}
+  s.date = %q{2011-02-14}
   s.description = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
   s.email = %q{opensource@thinkrelevance.com}
   s.extra_rdoc_files = [
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "CHANGELOG",
-     "MIT-LICENSE",
+     "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION.yml",
@@ -77,15 +77,16 @@ Gem::Specification.new do |s|
      "lib/relevance/tarantula/test_report.html.erb",
      "lib/relevance/tarantula/tidy_handler.rb",
      "lib/relevance/tarantula/transform.rb",
-     "tasks/tarantula_tasks.rake",
+     "lib/tarantula-rails3.rb",
+     "lib/relevance/tasks/tarantula_tasks.rake",
      "template/tarantula_test.rb"
   ]
-  s.homepage = %q{http://github.com/relevance/tarantula}
+  s.homepage = %q{http://github.com/nashby/tarantula-rails3}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{thinkrelevance}
-  s.rubygems_version = %q{1.3.4}
-  s.summary = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc}
+  s.rubygems_version = %q{1.5.0}
+  s.summary = %q{A big hairy fuzzy spider that crawls your site, wreaking havoc. For Rails 3.}
   s.test_files = [
     "examples/example_helper.rb",
      "examples/relevance/core_extensions/ellipsize_example.rb",

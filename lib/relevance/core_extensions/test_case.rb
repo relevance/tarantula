@@ -1,4 +1,4 @@
-require 'action_controller/integration'
+require 'action_dispatch/testing/integration'
 
 module Relevance::CoreExtensions::TestCaseExtensions
 

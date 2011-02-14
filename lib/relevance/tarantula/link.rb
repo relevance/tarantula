@@ -7,6 +7,24 @@ class Relevance::Tarantula::Link
     def protect_against_forgery?
       false
     end
+    #fast fix for rails3 
+	def method_javascript_function(method, url = '', href = nil)
+	  action = (href && url.size > 0) ? "'#{url}'" : 'this.href'
+	  submit_function =
+		"var f = document.createElement('form'); f.style.display = 'none'; " +
+		"this.parentNode.appendChild(f); f.method = 'POST'; f.action = #{action};"
+
+	  unless method == :post
+		submit_function << "var m = document.createElement('input'); m.setAttribute('type', 'hidden'); "
+		submit_function << "m.setAttribute('name', '_method'); m.setAttribute('value', '#{method}'); f.appendChild(m);"
+	  end
+
+	  if protect_against_forgery?
+		submit_function << "var s = document.createElement('input'); s.setAttribute('type', 'hidden'); "
+		submit_function << "s.setAttribute('name', '#{request_forgery_protection_token}'); s.setAttribute('value', '#{escape_javascript form_authenticity_token}'); f.appendChild(s);"
+	  end
+	  submit_function << "f.submit();"
+	end    
   end
   
   METHOD_REGEXPS = {}

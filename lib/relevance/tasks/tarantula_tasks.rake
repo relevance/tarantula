@@ -36,7 +36,7 @@ namespace :tarantula do
   desc 'Generate a default tarantula test'
   task :setup do
     mkdir_p "test/tarantula"
-    template_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "template", "tarantula_test.rb"))
+    template_path = File.expand_path(File.join(File.dirname(__FILE__), "../../..", "template", "tarantula_test.rb"))
     cp template_path, "test/tarantula/"
   end
 end
