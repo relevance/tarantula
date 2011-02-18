@@ -1,4 +1,5 @@
 require "erb"
+require "active_support/builder" unless defined?(Builder)
 module Relevance::Tarantula::HtmlReportHelper 
   include ERB::Util
   include Relevance::Tarantula

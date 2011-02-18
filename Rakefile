@@ -6,14 +6,14 @@ require 'micronaut/rake_task'
 
 begin
   require 'jeweler'
-  files = ["CHANGELOG", "MIT-LICENSE", "Rakefile", "README.rdoc", "VERSION.yml"]
+  files = ["CHANGELOG", "LICENSE", "Rakefile", "README.rdoc", "VERSION.yml"]
   files << Dir["examples/**/*", "laf/**/*", "lib/**/*", "tasks/**/*", "template/**/*"]
   
   Jeweler::Tasks.new do |s|
-    s.name = "tarantula"
+    s.name = "tarantula-rails3"
     s.summary = "A big hairy fuzzy spider that crawls your site, wreaking havoc"
     s.description = "A big hairy fuzzy spider that crawls your site, wreaking havoc"
-    s.homepage = "http://github.com/relevance/tarantula"
+    s.homepage = "http://github.com/nashby/tarantula-rails3"
     s.email = "opensource@thinkrelevance.com"
     s.authors = ["Relevance, Inc."]
     s.require_paths = ["lib"]
@@ -30,33 +30,14 @@ end
 
 desc "Run all micronaut examples"
 Micronaut::RakeTask.new :examples do |t|
-  t.pattern = "examples/**/*_example.rb"
+  t.pattern = File.dirname(__FILE__)+"/examples/**/*_example.rb"
 end
 
 desc "Run all micronaut examples using rcov"
 Micronaut::RakeTask.new :rcov do |t|
-  t.pattern = "examples/**/*_example.rb"
+  t.pattern = File.dirname(__FILE__)+"/examples/**/*_example.rb"
   t.rcov = true
   t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage]
-end
-
-namespace :examples do
-  
-  RAILS_VERSIONS = %w[2.3.2 2.3.4]
-  
-  unless RUBY_VERSION =~ /^1\.9\./
-    RAILS_VERSIONS.unshift(*%w[2.0.2 2.1.0 2.1.1 2.2.2 2.3.3])
-    RAILS_VERSIONS.sort!
-  end
-  
-  desc "Run examples with multiple versions of rails"
-  task :multi_rails do
-    RAILS_VERSIONS.each do |rails_version|
-      puts
-      sh "RAILS_VERSION='#{rails_version}' rake examples"
-    end
-  end
-  
 end
 
 if ENV["RUN_CODE_RUN"]

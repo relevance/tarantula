@@ -72,7 +72,7 @@ class Relevance::Tarantula::FormSubmission
   def mutate_selects(form)
     form.search('select').inject({}) do |form_args, select|
       options = select.search('option')
-      option = options.rand
+      option = options.sample
       form_args[select['name']] = option['value']
       form_args
     end

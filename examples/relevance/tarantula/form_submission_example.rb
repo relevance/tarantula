@@ -53,7 +53,7 @@ describe Relevance::Tarantula::FormSubmission do
       end
   
       it "can mutate selects" do
-        Hpricot::Elements.any_instance.stubs(:rand).returns(stub(:[] => "2006-stub"))
+        @fs.attack.stubs(:rand).returns(stub(:[] => "2006-stub"))
         @fs.mutate_selects(@form).should == {"foo[opened_on(1i)]" => "2006-stub"}
       end
   

@@ -67,7 +67,7 @@ class Relevance::Tarantula::Crawler
         puts e.message
       end
       
-      puts "#{(num+1).ordinalize} crawl" if @times_to_crawl > 1
+      puts "#{ActiveSupport::Inflector.ordinalize((num+1))} crawl" if @times_to_crawl > 1
 
       if num + 1 < @times_to_crawl
         @links_queued = orig_links_queued
