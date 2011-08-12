@@ -1,22 +1,26 @@
-module Relevance::CoreExtensions::Nil
-  def ellipsize(cutoff = 20)
-    ""
-  end
-end
-
-module Relevance::CoreExtensions::String
-  def ellipsize(cutoff = 20)
-    if length > cutoff
-      "#{self[0...cutoff]}..."
-    else
-      self
+module Relevance
+  module CoreExtensions
+    module Nil
+      def ellipsize(cutoff = 20)
+        ""
+      end
     end
-  end
-end
- 
-module Relevance::CoreExtensions::Object
-  def ellipsize(cutoff = 20)
-    inspect.ellipsize(cutoff)
+
+    module String
+      def ellipsize(cutoff = 20)
+        if length > cutoff
+          "#{self[0...cutoff]}..."
+        else
+          self
+        end
+      end
+    end
+
+    module Object
+      def ellipsize(cutoff = 20)
+        inspect.ellipsize(cutoff)
+      end
+    end
   end
 end
 
@@ -29,6 +33,6 @@ end
 class NilClass
   include Relevance::CoreExtensions::Nil
 end
-  
-  
+
+
 

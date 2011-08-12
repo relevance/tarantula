@@ -1,6 +1,12 @@
-module Relevance::CoreExtensions::File 
-  def extension(path)
-    extname(path)[1..-1]
+module Relevance
+  module CoreExtensions
+
+    module File 
+      def extension(path)
+        extname(path)[1..-1]
+      end
+    end
+
   end
 end
 
