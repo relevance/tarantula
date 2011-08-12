@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     relevance/tarantula (0.4.0)
+      hpricot (~> 0.8.4)
+      htmlentities (~> 4.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -96,13 +98,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  hpricot
-  htmlentities
-  log_buddy
-  mocha
-  rails
-  rdiscount
+  log_buddy (~> 0.6.0)
+  mocha (~> 0.9.12)
+  rails (~> 3.0.9)
+  rdiscount (~> 1.6.8)
   relevance/tarantula!
-  rspec
-  sdoc
-  sdoc-helpers
+  rspec (~> 2.6.0)
+  sdoc (~> 0.3.0)
+  sdoc-helpers (~> 0.1.4)

@@ -18,13 +18,14 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {examples,template}`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "hpricot"
-  s.add_development_dependency "sdoc"
-  s.add_development_dependency "sdoc-helpers"
-  s.add_development_dependency "rdiscount"
-  s.add_development_dependency "log_buddy"
-  s.add_development_dependency "mocha"
-  s.add_development_dependency "rails"
-  s.add_development_dependency "htmlentities"
+  s.add_runtime_dependency "htmlentities", "~> 4.3.0"
+  s.add_runtime_dependency "hpricot", "~> 0.8.4"
+
+  s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "sdoc", "~> 0.3.0"
+  s.add_development_dependency "sdoc-helpers", "~> 0.1.4"
+  s.add_development_dependency "rdiscount", "~> 1.6.8"
+  s.add_development_dependency "log_buddy", "~> 0.6.0"
+  s.add_development_dependency "mocha", "~> 0.9.12"
+  s.add_development_dependency "rails", "~> 3.0.9"
 end
