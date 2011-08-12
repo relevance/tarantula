@@ -1,4 +1,4 @@
-require 'action_dispatch/testing/integration'
+require 'action_dispatch/testing/integration' if ::Rails::VERSION::MAJOR == 3
 
 module Relevance::CoreExtensions::TestCaseExtensions
 
