@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "../..", "example_helper.rb"))
+require "spec_helper"
 require 'relevance/core_extensions/file'
 
 describe "Relevance::CoreExtensions::File#extension" do

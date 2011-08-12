@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../../example_helper.rb"
+require "spec_helper"
 
 describe Relevance::Tarantula::BasicAttack do
   before do

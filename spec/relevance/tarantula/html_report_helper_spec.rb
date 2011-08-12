@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "example_helper.rb"))
+require "spec_helper"
 
 module HtmlReportHelperSpec
   # Is there an idiom for this?
