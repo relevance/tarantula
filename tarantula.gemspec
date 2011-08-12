@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "relevance/tarantula/version"
 
 Gem::Specification.new do |s|
-  s.name        = "tarantula"
+  s.name        = "relevance/tarantula"
   s.version     = Relevance::Tarantula::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Relevance, Inc."]
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {examples,template}`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "micronaut"
+  s.add_development_dependency "rspec"
   s.add_development_dependency "hpricot"
   s.add_development_dependency "sdoc"
   s.add_development_dependency "sdoc-helpers"

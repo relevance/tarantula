@@ -1,17 +1,17 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'micronaut'
-require 'micronaut/rake_task'
+require 'rspec'
+require 'rspec/core/rake_task'
 
-desc "Run all micronaut examples"
-Micronaut::RakeTask.new :examples do |t|
-  t.pattern = File.dirname(__FILE__)+"/examples/**/*_example.rb"
+desc "Run all RSpec specs"
+RSpec::Core::RakeTask.new :spec do |t|
+  t.pattern = File.dirname(__FILE__)+"/spec/**/*_spec.rb"
 end
 
-desc "Run all micronaut examples using rcov"
-Micronaut::RakeTask.new :rcov do |t|
-  t.pattern = File.dirname(__FILE__)+"/examples/**/*_example.rb"
+desc "Run all RSpec specs using rcov"
+RSpec::Core::RakeTask.new :rcov do |t|
+  t.pattern = File.dirname(__FILE__)+"/spec/**/*_spec.rb"
   t.rcov = true
   t.rcov_opts = %[--exclude "gems/*,/Library/Ruby/*,config/*" --text-summary  --sort coverage]
 end
@@ -24,7 +24,7 @@ rescue LoadError => ex
   puts ex.inspect
 end
 
-task :default => :examples
+task :default => :spec
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
