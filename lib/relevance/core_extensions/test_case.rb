@@ -1,5 +1,3 @@
-require 'action_dispatch/testing/integration' if ::Rails::VERSION::MAJOR == 3
-
 module Relevance
   module CoreExtensions
 
