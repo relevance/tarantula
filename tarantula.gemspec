@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "relevance/tarantula/version"
 
 Gem::Specification.new do |s|
-  s.name        = "relevance/tarantula"
+  s.name        = "tarantula"
   s.version     = Relevance::Tarantula::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Relevance, Inc."]
