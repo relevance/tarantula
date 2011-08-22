@@ -11,7 +11,7 @@ Tarantula is a big fuzzy spider. It crawls your Rails 3 application, fuzzing dat
 The latest and greatest version is always available on GitHub. (See the rakefile for dependencies, or
 just let RubyGems handle it).  Add it to your Gemfile as normal:
 
-gem "tarantula", "0.4.1"
+   gem "tarantula", "0.4.1"
 
 === Crawling Your App
 
