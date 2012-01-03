@@ -7,16 +7,16 @@ describe "Relevance::CoreExtensions::Response#html?" do
   end
 
   it "should be html if the content-type is 'text/html'" do
-    @response.content_type = "text/html"
+    @response.content_type = Mime::Type.new("text/html")
     @response.should be_html
-    @response.content_type = "text/html;charset=iso-8859-2"
+    @response.content_type = Mime::Type.new("text/html;charset=iso-8859-2")
     @response.should be_html
   end
 
   it "should not be html if the content-type isn't an html type" do
-    @response.content_type = "text/plain"
+    @response.content_type = Mime::Type.new("text/plain")
     @response.should_not be_html
-    @response.content_type = "application/pdf"
+    @response.content_type = Mime::Type.new("application/pdf")
     @response.should_not be_html
   end
 

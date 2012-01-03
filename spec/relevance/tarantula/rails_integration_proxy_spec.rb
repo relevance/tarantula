@@ -57,11 +57,11 @@ describe "Relevance::Tarantula::RailsIntegrationProxy patching" do
   it "patches in Relevance::CoreExtensions::Response" do
     @rip = Relevance::Tarantula::RailsIntegrationProxy.new(stub)
     @rip.stubs(:rails_root).returns("faux_rails_root")
-    @response = stub_everything({:code => "404", :headers => {}, :content_type => "text/html"})
+    @response = stub_everything({:code => "404", :headers => {}, :content_type => Mime::Type.new("text/html")})
     @response.meta.ancestors.should_not include(Relevance::CoreExtensions::Response)
     @rip.patch_response("/url", @response)
     @response.meta.ancestors.should include(Relevance::CoreExtensions::Response)
-    @response.html?.should == true
+    @response.should be_html
   end
     
   it "replaces 404s with 200s, pulling content from public, for known text types" do
