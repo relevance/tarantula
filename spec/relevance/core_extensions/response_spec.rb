@@ -16,6 +16,8 @@ describe "Relevance::CoreExtensions::Response#html?" do
   it "should not be html if the content-type isn't an html type" do
     @response.content_type = "text/plain"
     @response.should_not be_html
+    @response.content_type = "application/pdf"
+    @response.should_not be_html
   end
 
   # better ideas welcome, but be careful not to
