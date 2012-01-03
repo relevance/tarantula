@@ -5,7 +5,10 @@ module Relevance
       include Relevance::Tarantula
       def handle(result)
         response = result.response
-        return unless response.html?
+        unless response.html?
+          log "Skipping #{self.class} on url: #{result.url} because response is not html."
+          return
+        end
         begin
           body = HTML::Document.new(response.body, true)
         rescue Exception => e
