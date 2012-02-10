@@ -1,10 +1,7 @@
-TARANTULA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "../.."))
-
 require 'forwardable'
 require 'erb'
 require 'active_support'
 require 'action_controller'
-
 require 'htmlentities'
 
 module Relevance; end
