@@ -1,12 +1,11 @@
 require "spec_helper"
-require 'relevance/core_extensions/file'
 
 describe "Relevance::CoreExtensions::Response#html?" do
   before do
     @response = OpenStruct.new
     @response.extend(Relevance::CoreExtensions::Response)
-  end         
-  
+  end
+
   it "should be html if the content-type is 'text/html'" do
     @response.content_type = "text/html"
     @response.should be_html
@@ -19,11 +18,11 @@ describe "Relevance::CoreExtensions::Response#html?" do
     @response.should_not be_html
   end
 
-  # better ideas welcome, but be careful not to  
+  # better ideas welcome, but be careful not to
   # castrate tarantula for proxies that don't set the content-type
   it "should pretend we have html if the content-type is nil" do
     @response.content_type = nil
     @response.should be_html
   end
-  
+
 end

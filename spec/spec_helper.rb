@@ -13,6 +13,7 @@ if Rails::VERSION::STRING < "2.3.1" && RUBY_VERSION >= "1.9.1"
 end
 puts "==== Testing with Rails #{Rails::VERSION::STRING} ===="
 
+require 'relevance/tarantula'
 require 'bundler'
 Bundler.require
 require 'ostruct'
