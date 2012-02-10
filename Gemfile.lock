@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    relevance/tarantula (0.4.0)
+    tarantula (0.4.1)
       hpricot (~> 0.8.4)
       htmlentities (~> 4.3.0)
 
@@ -40,8 +40,8 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    hpricot (0.8.4)
-    htmlentities (4.3.0)
+    hpricot (0.8.6)
+    htmlentities (4.3.1)
     i18n (0.5.0)
     json (1.5.3)
     log_buddy (0.6.0)
@@ -102,7 +102,7 @@ DEPENDENCIES
   mocha (~> 0.9.12)
   rails (~> 3.0.9)
   rdiscount (~> 1.6.8)
-  relevance/tarantula!
   rspec (~> 2.6.0)
   sdoc (~> 0.3.0)
   sdoc-helpers (~> 0.1.4)
+  tarantula!
