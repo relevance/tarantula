@@ -4,11 +4,6 @@ require 'forwardable'
 require 'erb'
 require 'active_support'
 require 'action_controller'
-# bringing in xss-shield requires a bunch of other dependencies
-# still not certain about this, if it ruins your world please let me know
-#xss_shield_path = File.join(TARANTULA_ROOT, %w{vendor xss-shield})
-#$: << File.join(xss_shield_path, "lib")
-#require File.join(xss_shield_path, "init")
 
 require 'htmlentities'
 
