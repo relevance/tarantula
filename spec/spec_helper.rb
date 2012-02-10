@@ -1,6 +1,5 @@
-require 'rubygems'
-
 if rails_version = ENV['RAILS_VERSION']
+  require 'rubygems'
   gem "rails", rails_version
 end
 

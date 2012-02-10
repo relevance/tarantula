@@ -1,8 +1,6 @@
-require 'rubygems'
 begin
-  gem 'tidy'
   require 'tidy'
-rescue Gem::LoadError
+rescue LoadError
   puts "Tidy gem not available -- 'gem install tidy' to get it."
 end
 
@@ -12,7 +10,7 @@ if defined? Tidy
   module Relevance
     module Tarantula
 
-      class TidyHandler 
+      class TidyHandler
         include Relevance::Tarantula
         def initialize(options = {})
           @options = {:show_warnings=>true}.merge(options)
