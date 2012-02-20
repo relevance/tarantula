@@ -1,4 +1,6 @@
-v0.4.2 All tests green again [Gabriel Horner]
+v0.4.2
+* Fix Response#html? for Rails 3 (jgkite + rsanheim)
+* All tests green again [cldwalker]
 
 v0.2.0 Implementation of updated look-and-feel [Jason Rudolph]
 
