@@ -27,5 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rdiscount", "~> 1.6.8"
   s.add_development_dependency "log_buddy", "~> 0.6.0"
   s.add_development_dependency "mocha", "~> 0.9.12"
-  s.add_development_dependency "rails", "~> 3.0.9"
+  s.add_development_dependency "rails", ">= 2.3.0"
 end
