@@ -1,6 +1,6 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 Dir["lib/relevance/tasks/*.rake"].each {|f| load f }
 
 begin
@@ -31,7 +31,6 @@ rescue LoadError => ex
   puts ex.inspect
 end
 
-require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ''
   rdoc.rdoc_dir = 'rdoc'
