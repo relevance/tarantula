@@ -22,9 +22,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "hpricot", "~> 0.8.4"
 
   s.add_development_dependency "rspec", "~> 2.6.0"
-  s.add_development_dependency "sdoc", "~> 0.3.16"
-  s.add_development_dependency "sdoc-helpers", "~> 0.1.4"
-  s.add_development_dependency "rdiscount", "~> 1.6.8"
   s.add_development_dependency "log_buddy", "~> 0.6.0"
   s.add_development_dependency "mocha", "~> 0.9.12"
   s.add_development_dependency "rails", ">= 2.3.0"

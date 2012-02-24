@@ -23,14 +23,6 @@ rescue LoadError
   puts "rspec, or one of its dependencies, is not available. Install it with: sudo gem install rspec"
 end
 
-begin
-  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
-  require 'sdoc_helpers'
-rescue LoadError => ex
-  puts "sdoc support not enabled:"
-  puts ex.inspect
-end
-
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ''
   rdoc.rdoc_dir = 'rdoc'
