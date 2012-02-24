@@ -4,6 +4,9 @@
 
 Tarantula is a big fuzzy spider. It crawls your Rails 3 application, fuzzing data to see what breaks.
 
+{<img src="https://secure.travis-ci.org/relevance/tarantula.png"
+/>}[http://travis-ci.org/relevance/tarantula]
+
 == Usage
 
 === Installation
@@ -18,8 +21,7 @@ just let RubyGems handle it).  Add it to your Gemfile as normal:
 Use the included rake task to create a Rails integration test that will allow Tarantula to crawl your
 app.
 
-   #!sh
-   rake tarantula:setup
+   $ rake tarantula:setup
 
 Take a moment to familiarize yourself with the generated test. If parts of your application require
 login, update the test to make sure Tarantula can access those parts of your app.
@@ -63,9 +65,8 @@ it. For example, this would turn on HTMLTidy.
 
 Now it's time to turn Tarantula loose on your app. Assuming your project is at /work/project/:
 
-   #!sh
-   cd /work/project
-   rake tarantula:test
+   $ cd /work/project
+   $ rake tarantula:test
 
 == Verbose Mode
 
