@@ -28,7 +28,6 @@ require "relevance/core_extensions/ellipsize"
 require "relevance/core_extensions/file"
 require "relevance/core_extensions/response"
 require "relevance/core_extensions/metaclass"
-require "relevance/core_extensions/string_chars_fix"
 
 require "relevance/tarantula/html_reporter"
 require "relevance/tarantula/html_report_helper"
