@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+Dir["lib/relevance/tasks/*.rake"].each {|f| load f }
 
 begin
   require 'rspec'
