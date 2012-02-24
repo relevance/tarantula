@@ -2,7 +2,7 @@
 
 == DESCRIPTION
 
-Tarantula is a big fuzzy spider. It crawls your Rails 3 application, fuzzing data to see what breaks.
+Tarantula is a big fuzzy spider. It crawls your Rails 2.3 and 3.x applications, fuzzing data to see what breaks.
 
 {<img src="https://secure.travis-ci.org/relevance/tarantula.png"
 />}[http://travis-ci.org/relevance/tarantula]

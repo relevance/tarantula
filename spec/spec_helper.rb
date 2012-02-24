@@ -4,10 +4,6 @@ if rails_version = ENV['RAILS_VERSION']
 end
 
 require "rails/version"
-if Rails::VERSION::STRING < "2.3.1" && RUBY_VERSION >= "1.9.1"
-  puts "Tarantula requires Rails 2.3.1 or higher for Ruby 1.9 support"
-  exit(1)
-end
 puts "==== Testing with Rails #{Rails::VERSION::STRING} ===="
 
 require 'relevance/tarantula'
