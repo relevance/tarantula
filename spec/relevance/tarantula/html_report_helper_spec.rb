@@ -26,7 +26,7 @@ describe 'Relevance::Tarantula::HtmlReportHelper#wrap_stack_trace_line' do
     line = %{/action_controller/filters.rb:697:in `call_filters'}
     @reporter.stubs(:textmate_url).returns("ide_url")
     html = @reporter.wrap_stack_trace_line(line)
-    html.should == "<a href='ide_url'>/action_controller/filters.rb:697</a>:in `call_filters'"
+    html.should include "<a href='ide_url'>/action_controller/filters.rb:697</a>:in `call_filters"
   end  
   
   it "converts html entities for non-stack trace lines" do
