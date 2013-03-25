@@ -31,7 +31,7 @@ module Relevance
       end
 
       METHOD_REGEXPS = {}
-      [:put, :delete, :post].each do |m|
+      [:put, :delete, :post, :patch].each do |m|
         # remove submit from the end so we'll match with or without forgery protection
         s = method_javascript_function(m).gsub( /f.submit();/, "" )
         # don't just match this.href in case a different url was passed originally
@@ -69,8 +69,9 @@ module Relevance
       def meth
         @meth ||= begin
                       (@tag &&
-                       [:put, :delete, :post].detect do |m| # post should be last since it's least specific
-                        @tag['onclick'] =~ METHOD_REGEXPS[m]
+                       [:put, :delete, :post, :patch].detect do |m| # post should be last since it's least specific
+                        @tag['onclick'] =~ METHOD_REGEXPS[m] ||
+                        @tag['data-method'] == m.to_s.downcase
                        end) ||
                          :get
                     end
