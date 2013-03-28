@@ -33,24 +33,18 @@ module Relevance
 
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |url, *args|
-          safe_request do
+          response = integration_test.response
+          begin
             integration_test.send(verb, url, *args)
-            response = integration_test.response
-            patch_response(url, response)
-            response
+          rescue Exception => e
+            alter_response(response, '500', e.message + "\n\n" + e.backtrace.join("\n"))
           end
+          patch_response(url, response)
+          response
         end
       end
 
-      def safe_request
-        begin
-          yield
-        rescue => e
-          fix_response(integration_test.response, 500, e.message + "\n\n" + e.backtrace.join("\n"))
-        end
-      end
-
-      def fix_response(response, code, body)
+      def alter_response(response, code, body)
         response.meta.attr_accessor :code
         response.code = code
         response.body = body
@@ -63,7 +57,7 @@ module Relevance
             case ext = File.extension(url)
             when /html|te?xt|css|js|jpe?g|gif|psd|png|eps|pdf|ico/
               response.headers["type"] = "text/#{ext}"  # readable as response.content_type
-              fix_response(response, 200, static_content_file(url))
+              alter_response(response, '200', static_content_file(url))
             else
               log "Skipping unknown type #{url}"
             end
