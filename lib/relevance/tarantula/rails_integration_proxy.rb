@@ -33,10 +33,12 @@ module Relevance
 
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |url, *args|
-          response = integration_test.response
+          response = nil
           begin
             integration_test.send(verb, url, *args)
+            response = integration_test.response
           rescue Exception => e
+            response = integration_test.response
             alter_response(response, '500', e.message + "\n\n" + e.backtrace.join("\n"))
           end
           patch_response(url, response)
