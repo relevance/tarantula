@@ -37,7 +37,8 @@ module Relevance
           begin
             integration_test.send(verb, url, *args)
             response = integration_test.response
-          rescue ActiveRecord::RecordNotFound => e
+          rescue ActiveRecord::RecordNotFound, 
+                 ActionController::RoutingError => e
             response = integration_test.response
             alter_response(response, '404', e.message + "\n\n" + e.backtrace.join("\n"))
           rescue Exception => e
