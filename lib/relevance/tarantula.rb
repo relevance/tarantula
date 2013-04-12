@@ -4,6 +4,12 @@ require 'active_support'
 require 'action_controller'
 require 'htmlentities'
 
+if RUBY_VERSION < '1.9.1'
+  warn "***************************************************"
+  warn "tarantula will stop supporting ruby 1.8.x in 0.6.0."
+  warn "***************************************************"
+end
+
 module Relevance; end
 module Relevance; module CoreExtensions; end; end
 module Relevance
