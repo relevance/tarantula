@@ -1,3 +1,9 @@
+v0.5.0
+* Handle rails 3.2 link methods
+* Renamed Relevance::Tarantula::Link#method to #meth
+* Ensure tests pass with latest Rails 2 and 3
+* Add notice for deprecating ruby 1.8 in 0.6.0
+
 v0.4.3
 * Fix rake tasks #25 [cldwalker]
 * Remove removing String#chars #18 [cldwalker]
