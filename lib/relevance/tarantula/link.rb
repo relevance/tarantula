@@ -10,7 +10,7 @@ module Relevance
         def protect_against_forgery?
           false
         end
-        #fast fix for rails3 
+        #fast fix for rails3
         def method_javascript_function(method, url = '', href = nil)
           action = (href && url.size > 0) ? "'#{url}'" : 'this.href'
           submit_function =
@@ -27,7 +27,7 @@ module Relevance
             submit_function << "s.setAttribute('name', '#{request_forgery_protection_token}'); s.setAttribute('value', '#{escape_javascript form_authenticity_token}'); f.appendChild(s);"
           end
           submit_function << "f.submit();"
-        end    
+        end
       end
 
       METHOD_REGEXPS = {}
@@ -46,7 +46,7 @@ module Relevance
 
         if String === link || link.nil?
           @href = transform_url(link)
-          @method = :get
+          @meth = :get
         else # should be a tag
           @href = link['href'] ? transform_url(link['href'].downcase) : nil
           @tag = link
@@ -54,20 +54,20 @@ module Relevance
       end
 
       def crawl
-        response = crawler.follow(method, href)
+        response = crawler.follow(meth, href)
         log "Response #{response.code} for #{self}"
         crawler.handle_link_results(self, make_result(response))
       end
 
       def make_result(response)
-        crawler.make_result(:method    => method,
+        crawler.make_result(:method    => meth,
                             :url       => href,
                             :response  => response,
                             :referrer  => referrer)
       end
 
-      def method
-        @method ||= begin
+      def meth
+        @meth ||= begin
                       (@tag &&
                        [:put, :delete, :post].detect do |m| # post should be last since it's least specific
                         @tag['onclick'] =~ METHOD_REGEXPS[m]
@@ -82,7 +82,7 @@ module Relevance
 
       def ==(obj)
         obj.respond_to?(:href) && obj.respond_to?(:method) &&
-          self.href.to_s == obj.href.to_s && self.method.to_s == obj.method.to_s
+          self.href.to_s == obj.href.to_s && self.meth.to_s == obj.meth.to_s
       end
       alias :eql? :==
 
@@ -91,7 +91,7 @@ module Relevance
         end
 
       def to_s
-        "<Relevance::Tarantula::Link href=#{href}, method=#{method}>"
+        "<Relevance::Tarantula::Link href=#{href}, method=#{meth}>"
       end
 
     end
