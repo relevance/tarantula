@@ -1,6 +1,7 @@
 require 'rake'
 require 'rake/testtask'
 require 'rdoc/task'
+require "bundler/gem_tasks"
 Dir["lib/relevance/tasks/*.rake"].each {|f| load f }
 
 begin
