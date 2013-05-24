@@ -37,8 +37,7 @@ module Relevance
           begin
             integration_test.send(verb, url, *args)
             response = integration_test.response
-          rescue ActiveRecord::RecordNotFound, 
-                 ActionController::RoutingError => e
+          rescue *error_classes => e
             response = integration_test.response
             alter_response(response, '404', e.message + "\n\n" + e.backtrace.join("\n"))
           rescue Exception => e
@@ -84,6 +83,14 @@ module Relevance
       def static_content_path(url)
         File.expand_path(File.join(rails_root, "public", url))
       end
+
+      private
+      def error_classes
+        defined?(ActionController::RoutingError) ?
+          [ActiveRecord::RecordNotFound, ActionController::RoutingError] :
+          [ActiveRecord::RecordNotFound]
+      end
+
     end
 
   end
