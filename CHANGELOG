@@ -1,3 +1,6 @@
+v0.5.1
+* Rescue exceptions for Rails 3 integration tests and return them as 404/500 responses.
+
 v0.5.0
 * Handle rails 3.2 link methods
 * Renamed Relevance::Tarantula::Link#method to #meth
