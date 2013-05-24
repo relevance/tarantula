@@ -11,8 +11,8 @@ module Relevance
 
       def self.rails_integration_test(integration_test, options = {})
         t = Crawler.new
-        t.max_url_length = options[:max_url_length] if options[:max_url_length] 
-        t.proxy = RailsIntegrationProxy.new(integration_test)    
+        t.max_url_length = options[:max_url_length] if options[:max_url_length]
+        t.proxy = RailsIntegrationProxy.new(integration_test)
         t.handlers << HtmlDocumentHandler.new(t)
         t.handlers << InvalidHtmlHandler.new
         t.log_grabber = Relevance::Tarantula::LogGrabber.new(File.join(rails_root, "log/test.log"))
@@ -33,11 +33,28 @@ module Relevance
 
       [:get, :post, :put, :delete].each do |verb|
         define_method(verb) do |url, *args|
-          integration_test.send(verb, url, *args)
-          response = integration_test.response
+          response = nil
+          begin
+            integration_test.send(verb, url, *args)
+            response = integration_test.response
+          rescue ActiveRecord::RecordNotFound, 
+                 ActionController::RoutingError => e
+            response = integration_test.response
+            alter_response(response, '404', e.message + "\n\n" + e.backtrace.join("\n"))
+          rescue Exception => e
+            response = integration_test.response
+            alter_response(response, '500', e.message + "\n\n" + e.backtrace.join("\n"))
+          end
           patch_response(url, response)
           response
         end
+      end
+
+      def alter_response(response, code, body)
+        response.meta.attr_accessor :code
+        response.code = code
+        response.body = body
+        response
       end
 
       def patch_response(url, response)
@@ -45,10 +62,8 @@ module Relevance
           if File.exist?(static_content_path(url))
             case ext = File.extension(url)
             when /html|te?xt|css|js|jpe?g|gif|psd|png|eps|pdf|ico/
-              response.body = static_content_file(url)
               response.headers["type"] = "text/#{ext}"  # readable as response.content_type
-              response.meta.attr_accessor :code
-              response.code = "200"
+              alter_response(response, '200', static_content_file(url))
             else
               log "Skipping unknown type #{url}"
             end
@@ -60,6 +75,7 @@ module Relevance
           include Relevance::CoreExtensions::Response
         end
       end
+
 
       def static_content_file(url)
         File.read(static_content_path(url))

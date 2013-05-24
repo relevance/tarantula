@@ -43,7 +43,19 @@ describe "Relevance::Tarantula::RailsIntegrationProxy" do
     Relevance::Tarantula::RailsIntegrationProxy.new(o)
     o.methods(false).map(&:to_s).sort.should == %w{response response=}
   end
+end
 
+describe "Relevance::Tarantula::RailsIntegrationProxy errors" do
+  it "alters response to contain the error message" do
+    @rip = Relevance::Tarantula::RailsIntegrationProxy.new(stub)
+    @response = Struct.new(:body, :code).new(nil, nil)
+    @rip.integration_test = stub_everything(:response => @response) do |stub|
+      stub.stubs(:get).raises(Exception, 'Internal Server Error')
+    end
+    response = @rip.get("/url")
+    response.code.should == '500'
+    response.body.should =~ /\AInternal Server Error\n\n/
+  end
 end
 
 describe "Relevance::Tarantula::RailsIntegrationProxy patching" do
